@@ -1,0 +1,50 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking subtle v2.6.1
+    Checking base64 v0.22.1
+    Checking cipher v0.4.4
+    Checking num-traits v0.2.19
+    Checking digest v0.10.7
+    Checking universal-hash v0.5.1
+    Checking password-hash v0.5.0
+    Checking polyval v0.6.2
+    Checking poly1305 v0.8.0
+    Checking aes v0.8.4
+    Checking chacha20 v0.9.1
+    Checking ctr v0.9.2
+    Checking blake2 v0.10.6
+    Checking sha2 v0.10.9
+    Checking hmac v0.12.1
+    Checking ghash v0.5.1
+    Checking chacha20poly1305 v0.10.1
+    Checking quetzal-primitives v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-primitives)
+    Checking argon2 v0.5.3
+    Checking chrono v0.4.45
+    Checking aes-gcm v0.10.3
+    Checking quetzal-crypto v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-crypto)
+    Checking quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-network)
+error[E0599]: no variant, associated function, or constant named `V1` found for enum `DerivationScheme` in the current scope
+  --> crates/quetzal-crypto/src/key.rs:26:57
+   |
+26 |         Bip32PrivateKey(self.0.derive(DerivationScheme::V1, index))
+   |                                                         ^^ variant, associated function, or constant not found in `DerivationScheme`
+   |
+help: there is a variant with a similar name
+   |
+26 -         Bip32PrivateKey(self.0.derive(DerivationScheme::V1, index))
+26 +         Bip32PrivateKey(self.0.derive(DerivationScheme::V2, index))
+   |
+
+error[E0599]: no variant, associated function, or constant named `V1` found for enum `DerivationScheme` in the current scope
+  --> crates/quetzal-crypto/src/key.rs:50:39
+   |
+50 |             .derive(DerivationScheme::V1, index)
+   |                                       ^^ variant, associated function, or constant not found in `DerivationScheme`
+   |
+help: there is a variant with a similar name
+   |
+50 -             .derive(DerivationScheme::V1, index)
+50 +             .derive(DerivationScheme::V2, index)
+   |
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `quetzal-crypto` (lib) due to 2 previous errors

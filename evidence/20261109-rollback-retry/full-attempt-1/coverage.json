@@ -1,0 +1,30 @@
+{
+  "covered": 638,
+  "exhaustive": false,
+  "failures": [
+    "family-shared-pending-delegation-patch",
+    "pending:workflow"
+  ],
+  "missing": [
+    "wallet.resubmission",
+    "api.differential-reference",
+    "api:patchSharedWalletInDelegation:positive",
+    "api:patchSharedWalletInDelegation:status:200",
+    "api:postByronTransaction:status:500"
+  ],
+  "required": 643,
+  "unexecuted_cases": {
+    "api.differential-reference": [
+      "family-shared-pending-delegation-patch"
+    ],
+    "api:patchSharedWalletInDelegation:positive": [
+      "family-shared-pending-delegation-patch"
+    ],
+    "api:patchSharedWalletInDelegation:status:200": [
+      "family-shared-pending-delegation-patch"
+    ],
+    "wallet.resubmission": [
+      "live:pending-retry"
+    ]
+  }
+}

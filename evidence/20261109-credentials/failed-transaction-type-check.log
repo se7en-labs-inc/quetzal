@@ -1,0 +1,52 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-primitives v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-primitives)
+    Checking quetzal-crypto v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-crypto)
+    Checking quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-network)
+    Checking quetzal-address v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-address)
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+error[E0277]: `?` couldn't convert the error to `ConflictableTransactionError<error::WalletError>`
+   --> crates/quetzal-wallet/src/db/mod.rs:184:82
+    |
+184 |             let mut meta: WalletMeta = cbor_decode(&raw).map_err(Conflict::Abort)?;
+    |                                        ----------------- ------------------------^ unsatisfied trait bound
+    |                                        |                 |
+    |                                        |                 this can't be annotated with `?` because it has type `Result<_, ConflictableTransactionError<ciborium::de::Error<std::io::Error>>>`
+    |                                        this has type `Result<_, ciborium::de::Error<std::io::Error>>`
+    |
+    = help: the trait `From<ConflictableTransactionError<ciborium::de::Error<std::io::Error>>>` is not implemented for `ConflictableTransactionError<error::WalletError>`
+    = note: the question mark operation (`?`) implicitly performs a conversion on the error value using the `From` trait
+help: the following other types implement trait `From<T>`
+   --> /home/sam/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sled-0.34.7/src/transaction.rs:145:1
+    |
+145 | impl<E> From<UnabortableTransactionError> for ConflictableTransactionError<E> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `ConflictableTransactionError<E>` implements `From<UnabortableTransactionError>`
+...
+240 | impl<T> From<Error> for ConflictableTransactionError<T> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `ConflictableTransactionError<T>` implements `From<sled::Error>`
+    = note: the full name for the type has been written to '/home/sam/work/se7en/quetzal/wallet-migration/target/debug/deps/quetzal_wallet-8b1e8b569f68ba36.long-type-13087760224066772755.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: `?` couldn't convert the error to `ConflictableTransactionError<error::WalletError>`
+   --> crates/quetzal-wallet/src/db/mod.rs:191:60
+    |
+191 |                 cbor_encode(&meta).map_err(Conflict::Abort)?,
+    |                 ------------------ ------------------------^ unsatisfied trait bound
+    |                 |                  |
+    |                 |                  this can't be annotated with `?` because it has type `Result<_, ConflictableTransactionError<ciborium::ser::Error<std::io::Error>>>`
+    |                 this has type `Result<_, ciborium::ser::Error<std::io::Error>>`
+    |
+    = help: the trait `From<ConflictableTransactionError<ciborium::ser::Error<std::io::Error>>>` is not implemented for `ConflictableTransactionError<error::WalletError>`
+    = note: the question mark operation (`?`) implicitly performs a conversion on the error value using the `From` trait
+help: the following other types implement trait `From<T>`
+   --> /home/sam/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sled-0.34.7/src/transaction.rs:145:1
+    |
+145 | impl<E> From<UnabortableTransactionError> for ConflictableTransactionError<E> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `ConflictableTransactionError<E>` implements `From<UnabortableTransactionError>`
+...
+240 | impl<T> From<Error> for ConflictableTransactionError<T> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `ConflictableTransactionError<T>` implements `From<sled::Error>`
+    = note: the full name for the type has been written to '/home/sam/work/se7en/quetzal/wallet-migration/target/debug/deps/quetzal_wallet-8b1e8b569f68ba36.long-type-16784897277364906318.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `quetzal-wallet` (lib) due to 2 previous errors

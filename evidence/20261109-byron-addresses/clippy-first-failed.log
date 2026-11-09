@@ -1,0 +1,23 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+    Checking quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/quetzal-wallet/src/byron_addresses.rs:151:50
+    |
+151 |             .import_random_addresses(&wallet.id, &[owned.address.0.clone()], Some(42))
+    |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&owned.address.0)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/quetzal-wallet/src/byron_addresses.rs:178:50
+    |
+178 |             .import_random_addresses(&wallet.id, &[next.clone()], Some(43))
+    |                                                  ^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&next)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cloned_ref_to_slice_refs
+
+error: could not compile `quetzal-wallet` (lib test) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...

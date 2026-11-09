@@ -1,0 +1,487 @@
+{
+  "format_version": 1,
+  "contract_reference_revision": "2fc5c383c94bb907deaa0cd27b1b407f86224b6c",
+  "suite_sha256": "ca899c8620fb5cee45a7a7b0120d59c6f327095513f0f9989c7ac611d624f66d",
+  "unregistered_inputs": [],
+  "harness_self_test": false,
+  "environment": "quetzal-v55",
+  "target": "http://127.0.0.1:19097/v2/",
+  "evidence": [
+    {
+      "case": "pending:single-producer-fixture",
+      "requirements": [],
+      "passed": true,
+      "detail": "{\"paused_producers\":[{\"executable_sha256\":\"8b6cc36f00115d5fcba385b8dd06c7b495e8b17aad6be9180dcdcd7545b840d5\",\"group\":214367,\"parent\":214367,\"pid\":214902,\"producer\":true,\"start\":18279739},{\"executable_sha256\":\"8b6cc36f00115d5fcba385b8dd06c7b495e8b17aad6be9180dcdcd7545b840d5\",\"group\":214367,\"parent\":214367,\"pid\":214903,\"producer\":true,\"start\":18279739},{\"executable_sha256\":\"8b6cc36f00115d5fcba385b8dd06c7b495e8b17aad6be9180dcdcd7545b840d5\",\"group\":214367,\"parent\":214367,\"pid\":214907,\"producer\":true,\"start\":18279739}],\"running_producer\":{\"executable_sha256\":\"8b6cc36f00115d5fcba385b8dd06c7b495e8b17aad6be9180dcdcd7545b840d5\",\"group\":214367,\"parent\":214367,\"pid\":214498,\"producer\":true,\"start\":18277700},\"selection\":\"earliest-started-owned-producer\"}"
+    },
+    {
+      "case": "live:postWallet",
+      "requirements": [
+        "api:postWallet:positive",
+        "api:postWallet:status:201"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:postWallet",
+      "requirements": [
+        "api:postWallet:positive",
+        "api:postWallet:status:201"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:constructTransaction",
+      "requirements": [
+        "api:constructTransaction:positive",
+        "api:constructTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:signTransaction",
+      "requirements": [
+        "api:signTransaction:positive",
+        "api:signTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:submitTransaction",
+      "requirements": [
+        "api:submitTransaction:positive",
+        "api:submitTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getTransaction:eventually",
+      "requirements": [
+        "api:getTransaction:positive",
+        "api:getTransaction:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:signTransaction",
+      "requirements": [
+        "api:signTransaction:positive",
+        "api:signTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "state:restart-pending",
+      "requirements": [
+        "wallet.restart"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:deleteTransaction",
+      "requirements": [
+        "api:deleteTransaction:positive",
+        "api:deleteTransaction:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getTransaction",
+      "requirements": [
+        "api:getTransaction:negative",
+        "api:getTransaction:status:404"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "pending:before-inclusion",
+      "requirements": [],
+      "passed": true,
+      "detail": "{\"forgotten\":{\"account_key\":\"acct_xvk1kahwstpcpwcvwlklvncstnt820xprfmmzgx43fkshdxf5tlhvfcdt56u90fa74hr5y04dyjmlr7qcydqrrptqt622d0gqklhf3kmn4g80anpw\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"],\"id\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qr3cg6gfvr3xppj4swpp5lmkt20mztreje93afnccxp45rgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh7qzc6\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qqrdac3qgdrgrwpukxkj3zzfaf2fwq86h28cwz2ej5s95jqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sldv4uf\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qqlzduqcpgljtrhjtvtcyxhe3z52knxhtnh6pqrkpceh4ycfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s3c4na8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qr6680fnmysr5mfvrl2dzy5zs940xxw76wnpw6upnf8vkvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sd3j89c\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qr443mhvnaw8lhd5rmjj4a9vcamdgp3065hupjey0q0tgzqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s8wnggq\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qzsg3vu3nzgx0rmhd5e2qv5u6texz5pwq90aepnkh7fp3fsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0suzjjj9\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qrv9xztmdavvtq3lqstmsm6xmyd4zkncvkgvrx922mwpvvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0veucm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qq7wfanz2gylv0n4w7m3c46jhstne8w69kd680lylelg5uqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s4hk02w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qqmn4s8ux2lydkgus90chg2h78jeyggg0svzuhrxah9mgzcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sj65lqs\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qqy7lqwg7e7k5v30jpz8uqtqumwrwjrglr7fpgycttlv87gfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0swmtqq8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qqgf3w6qp75c7rvt4exglj73z2umy9eh08kv0ha3h6xhn4sfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh6fvuh\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qqswe65lagk6nwm0mqatat0x0znygcuaqs00wquylj75aasfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0q403z\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qpq0j5stneklkxgq37hjg72gw80cmjz2a2p3l0f9vypr4zgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0shjgcjv\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qqa5yecmntztvw98nzfca5yt7dapag0w9z825umrvh6patgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sn3hfmm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qzxu70rcpjfvh7zpnl5ep6h5p6ezt8hecunk6f2dwzacz5cfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0skdy3cd\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qrt6qy94rxvy34lwfhpvgjmer2drdtez3vqqnlf24x74djqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sttgu32\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qzdmy5k474f9fptjed96k44axu5f8q8ysdd00ru2gjuzptcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0serqw9w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qzm02z25rvs6aedm3xh2cp2swtxcrkv8rc3gk2a4ydpyphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssvrqly\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qpp489hw7mtqhu3ctc8ac5sf354dfe8cxtu04tjqqmyahecfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0seccf2j\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qquqzshq23pm67uxqeezxc2sd9ytcy5mlfdkq4rukg4xphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssxk9rl\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":6000000,\"epoch_number\":50000,\"slot_number\":0,\"time\":\"2026-11-23T16:07:16Z\"},\"fee\":{\"quantity\":999999900000000,\"unit\":\"lovelace\"},\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"inputs\":[{\"assets\":[],\"id\":\"727c5a1ea227b4098db4758abe7ad9f5117c5d08486bd88a6ab6960efb703065\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":303,\"epoch_number\":2,\"height\":{\"quantity\":66,\"unit\":\"block\"},\"slot_number\":63,\"time\":\"2026-11-09T18:48:16.600Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"utxo\":{\"entries\":[{\"ada\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":100000000,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"041a999df6307e14bc244f64aa53e60dbd6091e1\",\"name\":\"conformance-pending-sender\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-09T18:47:37.546702196Z\"}}},\"funding\":{\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f#0\":{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":100000000}}},\"mempool_after_forgetting\":{\"exists\":true,\"slot\":304,\"txId\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\"},\"pending\":{\"amount\":{\"quantity\":2129700,\"unit\":\"lovelace\"},\"burn\":{\"tokens\":[]},\"certificates\":[],\"collateral\":[],\"collateral_outputs\":[],\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":3307,\"epoch_number\":27,\"slot_number\":67,\"time\":\"2026-11-09T18:58:17.400Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\",\"inputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"index\":0}],\"metadata\":null,\"mint\":{\"tokens\":[]},\"outputs\":[{\"address\":\"addr_test1qpcn0ssn9p4xfdk4c9q2ulhp7vrm8cs5l9gsq3gr85umwdezq67jrecum605sf7zmtvh07pmj4w67h6z7jkhcuj2plhsjn65f4\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":{\"absolute_slot_number\":303,\"epoch_number\":2,\"height\":{\"quantity\":66,\"unit\":\"block\"},\"slot_number\":63,\"time\":\"2026-11-09T18:48:16.600Z\"},\"script_validity\":\"valid\",\"status\":\"pending\",\"withdrawals\":[]},\"signed_transaction\":{\"script_validity\":\"valid\",\"status\":\"pending\",\"transaction\":\"84a600d901028182582087910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f000182825839007137c213286a64b6d5c140ae7ee1f307b3e214f9510045033d39b7372206bd21e71cde9f4827c2dad977f83b955daf5f42f4ad7c724a0fef1a001e848082583900535f23a950a5c7ddb425b08fe7c32f2ed182920808de6965678f0eb009e129bf992c82ef30d800807c6b5bebfc475e65353979b213b8f31f1a05d561dc021a0001faa403190ceb08000f00a100d90102818258207745113720105ddfcc9d474f36219ea55938ca00645ebe01cb98df9898d33be25840ccc3b287b4a5338788085325ce9db87691d84b51c787ab3234a270639737d313f703e8331f2782fcad2bb23188f3e90b1e4b7c265b4edaa95efbd9af6b5f2f01f5f6\"},\"stable_tip\":{\"hash\":\"c4ec26d4a8895cdf22e3d1a6c02706cb07b18404e7242c0aaedfac3e7c6afc7d\",\"height\":66,\"slot\":303},\"transaction\":{\"fee\":129700,\"id\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\",\"inputs\":[\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f#0\"],\"outputs\":[{\"address_hex\":\"007137c213286a64b6d5c140ae7ee1f307b3e214f9510045033d39b7372206bd21e71cde9f4827c2dad977f83b955daf5f42f4ad7c724a0fef\",\"assets\":{},\"coin\":2000000},{\"address_hex\":\"00535f23a950a5c7ddb425b08fe7c32f2ed182920808de6965678f0eb009e129bf992c82ef30d800807c6b5bebfc475e65353979b213b8f31f\",\"assets\":{},\"coin\":97870300}],\"verification_keys\":[\"7745113720105ddfcc9d474f36219ea55938ca00645ebe01cb98df9898d33be2\"]}}"
+    },
+    {
+      "case": "live:getTransaction:confirmed",
+      "requirements": [
+        "api:getTransaction:positive",
+        "api:getTransaction:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getTransaction:confirmed",
+      "requirements": [
+        "api:getTransaction:positive",
+        "api:getTransaction:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "pending:forget-and-reappear",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "pending:workflow",
+      "requirements": [],
+      "passed": true,
+      "detail": "{\"confirmed\":{\"amount\":{\"quantity\":2129700,\"unit\":\"lovelace\"},\"burn\":{\"tokens\":[]},\"certificates\":[],\"collateral\":[],\"collateral_outputs\":[],\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"depth\":{\"quantity\":0,\"unit\":\"block\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":3307,\"epoch_number\":27,\"slot_number\":67,\"time\":\"2026-11-09T18:58:17.400Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\",\"inputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":326,\"epoch_number\":2,\"height\":{\"quantity\":67,\"unit\":\"block\"},\"slot_number\":86,\"time\":\"2026-11-09T18:48:21.200Z\"},\"metadata\":null,\"mint\":{\"tokens\":[]},\"outputs\":[{\"address\":\"addr_test1qpcn0ssn9p4xfdk4c9q2ulhp7vrm8cs5l9gsq3gr85umwdezq67jrecum605sf7zmtvh07pmj4w67h6z7jkhcuj2plhsjn65f4\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]},\"final_state\":{\"account_key\":\"acct_xvk1kahwstpcpwcvwlklvncstnt820xprfmmzgx43fkshdxf5tlhvfcdt56u90fa74hr5y04dyjmlr7qcydqrrptqt622d0gqklhf3kmn4g80anpw\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"],\"id\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qr3cg6gfvr3xppj4swpp5lmkt20mztreje93afnccxp45rgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh7qzc6\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qqrdac3qgdrgrwpukxkj3zzfaf2fwq86h28cwz2ej5s95jqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sldv4uf\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qqlzduqcpgljtrhjtvtcyxhe3z52knxhtnh6pqrkpceh4ycfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s3c4na8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qr6680fnmysr5mfvrl2dzy5zs940xxw76wnpw6upnf8vkvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sd3j89c\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qr443mhvnaw8lhd5rmjj4a9vcamdgp3065hupjey0q0tgzqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s8wnggq\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qzsg3vu3nzgx0rmhd5e2qv5u6texz5pwq90aepnkh7fp3fsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0suzjjj9\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qrv9xztmdavvtq3lqstmsm6xmyd4zkncvkgvrx922mwpvvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0veucm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qq7wfanz2gylv0n4w7m3c46jhstne8w69kd680lylelg5uqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s4hk02w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qqmn4s8ux2lydkgus90chg2h78jeyggg0svzuhrxah9mgzcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sj65lqs\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qqy7lqwg7e7k5v30jpz8uqtqumwrwjrglr7fpgycttlv87gfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0swmtqq8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qqgf3w6qp75c7rvt4exglj73z2umy9eh08kv0ha3h6xhn4sfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh6fvuh\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qqswe65lagk6nwm0mqatat0x0znygcuaqs00wquylj75aasfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0q403z\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qpq0j5stneklkxgq37hjg72gw80cmjz2a2p3l0f9vypr4zgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0shjgcjv\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qqa5yecmntztvw98nzfca5yt7dapag0w9z825umrvh6patgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sn3hfmm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qzxu70rcpjfvh7zpnl5ep6h5p6ezt8hecunk6f2dwzacz5cfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0skdy3cd\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qrt6qy94rxvy34lwfhpvgjmer2drdtez3vqqnlf24x74djqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sttgu32\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qzdmy5k474f9fptjed96k44axu5f8q8ysdd00ru2gjuzptcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0serqw9w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qzm02z25rvs6aedm3xh2cp2swtxcrkv8rc3gk2a4ydpyphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssvrqly\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qpp489hw7mtqhu3ctc8ac5sf354dfe8cxtu04tjqqmyahecfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0seccf2j\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qquqzshq23pm67uxqeezxc2sd9ytcy5mlfdkq4rukg4xphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssxk9rl\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":2129700,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":3307,\"epoch_number\":27,\"slot_number\":67,\"time\":\"2026-11-09T18:58:17.400Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\",\"inputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":326,\"epoch_number\":2,\"height\":{\"quantity\":67,\"unit\":\"block\"},\"slot_number\":86,\"time\":\"2026-11-09T18:48:21.200Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qpcn0ssn9p4xfdk4c9q2ulhp7vrm8cs5l9gsq3gr85umwdezq67jrecum605sf7zmtvh07pmj4w67h6z7jkhcuj2plhsjn65f4\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]},{\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":6000000,\"epoch_number\":50000,\"slot_number\":0,\"time\":\"2026-11-23T16:07:16Z\"},\"fee\":{\"quantity\":999999900000000,\"unit\":\"lovelace\"},\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"inputs\":[{\"assets\":[],\"id\":\"727c5a1ea227b4098db4758abe7ad9f5117c5d08486bd88a6ab6960efb703065\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":303,\"epoch_number\":2,\"height\":{\"quantity\":66,\"unit\":\"block\"},\"slot_number\":63,\"time\":\"2026-11-09T18:48:16.600Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"utxo\":{\"entries\":[{\"ada\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":97870300,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"041a999df6307e14bc244f64aa53e60dbd6091e1\",\"name\":\"conformance-pending-sender\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-09T18:47:37.546702196Z\"}}},\"forgotten\":{\"account_key\":\"acct_xvk1kahwstpcpwcvwlklvncstnt820xprfmmzgx43fkshdxf5tlhvfcdt56u90fa74hr5y04dyjmlr7qcydqrrptqt622d0gqklhf3kmn4g80anpw\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"],\"id\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qr3cg6gfvr3xppj4swpp5lmkt20mztreje93afnccxp45rgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh7qzc6\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qqrdac3qgdrgrwpukxkj3zzfaf2fwq86h28cwz2ej5s95jqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sldv4uf\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qqlzduqcpgljtrhjtvtcyxhe3z52knxhtnh6pqrkpceh4ycfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s3c4na8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qr6680fnmysr5mfvrl2dzy5zs940xxw76wnpw6upnf8vkvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sd3j89c\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qr443mhvnaw8lhd5rmjj4a9vcamdgp3065hupjey0q0tgzqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s8wnggq\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qzsg3vu3nzgx0rmhd5e2qv5u6texz5pwq90aepnkh7fp3fsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0suzjjj9\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qrv9xztmdavvtq3lqstmsm6xmyd4zkncvkgvrx922mwpvvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0veucm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qq7wfanz2gylv0n4w7m3c46jhstne8w69kd680lylelg5uqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s4hk02w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qqmn4s8ux2lydkgus90chg2h78jeyggg0svzuhrxah9mgzcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sj65lqs\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qqy7lqwg7e7k5v30jpz8uqtqumwrwjrglr7fpgycttlv87gfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0swmtqq8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qqgf3w6qp75c7rvt4exglj73z2umy9eh08kv0ha3h6xhn4sfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh6fvuh\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qqswe65lagk6nwm0mqatat0x0znygcuaqs00wquylj75aasfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0q403z\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qpq0j5stneklkxgq37hjg72gw80cmjz2a2p3l0f9vypr4zgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0shjgcjv\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qqa5yecmntztvw98nzfca5yt7dapag0w9z825umrvh6patgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sn3hfmm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qzxu70rcpjfvh7zpnl5ep6h5p6ezt8hecunk6f2dwzacz5cfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0skdy3cd\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qrt6qy94rxvy34lwfhpvgjmer2drdtez3vqqnlf24x74djqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sttgu32\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qzdmy5k474f9fptjed96k44axu5f8q8ysdd00ru2gjuzptcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0serqw9w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qzm02z25rvs6aedm3xh2cp2swtxcrkv8rc3gk2a4ydpyphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssvrqly\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qpp489hw7mtqhu3ctc8ac5sf354dfe8cxtu04tjqqmyahecfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0seccf2j\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qquqzshq23pm67uxqeezxc2sd9ytcy5mlfdkq4rukg4xphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssxk9rl\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":6000000,\"epoch_number\":50000,\"slot_number\":0,\"time\":\"2026-11-23T16:07:16Z\"},\"fee\":{\"quantity\":999999900000000,\"unit\":\"lovelace\"},\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"inputs\":[{\"assets\":[],\"id\":\"727c5a1ea227b4098db4758abe7ad9f5117c5d08486bd88a6ab6960efb703065\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":303,\"epoch_number\":2,\"height\":{\"quantity\":66,\"unit\":\"block\"},\"slot_number\":63,\"time\":\"2026-11-09T18:48:16.600Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"utxo\":{\"entries\":[{\"ada\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":100000000,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"041a999df6307e14bc244f64aa53e60dbd6091e1\",\"name\":\"conformance-pending-sender\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-09T18:47:37.546702196Z\"}}},\"funding\":{\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f#0\":{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":100000000}}},\"mempool_after_forget\":{\"exists\":true,\"slot\":304,\"txId\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\"},\"mempool_after_restart\":{\"exists\":true,\"slot\":304,\"txId\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\"},\"mempool_before\":{\"exists\":true,\"slot\":304,\"txId\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\"},\"new_wallet_pid\":215536,\"old_wallet_pid\":215217,\"pending_after_restart\":{\"account_key\":\"acct_xvk1kahwstpcpwcvwlklvncstnt820xprfmmzgx43fkshdxf5tlhvfcdt56u90fa74hr5y04dyjmlr7qcydqrrptqt622d0gqklhf3kmn4g80anpw\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"],\"id\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qr3cg6gfvr3xppj4swpp5lmkt20mztreje93afnccxp45rgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh7qzc6\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qqrdac3qgdrgrwpukxkj3zzfaf2fwq86h28cwz2ej5s95jqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sldv4uf\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qqlzduqcpgljtrhjtvtcyxhe3z52knxhtnh6pqrkpceh4ycfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s3c4na8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qr6680fnmysr5mfvrl2dzy5zs940xxw76wnpw6upnf8vkvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sd3j89c\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qr443mhvnaw8lhd5rmjj4a9vcamdgp3065hupjey0q0tgzqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s8wnggq\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qzsg3vu3nzgx0rmhd5e2qv5u6texz5pwq90aepnkh7fp3fsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0suzjjj9\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qrv9xztmdavvtq3lqstmsm6xmyd4zkncvkgvrx922mwpvvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0veucm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qq7wfanz2gylv0n4w7m3c46jhstne8w69kd680lylelg5uqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s4hk02w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qqmn4s8ux2lydkgus90chg2h78jeyggg0svzuhrxah9mgzcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sj65lqs\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qqy7lqwg7e7k5v30jpz8uqtqumwrwjrglr7fpgycttlv87gfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0swmtqq8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qqgf3w6qp75c7rvt4exglj73z2umy9eh08kv0ha3h6xhn4sfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh6fvuh\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qqswe65lagk6nwm0mqatat0x0znygcuaqs00wquylj75aasfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0q403z\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qpq0j5stneklkxgq37hjg72gw80cmjz2a2p3l0f9vypr4zgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0shjgcjv\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qqa5yecmntztvw98nzfca5yt7dapag0w9z825umrvh6patgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sn3hfmm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qzxu70rcpjfvh7zpnl5ep6h5p6ezt8hecunk6f2dwzacz5cfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0skdy3cd\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qrt6qy94rxvy34lwfhpvgjmer2drdtez3vqqnlf24x74djqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sttgu32\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qzdmy5k474f9fptjed96k44axu5f8q8ysdd00ru2gjuzptcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0serqw9w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qzm02z25rvs6aedm3xh2cp2swtxcrkv8rc3gk2a4ydpyphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssvrqly\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qpp489hw7mtqhu3ctc8ac5sf354dfe8cxtu04tjqqmyahecfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0seccf2j\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qquqzshq23pm67uxqeezxc2sd9ytcy5mlfdkq4rukg4xphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssxk9rl\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":2129700,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":3307,\"epoch_number\":27,\"slot_number\":67,\"time\":\"2026-11-09T18:58:17.400Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\",\"inputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"index\":0}],\"inserted_at\":null,\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qpcn0ssn9p4xfdk4c9q2ulhp7vrm8cs5l9gsq3gr85umwdezq67jrecum605sf7zmtvh07pmj4w67h6z7jkhcuj2plhsjn65f4\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":{\"absolute_slot_number\":303,\"epoch_number\":2,\"height\":{\"quantity\":66,\"unit\":\"block\"},\"slot_number\":63,\"time\":\"2026-11-09T18:48:16.600Z\"},\"script_validity\":\"valid\",\"status\":\"pending\",\"withdrawals\":[]},{\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":6000000,\"epoch_number\":50000,\"slot_number\":0,\"time\":\"2026-11-23T16:07:16Z\"},\"fee\":{\"quantity\":999999900000000,\"unit\":\"lovelace\"},\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"inputs\":[{\"assets\":[],\"id\":\"727c5a1ea227b4098db4758abe7ad9f5117c5d08486bd88a6ab6960efb703065\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":303,\"epoch_number\":2,\"height\":{\"quantity\":66,\"unit\":\"block\"},\"slot_number\":63,\"time\":\"2026-11-09T18:48:16.600Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"utxo\":{\"entries\":[]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":0,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":97870300,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"041a999df6307e14bc244f64aa53e60dbd6091e1\",\"name\":\"conformance-pending-sender\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-09T18:47:37.546702196Z\"}}},\"pending_before\":{\"account_key\":\"acct_xvk1kahwstpcpwcvwlklvncstnt820xprfmmzgx43fkshdxf5tlhvfcdt56u90fa74hr5y04dyjmlr7qcydqrrptqt622d0gqklhf3kmn4g80anpw\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"],\"id\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qr3cg6gfvr3xppj4swpp5lmkt20mztreje93afnccxp45rgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh7qzc6\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qqrdac3qgdrgrwpukxkj3zzfaf2fwq86h28cwz2ej5s95jqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sldv4uf\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qqlzduqcpgljtrhjtvtcyxhe3z52knxhtnh6pqrkpceh4ycfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s3c4na8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qr6680fnmysr5mfvrl2dzy5zs940xxw76wnpw6upnf8vkvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sd3j89c\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qr443mhvnaw8lhd5rmjj4a9vcamdgp3065hupjey0q0tgzqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s8wnggq\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qzsg3vu3nzgx0rmhd5e2qv5u6texz5pwq90aepnkh7fp3fsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0suzjjj9\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qrv9xztmdavvtq3lqstmsm6xmyd4zkncvkgvrx922mwpvvsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0veucm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qq7wfanz2gylv0n4w7m3c46jhstne8w69kd680lylelg5uqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s4hk02w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qqmn4s8ux2lydkgus90chg2h78jeyggg0svzuhrxah9mgzcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sj65lqs\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qqy7lqwg7e7k5v30jpz8uqtqumwrwjrglr7fpgycttlv87gfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0swmtqq8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qqgf3w6qp75c7rvt4exglj73z2umy9eh08kv0ha3h6xhn4sfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sh6fvuh\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qqswe65lagk6nwm0mqatat0x0znygcuaqs00wquylj75aasfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0s0q403z\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qpq0j5stneklkxgq37hjg72gw80cmjz2a2p3l0f9vypr4zgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0shjgcjv\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qqa5yecmntztvw98nzfca5yt7dapag0w9z825umrvh6patgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sn3hfmm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qzxu70rcpjfvh7zpnl5ep6h5p6ezt8hecunk6f2dwzacz5cfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0skdy3cd\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qrt6qy94rxvy34lwfhpvgjmer2drdtez3vqqnlf24x74djqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sttgu32\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qzdmy5k474f9fptjed96k44axu5f8q8ysdd00ru2gjuzptcfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0serqw9w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qzm02z25rvs6aedm3xh2cp2swtxcrkv8rc3gk2a4ydpyphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssvrqly\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qpp489hw7mtqhu3ctc8ac5sf354dfe8cxtu04tjqqmyahecfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0seccf2j\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qquqzshq23pm67uxqeezxc2sd9ytcy5mlfdkq4rukg4xphsfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0ssxk9rl\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":2129700,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":3307,\"epoch_number\":27,\"slot_number\":67,\"time\":\"2026-11-09T18:58:17.400Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\",\"inputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"index\":0}],\"inserted_at\":null,\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qpcn0ssn9p4xfdk4c9q2ulhp7vrm8cs5l9gsq3gr85umwdezq67jrecum605sf7zmtvh07pmj4w67h6z7jkhcuj2plhsjn65f4\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpf47gaf2zju0hd5ykcgle7r9uhdrq5jpqydu6t9v78savqfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0sa6x3tn\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":{\"absolute_slot_number\":303,\"epoch_number\":2,\"height\":{\"quantity\":66,\"unit\":\"block\"},\"slot_number\":63,\"time\":\"2026-11-09T18:48:16.600Z\"},\"script_validity\":\"valid\",\"status\":\"pending\",\"withdrawals\":[]},{\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":6000000,\"epoch_number\":50000,\"slot_number\":0,\"time\":\"2026-11-23T16:07:16Z\"},\"fee\":{\"quantity\":999999900000000,\"unit\":\"lovelace\"},\"id\":\"87910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f\",\"inputs\":[{\"assets\":[],\"id\":\"727c5a1ea227b4098db4758abe7ad9f5117c5d08486bd88a6ab6960efb703065\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":303,\"epoch_number\":2,\"height\":{\"quantity\":66,\"unit\":\"block\"},\"slot_number\":63,\"time\":\"2026-11-09T18:48:16.600Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qptpgq4suvwxll7sxakh4zd0ym7e4kser4c83ymxj8500dgfuy5mlxfvsthnpkqqsp7xkkltl3r4uef489umyyac7v0spn5pv9\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"utxo\":{\"entries\":[]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":0,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":97870300,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"041a999df6307e14bc244f64aa53e60dbd6091e1\",\"name\":\"conformance-pending-sender\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-09T18:47:37.546702196Z\"}}},\"signed_transaction\":{\"script_validity\":\"valid\",\"status\":\"pending\",\"transaction\":\"84a600d901028182582087910170a3d3bb5a2ca129d12485cc68548a16bbba33a4fbf23f1d3040b98a5f000182825839007137c213286a64b6d5c140ae7ee1f307b3e214f9510045033d39b7372206bd21e71cde9f4827c2dad977f83b955daf5f42f4ad7c724a0fef1a001e848082583900535f23a950a5c7ddb425b08fe7c32f2ed182920808de6965678f0eb009e129bf992c82ef30d800807c6b5bebfc475e65353979b213b8f31f1a05d561dc021a0001faa403190ceb08000f00a100d90102818258207745113720105ddfcc9d474f36219ea55938ca00645ebe01cb98df9898d33be25840ccc3b287b4a5338788085325ce9db87691d84b51c787ab3234a270639737d313f703e8331f2782fcad2bb23188f3e90b1e4b7c265b4edaa95efbd9af6b5f2f01f5f6\"},\"stable_tip\":{\"hash\":\"c4ec26d4a8895cdf22e3d1a6c02706cb07b18404e7242c0aaedfac3e7c6afc7d\",\"height\":66,\"slot\":303},\"transaction_id\":\"062903910c16682c8a411a65624998748382174837cbce816cfc1b3e23683f4e\"}"
+    },
+    {
+      "case": "live:deleteWallet",
+      "requirements": [
+        "api:deleteWallet:positive",
+        "api:deleteWallet:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "pending:cleanup-owned-wallet",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:deleteWallet",
+      "requirements": [
+        "api:deleteWallet:positive",
+        "api:deleteWallet:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "pending:cleanup-owned-wallet",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "pending:stop-owned-wallet",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "pending:independent-node-integration-last",
+      "requirements": [],
+      "passed": true,
+      "detail": "{\"address\":\"addr_test1vzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969yc2mg7gf\",\"after\":{\"32d16d64a0ff9de605b77ae460485b7967d45c132db35a161229af8142888e6e#0\":{\"address\":\"addr_test1vzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969yc2mg7gf\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":100000000}}},\"before\":{},\"transaction_id\":\"32d16d64a0ff9de605b77ae460485b7967d45c132db35a161229af8142888e6e\"}"
+    },
+    {
+      "case": "pending:stop-owned-cluster",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    }
+  ]
+}

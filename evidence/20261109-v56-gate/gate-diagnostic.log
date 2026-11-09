@@ -1,0 +1,24 @@
+{
+  "exhaustive": false,
+  "required": 643,
+  "covered": 641,
+  "missing": [
+    "wallet.rollback",
+    "wallet.resubmission"
+  ],
+  "unexecuted_cases": {
+    "wallet.resubmission": [
+      "live:node-disconnect-reconnect"
+    ],
+    "wallet.rollback": [
+      "live:rollback-reapply",
+      "state:rollback-balance-history",
+      "state:rollback-pending",
+      "state:rollback-spent-inputs"
+    ]
+  },
+  "failures": [
+    "live:parameters-workflow",
+    "live:pools-workflow"
+  ]
+}

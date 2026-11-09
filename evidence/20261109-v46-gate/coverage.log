@@ -1,0 +1,344 @@
+{
+  "exhaustive": false,
+  "required": 643,
+  "covered": 567,
+  "missing": [
+    "tx.delegation",
+    "wallet.discovery",
+    "wallet.restoration",
+    "wallet.rollback",
+    "wallet.restart",
+    "wallet.resubmission",
+    "wallet.byron-migration",
+    "wallet.transaction-filtering",
+    "wallet.stake-pools",
+    "wallet.governance",
+    "chain.protocol-parameters",
+    "chain.era-boundaries",
+    "api.error-precedence",
+    "api.differential-reference",
+    "api:byronSelectCoins:positive",
+    "api:byronSelectCoins:negative",
+    "api:byronSelectCoins:status:200",
+    "api:byronSelectCoins:status:400",
+    "api:byronSelectCoins:status:403",
+    "api:byronSelectCoins:status:404",
+    "api:byronSelectCoins:status:406",
+    "api:byronSelectCoins:status:415",
+    "api:createByronWalletMigrationPlan:positive",
+    "api:createByronWalletMigrationPlan:negative",
+    "api:createByronWalletMigrationPlan:status:202",
+    "api:createByronWalletMigrationPlan:status:403",
+    "api:createShelleyWalletMigrationPlan:negative",
+    "api:createShelleyWalletMigrationPlan:status:403",
+    "api:deleteByronTransaction:positive",
+    "api:deleteByronTransaction:negative",
+    "api:deleteByronTransaction:status:204",
+    "api:deleteByronTransaction:status:403",
+    "api:deleteByronTransaction:status:404",
+    "api:deleteTransaction:positive",
+    "api:deleteTransaction:status:204",
+    "api:getDRep:positive",
+    "api:getDRep:status:200",
+    "api:inspectAddress:negative",
+    "api:inspectAddress:status:400",
+    "api:joinStakePool:positive",
+    "api:joinStakePool:status:202",
+    "api:listDReps:positive",
+    "api:listDReps:status:200",
+    "api:listStakePools:positive",
+    "api:listStakePools:status:200",
+    "api:migrateByronWallet:positive",
+    "api:migrateByronWallet:negative",
+    "api:migrateByronWallet:status:202",
+    "api:migrateByronWallet:status:403",
+    "api:migrateByronWallet:status:404",
+    "api:migrateByronWallet:status:406",
+    "api:migrateByronWallet:status:415",
+    "api:migrateShelleyWallet:negative",
+    "api:migrateShelleyWallet:status:403",
+    "api:patchSharedWalletInDelegation:positive",
+    "api:patchSharedWalletInDelegation:status:200",
+    "api:postByronTransaction:positive",
+    "api:postByronTransaction:negative",
+    "api:postByronTransaction:status:202",
+    "api:postByronTransaction:status:400",
+    "api:postByronTransaction:status:403",
+    "api:postByronTransaction:status:404",
+    "api:postByronTransaction:status:406",
+    "api:postByronTransaction:status:415",
+    "api:postByronTransaction:status:500",
+    "api:postByronTransactionFee:positive",
+    "api:postByronTransactionFee:negative",
+    "api:postByronTransactionFee:status:202",
+    "api:postByronTransactionFee:status:403",
+    "api:postTransaction:status:500",
+    "api:putByronWalletPassphrase:negative",
+    "api:putByronWalletPassphrase:status:400",
+    "api:putWalletPassphrase:negative",
+    "api:putWalletPassphrase:status:400",
+    "api:signMetadata:negative",
+    "api:signMetadata:status:406"
+  ],
+  "unexecuted_cases": {
+    "api.differential-reference": [
+      "drep-list",
+      "extended-byron-fee-empty",
+      "extended-byron-migration-empty",
+      "extended-byron-migration-plan-empty",
+      "extended-byron-payment-empty",
+      "extended-byron-selection-empty",
+      "extended-shelley-migration-empty",
+      "extended-shelley-migration-plan-empty",
+      "extended-unknown-byronSelectCoins",
+      "extended-unknown-migrateByronWallet",
+      "extended-unknown-postByronTransaction",
+      "family-shared-pending-delegation-patch",
+      "generated-reject-byronSelectCoins",
+      "generated-reject-inspectAddress",
+      "generated-reject-postByronTransaction",
+      "precedence-deleteByronTransaction-unsupported-accept",
+      "precedence-putByronWalletPassphrase-unsupported-accept",
+      "precedence-putWalletPassphrase-unsupported-accept",
+      "stake-pool-list",
+      "status-byronSelectCoins-400",
+      "status-byronSelectCoins-406",
+      "status-byronSelectCoins-415",
+      "status-deleteByronTransaction-404",
+      "status-migrateByronWallet-406",
+      "status-migrateByronWallet-415",
+      "status-postByronTransaction-400",
+      "status-postByronTransaction-406",
+      "status-postByronTransaction-415",
+      "status-signMetadata-406"
+    ],
+    "api.error-precedence": [
+      "precedence-deleteByronTransaction-unsupported-accept",
+      "precedence-putByronWalletPassphrase-unsupported-accept",
+      "precedence-putWalletPassphrase-unsupported-accept"
+    ],
+    "api:byronSelectCoins:negative": [
+      "extended-byron-selection-empty",
+      "extended-unknown-byronSelectCoins",
+      "generated-reject-byronSelectCoins",
+      "status-byronSelectCoins-400",
+      "status-byronSelectCoins-406",
+      "status-byronSelectCoins-415"
+    ],
+    "api:byronSelectCoins:status:400": [
+      "generated-reject-byronSelectCoins",
+      "status-byronSelectCoins-400"
+    ],
+    "api:byronSelectCoins:status:403": [
+      "extended-byron-selection-empty"
+    ],
+    "api:byronSelectCoins:status:404": [
+      "extended-unknown-byronSelectCoins"
+    ],
+    "api:byronSelectCoins:status:406": [
+      "status-byronSelectCoins-406"
+    ],
+    "api:byronSelectCoins:status:415": [
+      "status-byronSelectCoins-415"
+    ],
+    "api:createByronWalletMigrationPlan:negative": [
+      "extended-byron-migration-plan-empty"
+    ],
+    "api:createByronWalletMigrationPlan:status:403": [
+      "extended-byron-migration-plan-empty"
+    ],
+    "api:createShelleyWalletMigrationPlan:negative": [
+      "extended-shelley-migration-plan-empty"
+    ],
+    "api:createShelleyWalletMigrationPlan:status:403": [
+      "extended-shelley-migration-plan-empty"
+    ],
+    "api:deleteByronTransaction:negative": [
+      "precedence-deleteByronTransaction-unsupported-accept",
+      "status-deleteByronTransaction-404"
+    ],
+    "api:deleteByronTransaction:status:404": [
+      "precedence-deleteByronTransaction-unsupported-accept",
+      "status-deleteByronTransaction-404"
+    ],
+    "api:inspectAddress:negative": [
+      "generated-reject-inspectAddress"
+    ],
+    "api:inspectAddress:status:400": [
+      "generated-reject-inspectAddress"
+    ],
+    "api:listDReps:positive": [
+      "drep-list"
+    ],
+    "api:listDReps:status:200": [
+      "drep-list"
+    ],
+    "api:listStakePools:positive": [
+      "stake-pool-list"
+    ],
+    "api:listStakePools:status:200": [
+      "stake-pool-list"
+    ],
+    "api:migrateByronWallet:negative": [
+      "extended-byron-migration-empty",
+      "extended-unknown-migrateByronWallet",
+      "status-migrateByronWallet-406",
+      "status-migrateByronWallet-415"
+    ],
+    "api:migrateByronWallet:status:403": [
+      "extended-byron-migration-empty"
+    ],
+    "api:migrateByronWallet:status:404": [
+      "extended-unknown-migrateByronWallet"
+    ],
+    "api:migrateByronWallet:status:406": [
+      "status-migrateByronWallet-406"
+    ],
+    "api:migrateByronWallet:status:415": [
+      "status-migrateByronWallet-415"
+    ],
+    "api:migrateShelleyWallet:negative": [
+      "extended-shelley-migration-empty"
+    ],
+    "api:migrateShelleyWallet:status:403": [
+      "extended-shelley-migration-empty"
+    ],
+    "api:patchSharedWalletInDelegation:positive": [
+      "family-shared-pending-delegation-patch"
+    ],
+    "api:patchSharedWalletInDelegation:status:200": [
+      "family-shared-pending-delegation-patch"
+    ],
+    "api:postByronTransaction:negative": [
+      "extended-byron-payment-empty",
+      "extended-unknown-postByronTransaction",
+      "generated-reject-postByronTransaction",
+      "status-postByronTransaction-400",
+      "status-postByronTransaction-406",
+      "status-postByronTransaction-415"
+    ],
+    "api:postByronTransaction:status:400": [
+      "generated-reject-postByronTransaction",
+      "status-postByronTransaction-400"
+    ],
+    "api:postByronTransaction:status:403": [
+      "extended-byron-payment-empty"
+    ],
+    "api:postByronTransaction:status:404": [
+      "extended-unknown-postByronTransaction"
+    ],
+    "api:postByronTransaction:status:406": [
+      "status-postByronTransaction-406"
+    ],
+    "api:postByronTransaction:status:415": [
+      "status-postByronTransaction-415"
+    ],
+    "api:postByronTransactionFee:negative": [
+      "extended-byron-fee-empty"
+    ],
+    "api:postByronTransactionFee:status:403": [
+      "extended-byron-fee-empty"
+    ],
+    "api:putByronWalletPassphrase:negative": [
+      "precedence-putByronWalletPassphrase-unsupported-accept"
+    ],
+    "api:putByronWalletPassphrase:status:400": [
+      "precedence-putByronWalletPassphrase-unsupported-accept"
+    ],
+    "api:putWalletPassphrase:negative": [
+      "precedence-putWalletPassphrase-unsupported-accept"
+    ],
+    "api:putWalletPassphrase:status:400": [
+      "precedence-putWalletPassphrase-unsupported-accept"
+    ],
+    "api:signMetadata:negative": [
+      "status-signMetadata-406"
+    ],
+    "api:signMetadata:status:406": [
+      "status-signMetadata-406"
+    ],
+    "chain.era-boundaries": [
+      "live:hard-fork-certificates",
+      "live:hard-fork-restore",
+      "live:hard-fork-submit"
+    ],
+    "chain.protocol-parameters": [
+      "chain:node-wallet-protocol-parameters",
+      "chain:protocol-parameter-update"
+    ],
+    "tx.delegation": [
+      "live:reward-withdrawal",
+      "live:stake-delegate"
+    ],
+    "wallet.byron-migration": [
+      "live:byron-icarus-spend",
+      "live:byron-migrate",
+      "live:byron-random-spend"
+    ],
+    "wallet.discovery": [
+      "discovery-random-byron"
+    ],
+    "wallet.governance": [
+      "governance:drep-queries"
+    ],
+    "wallet.restart": [
+      "state:restart-confirmed",
+      "state:restart-key-address-state",
+      "state:restart-pending"
+    ],
+    "wallet.restoration": [
+      "state:restore-from-checkpoint"
+    ],
+    "wallet.resubmission": [
+      "live:node-disconnect-reconnect",
+      "live:pending-expiry",
+      "live:pending-retry"
+    ],
+    "wallet.rollback": [
+      "live:rollback-reapply",
+      "state:rollback-balance-history",
+      "state:rollback-pending",
+      "state:rollback-spent-inputs"
+    ],
+    "wallet.stake-pools": [
+      "pools:maintenance",
+      "pools:metadata",
+      "pools:ranking",
+      "pools:retirement"
+    ],
+    "wallet.transaction-filtering": [
+      "history:status"
+    ]
+  },
+  "failures": [
+    "family-shared-pending-delegation-patch",
+    "generated-reject-byronSelectCoins",
+    "generated-reject-inspectAddress",
+    "generated-reject-postByronTransaction",
+    "stake-pool-list",
+    "drep-list",
+    "status-byronSelectCoins-400",
+    "status-byronSelectCoins-406",
+    "status-byronSelectCoins-415",
+    "status-deleteByronTransaction-404",
+    "precedence-deleteByronTransaction-unsupported-accept",
+    "status-migrateByronWallet-406",
+    "status-migrateByronWallet-415",
+    "status-postByronTransaction-400",
+    "status-postByronTransaction-406",
+    "status-postByronTransaction-415",
+    "precedence-putByronWalletPassphrase-unsupported-accept",
+    "precedence-putWalletPassphrase-unsupported-accept",
+    "status-signMetadata-406",
+    "extended-unknown-migrateByronWallet",
+    "extended-unknown-postByronTransaction",
+    "extended-unknown-byronSelectCoins",
+    "extended-byron-selection-empty",
+    "extended-byron-payment-empty",
+    "extended-byron-fee-empty",
+    "extended-shelley-migration-plan-empty",
+    "extended-byron-migration-plan-empty",
+    "extended-shelley-migration-empty",
+    "extended-byron-migration-empty"
+  ]
+}

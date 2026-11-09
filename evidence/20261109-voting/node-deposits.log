@@ -1,0 +1,24 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+   Compiling quetzal-primitives v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-primitives)
+   Compiling quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-network)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.84s
+     Running tests/node_query.rs (target/debug/deps/node_query-30622c8198e0a0e0)
+
+running 1 test
+test live_protocol_and_era_history ... FAILED
+
+failures:
+
+---- live_protocol_and_era_history stdout ----
+
+thread 'live_protocol_and_era_history' (117275) panicked at crates/quetzal-network/tests/node_query.rs:24:65:
+called `Result::unwrap()` on an `Err` value: StateQuery("error while sending or receiving data through the channel")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    live_protocol_and_era_history
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p quetzal-network --test node_query`

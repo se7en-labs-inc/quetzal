@@ -1,0 +1,151 @@
+{
+  "format_version": 1,
+  "contract_reference_revision": "2fc5c383c94bb907deaa0cd27b1b407f86224b6c",
+  "suite_sha256": "ca899c8620fb5cee45a7a7b0120d59c6f327095513f0f9989c7ac611d624f66d",
+  "unregistered_inputs": [],
+  "harness_self_test": false,
+  "environment": "quetzal-shelley-v24",
+  "target": "http://127.0.0.1:19092/v2/",
+  "evidence": [
+    {
+      "case": "network-information",
+      "requirements": [
+        "api:getNetworkInformation:positive",
+        "api:getNetworkInformation:status:200",
+        "api.differential-reference"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "network-parameters",
+      "requirements": [
+        "api:getNetworkParameters:positive",
+        "api:getNetworkParameters:status:200",
+        "api.differential-reference"
+      ],
+      "passed": false,
+      "detail": "differential JSON mismatch at /active_slot_coefficient/quantity"
+    },
+    {
+      "case": "network-clock",
+      "requirements": [
+        "api:getNetworkClock:positive",
+        "api:getNetworkClock:status:200",
+        "api.differential-reference"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "latest-block-header",
+      "requirements": [
+        "api:getBlocksLatestHeader:positive",
+        "api:getBlocksLatestHeader:status:200",
+        "api.differential-reference"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "stake-pool-list",
+      "requirements": [
+        "api:listStakePools:positive",
+        "api:listStakePools:status:200",
+        "api.differential-reference"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "pool-maintenance-status",
+      "requirements": [
+        "api:getMaintenanceActions:positive",
+        "api:getMaintenanceActions:status:200",
+        "api.differential-reference"
+      ],
+      "passed": false,
+      "detail": "unexpected HTTP status: expected 200, received 405"
+    },
+    {
+      "case": "smash-health",
+      "requirements": [
+        "api:getCurrentSmashHealth:positive",
+        "api:getCurrentSmashHealth:status:200",
+        "api.differential-reference"
+      ],
+      "passed": false,
+      "detail": "differential JSON mismatch at /health"
+    },
+    {
+      "case": "settings-read",
+      "requirements": [
+        "api:getSettings:positive",
+        "api:getSettings:status:200",
+        "api.differential-reference"
+      ],
+      "passed": false,
+      "detail": "differential JSON mismatch at /pool_metadata_source"
+    },
+    {
+      "case": "wallet-list",
+      "requirements": [
+        "api:listWallets:positive",
+        "api:listWallets:status:200",
+        "api.differential-reference"
+      ],
+      "passed": false,
+      "detail": "assertion mismatch at "
+    },
+    {
+      "case": "byron-wallet-list",
+      "requirements": [
+        "api:listByronWallets:positive",
+        "api:listByronWallets:status:200",
+        "api.differential-reference"
+      ],
+      "passed": false,
+      "detail": "assertion mismatch at "
+    },
+    {
+      "case": "shared-wallet-list",
+      "requirements": [
+        "api:listSharedWallets:positive",
+        "api:listSharedWallets:status:200",
+        "api.differential-reference"
+      ],
+      "passed": false,
+      "detail": "assertion mismatch at "
+    },
+    {
+      "case": "drep-list",
+      "requirements": [
+        "api:listDReps:positive",
+        "api:listDReps:status:200",
+        "api.differential-reference"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "drep-summary",
+      "requirements": [
+        "api:getDRepSummary:positive",
+        "api:getDRepSummary:status:200",
+        "api.differential-reference"
+      ],
+      "passed": false,
+      "detail": "response schema mismatch at "
+    },
+    {
+      "case": "drep-suggestions",
+      "requirements": [
+        "api:suggestedDReps:positive",
+        "api:suggestedDReps:status:200",
+        "api.differential-reference"
+      ],
+      "passed": true,
+      "detail": "passed"
+    }
+  ]
+}

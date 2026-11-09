@@ -1,0 +1,36 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+error: consider using `sort_by_key`
+  --> crates/quetzal-wallet/src/coinselect.rs:12:5
+   |
+12 |     sorted.sort_by(|a, b| b.value.coin.cmp(&a.value.coin));
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#unnecessary_sort_by
+   = note: `-D clippy::unnecessary-sort-by` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::unnecessary_sort_by)]`
+help: try
+   |
+12 -     sorted.sort_by(|a, b| b.value.coin.cmp(&a.value.coin));
+12 +     sorted.sort_by_key(|a| std::cmp::Reverse(a.value.coin));
+   |
+
+error: this function has too many arguments (9/7)
+   --> crates/quetzal-wallet/src/wallet.rs:587:5
+    |
+587 | /     pub async fn create_shared_wallet(
+588 | |         &self,
+589 | |         name: String,
+590 | |         entropy: &[u8],
+...   |
+596 | |         network: Network,
+597 | |     ) -> Result<WalletMeta, WalletError> {
+    | |________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#too_many_arguments
+    = note: `-D clippy::too-many-arguments` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+
+error: could not compile `quetzal-wallet` (lib test) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `quetzal-wallet` (lib) due to 2 previous errors

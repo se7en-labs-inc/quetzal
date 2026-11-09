@@ -1,0 +1,16 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+    Checking quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+warning: associated function `zero` is never used
+  --> crates/quetzal-api/src/json/transaction.rs:74:12
+   |
+67 | impl AmountResponse {
+   | ------------------- associated function in this implementation
+...
+74 |     pub fn zero() -> Self {
+   |            ^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `quetzal-api` (bin "quetzal") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.73s

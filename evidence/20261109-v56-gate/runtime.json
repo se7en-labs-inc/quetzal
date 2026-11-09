@@ -1,0 +1,47 @@
+{
+  "candidate": "/tmp/qz-1109-v56-zu1ZM7/quetzal-v56",
+  "reference": "/nix/store/3pvrzwp16icjdlyl85cz9wpkqnyyrn75-cardano-wallet-application-exe-cardano-wallet-2026.9.16/bin/cardano-wallet",
+  "target": "http://127.0.0.1:19097/v2/",
+  "environment": "quetzal-v56",
+  "cluster": "/tmp/qz-1109-v51-JTOyGQ",
+  "start_tip": "/tmp/qz-1109-v56-zu1ZM7/start-tip.json",
+  "binary_checksums": "../20261109-retry/binaries-v56.sha256",
+  "http_summary": {
+    "profiles": 9,
+    "cases": 537,
+    "failed": 0
+  },
+  "internal_summary": {
+    "profiles": 16,
+    "cases": 1241,
+    "failed": 0
+  },
+  "owned_control_reports": [
+    "../20261109-retry/era-v56.json",
+    "../20261109-retry/pending-basic-v56.json",
+    "../20261109-retry/pending-byron-v56.json",
+    "../20261109-retry/pending-expiry-v56.json",
+    "../20261109-retry/pending-checkpoint-v56.json",
+    "../20261109-retry/pending-retry-v56.json",
+    "../20261109-retry/drep-v56.json"
+  ],
+  "fresh_cluster": "/tmp/qz-1109-fresh-8OMSBB",
+  "clean_live_reports": [
+    "live-controlled.json",
+    "live-core.json",
+    "live-disconnect.json"
+  ],
+  "excluded_initial_report": {
+    "path": "live.json",
+    "reason": "two immutable fixture prerequisites violated; preserved unchanged for diagnosis"
+  },
+  "services_stopped": true,
+  "coverage": {
+    "covered": 642,
+    "required": 643,
+    "missing": [
+      "wallet.rollback"
+    ],
+    "blocked_attempt": "rollback-blocked.json"
+  }
+}

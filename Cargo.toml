@@ -1,0 +1,63 @@
+[workspace]
+members = [
+    "crates/quetzal-primitives",
+    "crates/quetzal-crypto",
+    "crates/quetzal-address",
+    "crates/quetzal-network",
+    "crates/quetzal-wallet",
+    "crates/quetzal-api",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/se7en-labs-inc/quetzal"
+
+[workspace.dependencies]
+pallas = "0.32"
+pallas-codec = "0.32"
+pallas-primitives = "0.32"
+pallas-traverse = "0.32"
+pallas-txbuilder = "0.32"
+pallas-network = "0.32"
+pallas-crypto = "0.32"
+pallas-addresses = "0.32"
+ed25519-bip32 = "0.4"
+ed25519-bip32-legacy = { package = "ed25519-bip32", version = "=0.3.2" }
+tokio = { version = "1", features = ["full"] }
+axum = "0.8"
+reqwest = { version = "=0.12.24", default-features = false, features = ["rustls-tls"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["trace", "timeout", "cors"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["arbitrary_precision"] }
+anyhow = "1"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+hex = "0.4"
+bech32 = "0.11"
+sled = "0.34"
+ciborium = "0.2"
+zeroize = { version = "1", features = ["derive"] }
+argon2 = "0.5"
+aes-gcm = "0.10"
+chacha20poly1305 = "0.10"
+rand = "0.8"
+proptest = "1"
+bytes = "1"
+uuid = { version = "1", features = ["v4"] }
+blake2 = "0.10"
+base64 = "0.22"
+cryptoxide = "0.4"
+subtle = "2"
+sha2 = "0.10"
+hmac = "0.12"
+num-bigint = "0.4"
+num-rational = "0.4"
+num-traits = "=0.2.19"
+base58 = "0.2"
+bip39 = "2"
+chrono = { version = "0.4", default-features = false, features = ["std", "serde"] }

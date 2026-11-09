@@ -1,0 +1,81 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+   Compiling quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+warning: method `magic` is never used
+  --> crates/quetzal-api/src/config.rs:34:12
+   |
+26 | impl Network {
+   | ------------ method in this implementation
+...
+34 |     pub fn magic(&self) -> u64 {
+   |            ^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `policy_script_template` is never read
+  --> crates/quetzal-api/src/handlers/keys.rs:39:9
+   |
+37 | pub struct PolicyIdRequest {
+   |            --------------- field in this struct
+38 |     pub passphrase: String,
+39 |     pub policy_script_template: Option<serde_json::Value>,
+   |         ^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `PolicyIdRequest` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: field `stake` is never read
+  --> crates/quetzal-api/src/handlers/stake_pools.rs:18:9
+   |
+17 | pub struct PoolListQuery {
+   |            ------------- field in this struct
+18 |     pub stake: Option<u64>,
+   |         ^^^^^
+   |
+   = note: `PoolListQuery` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: fields `passphrase`, `withdrawal`, and `mint_burn` are never read
+  --> crates/quetzal-api/src/handlers/transactions.rs:31:9
+   |
+30 | pub struct ConstructRequest {
+   |            ---------------- fields in this struct
+31 |     pub passphrase: Option<String>,
+   |         ^^^^^^^^^^
+32 |     pub payments: Option<Vec<PaymentTargetRaw>>,
+33 |     pub withdrawal: Option<serde_json::Value>,
+   |         ^^^^^^^^^^
+...
+37 |     pub mint_burn: Option<serde_json::Value>,
+   |         ^^^^^^^^^
+   |
+   = note: `ConstructRequest` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: field `unit` is never read
+  --> crates/quetzal-api/src/handlers/transactions.rs:51:9
+   |
+48 | pub struct AmountRaw {
+   |            --------- field in this struct
+...
+51 |     pub unit: Option<String>,
+   |         ^^^^
+   |
+   = note: `AmountRaw` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: struct `UtxoResponse` is never constructed
+ --> crates/quetzal-api/src/handlers/utxo.rs:9:12
+  |
+9 | pub struct UtxoResponse {
+  |            ^^^^^^^^^^^^
+
+warning: struct `UtxoInput` is never constructed
+  --> crates/quetzal-api/src/handlers/utxo.rs:15:12
+   |
+15 | pub struct UtxoInput {
+   |            ^^^^^^^^^
+
+warning: struct `UtxoOutput` is never constructed
+  --> crates/quetzal-api/src/handlers/utxo.rs:21:12
+   |
+21 | pub struct UtxoOutput {
+   |            ^^^^^^^^^^
+
+warning: `quetzal-api` (bin "quetzal") generated 8 warnings
+    Finished `release` profile [optimized] target(s) in 6.80s

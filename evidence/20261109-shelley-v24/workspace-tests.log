@@ -1,0 +1,168 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+   Compiling quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+   Compiling quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.34s
+     Running unittests src/lib.rs (target/debug/deps/quetzal_address-9c0d472fa29da04c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/quetzal-ecb8656391e898c3)
+
+running 8 tests
+test config::tests::fractional_slot_rounding_is_exact_on_testnet_and_mainnet ... ok
+test config::tests::isolated_service_paths_and_port ... ok
+test config::tests::mainnet_slot_clock_crosses_shelley_boundary ... ok
+test config::tests::invalid_options_are_rejected ... ok
+test handlers::settings::tests::captured_node_validity_rejection_preserves_ledger_bounds_and_slot ... ok
+test handlers::transactions::transaction_tests::history_accepts_zero_limit_and_filters_individual_withdrawals ... ok
+test workers::tests::stopping_a_worker_during_handshake_releases_its_socket ... ok
+test handlers::transactions::transaction_tests::repeated_signing_preserves_other_witnesses_and_body ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.68s
+
+     Running unittests src/bin/conformance.rs (target/debug/deps/quetzal_conformance_adapter-60374cf7e4452662)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_crypto-38c2d9eea8a244f8)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/derivation.rs (target/debug/deps/derivation-b6a676ba04b7873c)
+
+running 7 tests
+test account_key_from_root ... ok
+test cip1854_account_index_deterministic ... ok
+test child_key_derivation ... ok
+test public_key_length ... ok
+test cip1854_shared_key_differs_from_cip1852 ... ok
+test different_entropy_different_key ... ok
+test icarus_master_key_deterministic ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.41s
+
+     Running tests/passphrase.rs (target/debug/deps/passphrase-d5e3e4cbf3d16a2a)
+
+running 4 tests
+test byron_protection_survives_storage_and_authenticates_the_password ... ok
+test wrong_passphrase_returns_error ... ok
+test encrypt_decrypt_roundtrip ... ok
+test fresh_salt_nonce_each_time ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 10.10s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_network-b1bd8becec584548)
+
+running 2 tests
+test client::tests::cancelled_handshake_closes_the_socket ... ok
+test client::tests::stalled_handshake_times_out_and_closes_the_socket ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/node_query.rs (target/debug/deps/node_query-07ec30511e72fb1b)
+
+running 1 test
+test live_protocol_and_era_history ... ignored, requires an explicitly configured private node
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_primitives-9b5d6bb7becbffe5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (target/debug/deps/roundtrip-3c931f8305b33dd0)
+
+running 12 tests
+test checkpoint_default_is_origin ... ok
+test coin_checked_add_overflow ... ok
+test cbor_roundtrip_wallet_meta ... ok
+test coin_checked_sub_underflow ... ok
+test coin_json_roundtrip ... ok
+test slot_key_ordering ... ok
+test tx_history_key_ordering ... ok
+test tx_hash_hex_roundtrip ... ok
+test utxo_key_different_outputs ... ok
+test value_pure_ada ... ok
+test wallet_id_hex_roundtrip ... ok
+test prop::coin_add_sub_inverse ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_wallet-b5cc396ddf554839)
+
+running 13 tests
+test balancing::tests::collateral_guards_precede_funding_and_follow_reference_order ... ok
+test metadatum::tests::metadata_reports_overflow_without_rounding_the_integer ... ok
+test policy::tests::policy_rejects_missing_repeated_and_foreign_cosigners ... ok
+test metadatum::tests::metadata_retains_full_unsigned_and_negative_ledger_boundaries ... ok
+test policy::tests::policy_hash_resolves_the_template_and_includes_native_script_domain ... ok
+test db::chain::tests::aborted_block_leaves_no_utxo_checkpoint_or_journal ... ok
+test db::chain::tests::replay_and_rollback_restore_spent_inputs_addresses_and_checkpoints ... ok
+test shared::tests::shared_delegation_indices_match_pinned_reference_addresses ... ok
+test balancing::tests::input_boundaries_preserve_body_identity_and_exact_signed_size ... ok
+test payment::tests::payment_conserves_native_assets_and_authenticates_metadata ... ok
+test balancing::tests::preselected_balance_conserves_assets_and_preserves_wallet_state ... ok
+test policy::tests::policy_key_requires_authorization_and_is_persisted ... ok
+test shared::tests::peers_activate_atomically_and_sign_with_their_shared_account_keys ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.37s
+
+     Running tests/wallet.rs (target/debug/deps/wallet-12f3e72ff103222f)
+
+running 15 tests
+test get_wallet_not_found ... ok
+test create_shared_wallet_single_cosigner_self ... ok
+test initial_balance_is_zero ... ok
+test watch_wallet_reproduces_addresses_without_private_derivation ... ok
+test get_addresses_returns_gap_limit_count ... ok
+test delete_shared_wallet ... ok
+test create_and_list_wallet ... ok
+test account_xpub_stored_at_creation ... ok
+test delete_wallet ... ok
+test wallet_identity_matches_published_haskell_root_vector ... ok
+test shared_wallet_deterministic_id ... ok
+test duplicate_wallet_rejected ... ok
+test update_passphrase_wrong_old ... ok
+test update_passphrase_success ... ok
+test derive_account_xpub_at_requires_correct_passphrase ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.21s
+
+   Doc-tests quetzal_address
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_crypto
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_network
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_primitives
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_wallet
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

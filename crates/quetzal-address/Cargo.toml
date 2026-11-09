@@ -1,0 +1,23 @@
+[package]
+name = "quetzal-address"
+description = "Address derivation and discovery for the Quetzal wallet backend"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+quetzal-primitives = { path = "../quetzal-primitives" }
+quetzal-crypto = { path = "../quetzal-crypto" }
+pallas-addresses = { workspace = true }
+pallas-codec = { workspace = true }
+pallas-crypto = { workspace = true }
+ed25519-bip32 = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+bech32 = { workspace = true }
+base58 = { workspace = true }
+hex = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

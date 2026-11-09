@@ -1,0 +1,19 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-network)
+error: this loop never actually loops
+  --> crates/quetzal-network/src/chainsync.rs:59:9
+   |
+59 | /         loop {
+60 | |             let response = self
+61 | |                 .client
+62 | |                 .request_or_await_next()
+...  |
+91 | |         }
+   | |_________^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#never_loop
+   = note: `#[deny(clippy::never_loop)]` on by default
+
+error: could not compile `quetzal-network` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `quetzal-network` (lib test) due to 1 previous error

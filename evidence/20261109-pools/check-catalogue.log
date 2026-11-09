@@ -1,0 +1,20 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking num-traits v0.2.19
+    Checking quetzal-primitives v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-primitives)
+    Checking num-integer v0.1.47
+    Checking chrono v0.4.45
+    Checking num-bigint v0.4.8
+    Checking quetzal-crypto v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-crypto)
+    Checking quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-network)
+    Checking quetzal-address v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-address)
+    Checking num-rational v0.4.2
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+    Checking quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+error[E0599]: no associated function or constant named `now` found for struct `Utc` in the current scope
+  --> crates/quetzal-api/src/handlers/pool_catalogue.rs:75:36
+   |
+75 |             last_run: chrono::Utc::now().to_rfc3339_opts(chrono::SecondsFormat::AutoSi, true),
+   |                                    ^^^ associated function or constant not found in `Utc`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `quetzal-api` (bin "quetzal") due to 1 previous error

@@ -1,0 +1,131 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-primitives v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-primitives)
+    Checking quetzal-crypto v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-crypto)
+    Checking quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-network)
+    Checking quetzal-address v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-address)
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+error: consider using `sort_by_key`
+  --> crates/quetzal-wallet/src/coinselect.rs:12:5
+   |
+12 |     sorted.sort_by(|a, b| b.value.coin.cmp(&a.value.coin));
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#unnecessary_sort_by
+   = note: `-D clippy::unnecessary-sort-by` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::unnecessary_sort_by)]`
+help: try
+   |
+12 -     sorted.sort_by(|a, b| b.value.coin.cmp(&a.value.coin));
+12 +     sorted.sort_by_key(|a| std::cmp::Reverse(a.value.coin));
+   |
+
+error: very complex type used. Consider factoring parts into `type` definitions
+  --> crates/quetzal-wallet/src/sync.rs:17:21
+   |
+17 |     slot_reference: Option<Arc<dyn Fn(u64) -> (u64, u64, String) + Send + Sync>>,
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#type_complexity
+   = note: `-D clippy::type-complexity` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::type_complexity)]`
+
+error: items after a test module
+   --> crates/quetzal-wallet/src/db/chain.rs:23:1
+    |
+ 23 | mod tests {
+    | ^^^^^^^^^
+...
+180 | impl WalletDb {
+    | ^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#items_after_test_module
+    = note: `-D clippy::items-after-test-module` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::items_after_test_module)]`
+    = help: move the items to before the test module was defined
+
+error: this function has too many arguments (9/7)
+   --> crates/quetzal-wallet/src/wallet.rs:822:5
+    |
+822 | /     pub async fn create_shared_wallet(
+823 | |         &self,
+824 | |         name: String,
+825 | |         entropy: &[u8],
+...   |
+831 | |         network: Network,
+832 | |     ) -> Result<WalletMeta, WalletError> {
+    | |________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#too_many_arguments
+    = note: `-D clippy::too-many-arguments` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::too_many_arguments)]`
+
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/quetzal-wallet/src/db/chain.rs:116:23
+    |
+116 |                 used: &[input.address.clone()],
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&input.address)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cloned_ref_to_slice_refs
+    = note: `-D clippy::cloned-ref-to-slice-refs` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::cloned_ref_to_slice_refs)]`
+
+error: unnecessary use of `clone` to create a slice from a reference
+   --> crates/quetzal-wallet/src/db/chain.rs:121:64
+    |
+121 |         db.commit_chain_block(&wid, &cp2, true, &changes, &[], &[input.address.clone()])
+    |                                                                ^^^^^^^^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&input.address)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#cloned_ref_to_slice_refs
+
+error: this `if` has identical blocks
+   --> crates/quetzal-wallet/src/writer.rs:119:38
+    |
+119 |                   return Err(if voting {
+    |  ______________________________________^
+120 | |                     "unsupported_era"
+121 | |                 } else {
+    | |_________________^
+    |
+note: same as this
+   --> crates/quetzal-wallet/src/writer.rs:121:24
+    |
+121 |                   } else {
+    |  ________________________^
+122 | |                     "unsupported_era"
+123 | |                 })
+    | |_________________^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#if_same_then_else
+    = note: `-D clippy::if-same-then-else` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::if_same_then_else)]`
+
+error: this function has too many arguments (9/7)
+  --> crates/quetzal-wallet/src/payment.rs:51:1
+   |
+51 | / fn build(
+52 | |     inputs: &[UtxoEntry],
+53 | |     payments: &[Payment],
+54 | |     change: &AddressEntry,
+...  |
+60 | |     metadata: Option<&serde_json::Value>,
+61 | | ) -> Result<Vec<u8>, WalletError> {
+   | |_________________________________^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#too_many_arguments
+
+error: this function has too many arguments (8/7)
+   --> crates/quetzal-wallet/src/payment.rs:211:5
+    |
+211 | /     pub async fn construct_payment(
+212 | |         &self,
+213 | |         wallet: &WalletId,
+214 | |         payments: &[Payment],
+...   |
+219 | |         metadata: Option<&serde_json::Value>,
+220 | |     ) -> Result<ConstructedPayment, WalletError> {
+    | |________________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#too_many_arguments
+
+error: could not compile `quetzal-wallet` (lib) due to 6 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `quetzal-wallet` (lib test) due to 9 previous errors

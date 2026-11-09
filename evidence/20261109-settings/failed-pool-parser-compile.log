@@ -1,0 +1,23 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+error[E0599]: no associated function or constant named `from_bech32` found for struct `quetzal_primitives::PoolId` in the current scope
+   --> crates/quetzal-api/src/error.rs:215:127
+    |
+215 | ..._primitives::PoolId::from_bech32(value).is_err() => Some("Invalid stake pool id: expecting a Bech32 encoded value with human rea...
+    |                         ^^^^^^^^^^^ associated function or constant not found in `quetzal_primitives::PoolId`
+    |
+note: if you're trying to build a new `quetzal_primitives::PoolId`, consider using `quetzal_primitives::PoolId::from_hex` which returns `std::result::Result<quetzal_primitives::PoolId, hex::FromHexError>`
+   --> crates/quetzal-primitives/src/pool.rs:13:5
+    |
+ 13 |     pub fn from_hex(s: &str) -> Result<Self, hex::FromHexError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: there is a method `to_bech32` with a similar name, but with different arguments
+   --> crates/quetzal-primitives/src/pool.rs:22:5
+    |
+ 22 |     pub fn to_bech32(&self) -> String {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `quetzal-api` (bin "quetzal") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `quetzal-api` (bin "quetzal" test) due to 1 previous error

@@ -1,0 +1,22 @@
+[package]
+name = "quetzal-primitives"
+description = "Core domain types for the Quetzal wallet backend"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+hex = { workspace = true }
+bech32 = { workspace = true }
+ciborium = { workspace = true }
+zeroize = { workspace = true }
+sled = { workspace = true }
+blake2 = { workspace = true }
+bytes = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

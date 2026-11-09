@@ -1,0 +1,87 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+error: the `Err`-variant returned from this function is very large
+   --> crates/quetzal-wallet/src/seeded_selection.rs:161:48
+    |
+ 98 | /     BalanceInsufficient {
+ 99 | |         available: Bundle,
+100 | |         required: Bundle,
+101 | |         shortfall: Bundle,
+102 | |     },
+    | |_____- the largest variant contains at least 144 bytes
+...
+161 |   fn partition(total: u128, weights: &[u128]) -> Result<Vec<u128>, Error> {
+    |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: try reducing the size of `seeded_selection::Error`, for example by boxing large elements or replacing it with `Box<seeded_selection::Error>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+    = note: `-D clippy::result-large-err` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::result_large_err)]`
+
+error: the `Err`-variant returned from this function is very large
+   --> crates/quetzal-wallet/src/seeded_selection.rs:243:6
+    |
+ 98 | /     BalanceInsufficient {
+ 99 | |         available: Bundle,
+100 | |         required: Bundle,
+101 | |         shortfall: Bundle,
+102 | |     },
+    | |_____- the largest variant contains at least 144 bytes
+...
+243 |   ) -> Result<Vec<Bundle>, Error> {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: try reducing the size of `seeded_selection::Error`, for example by boxing large elements or replacing it with `Box<seeded_selection::Error>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+error: the `Err`-variant returned from this function is very large
+   --> crates/quetzal-wallet/src/seeded_selection.rs:367:37
+    |
+ 98 | /     BalanceInsufficient {
+ 99 | |         available: Bundle,
+100 | |         required: Bundle,
+101 | |         shortfall: Bundle,
+102 | |     },
+    | |_____- the largest variant contains at least 144 bytes
+...
+367 |   pub fn select(request: &Request) -> Result<Selection, Error> {
+    |                                       ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: try reducing the size of `seeded_selection::Error`, for example by boxing large elements or replacing it with `Box<seeded_selection::Error>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+error: the `Err`-variant returned from this closure is very large
+   --> crates/quetzal-wallet/src/seeded_selection.rs:478:36
+    |
+ 98 | /     BalanceInsufficient {
+ 99 | |         available: Bundle,
+100 | |         required: Bundle,
+101 | |         shortfall: Bundle,
+102 | |     },
+    | |_____- the largest variant contains at least 144 bytes
+...
+478 |               return result.and_then(|change| finish(request, &inputs, &selected, change));
+    |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: try reducing the size of `seeded_selection::Error`, for example by boxing large elements or replacing it with `Box<seeded_selection::Error>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+error: the `Err`-variant returned from this function is very large
+   --> crates/quetzal-wallet/src/seeded_selection.rs:488:6
+    |
+ 98 | /     BalanceInsufficient {
+ 99 | |         available: Bundle,
+100 | |         required: Bundle,
+101 | |         shortfall: Bundle,
+102 | |     },
+    | |_____- the largest variant contains at least 144 bytes
+...
+488 |   ) -> Result<Selection, Error> {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: try reducing the size of `seeded_selection::Error`, for example by boxing large elements or replacing it with `Box<seeded_selection::Error>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+error: could not compile `quetzal-wallet` (lib) due to 5 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `quetzal-wallet` (lib test) due to 5 previous errors

@@ -1,0 +1,22 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-network)
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+    Checking quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+error[E0507]: cannot move out of `*node` which is behind a mutable reference
+   --> crates/quetzal-api/src/handlers/transactions.rs:26:9
+    |
+ 26 |         node.abort().await;
+    |         ^^^^ ------- `*node` moved due to this method call
+    |         |
+    |         move occurs because `*node` has type `quetzal_network::NodeClient`, which does not implement the `Copy` trait
+    |
+note: `quetzal_network::NodeClient::abort` takes ownership of the receiver `self`, which moves `*node`
+   --> crates/quetzal-network/src/client.rs:164:24
+    |
+164 |     pub async fn abort(self) {
+    |                        ^^^^
+
+For more information about this error, try `rustc --explain E0507`.
+error: could not compile `quetzal-api` (bin "quetzal") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `quetzal-api` (bin "quetzal" test) due to 1 previous error

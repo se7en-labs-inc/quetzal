@@ -1,0 +1,41 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+    Checking quetzal-primitives v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-primitives)
+    Checking quetzal-crypto v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-crypto)
+    Checking quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-network)
+    Checking quetzal-address v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-address)
+    Checking quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-wallet)
+    Checking quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+error[E0282]: type annotations needed
+   --> crates/quetzal-api/src/handlers/transactions.rs:695:13
+    |
+695 |             Ok(quetzal_wallet::staking::Operation {
+    |             ^^ cannot infer type of the type parameter `E` declared on the enum `Result`
+    |
+help: consider specifying the generic arguments
+    |
+695 |             Ok::<quetzal_wallet::staking::Operation, E>(quetzal_wallet::staking::Operation {
+    |               +++++++++++++++++++++++++++++++++++++++++
+
+error[E0283]: type annotations needed
+   --> crates/quetzal-api/src/handlers/transactions.rs:695:13
+    |
+695 |             Ok(quetzal_wallet::staking::Operation {
+    |             ^^ cannot infer type of the type parameter `E` declared on the enum `Result`
+...
+710 |         .transpose()?;
+    |                     - type must be known at this point
+    |
+note: multiple `impl`s satisfying `ApiError: From<_>` found
+   --> crates/quetzal-api/src/error.rs:62:1
+    |
+ 62 | impl From<WalletError> for ApiError {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = note: and another `impl` found in the `core` crate: `impl<T> From<T> for T;`
+help: consider specifying the generic arguments
+    |
+695 |             Ok::<quetzal_wallet::staking::Operation, E>(quetzal_wallet::staking::Operation {
+    |               +++++++++++++++++++++++++++++++++++++++++
+
+Some errors have detailed explanations: E0282, E0283.
+For more information about an error, try `rustc --explain E0282`.
+error: could not compile `quetzal-api` (bin "quetzal") due to 2 previous errors

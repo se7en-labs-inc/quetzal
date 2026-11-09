@@ -1,0 +1,10 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/wallet-migration' is dirty
+   Compiling quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/wallet-migration/crates/quetzal-api)
+error[E0271]: type mismatch resolving `<i32 as Add>::Output == u64`
+   --> crates/quetzal-api/src/config.rs:222:89
+    |
+222 |             |millis| std::time::UNIX_EPOCH + std::time::Duration::from_millis(1_000_000 + millis);
+    |                                                                                         ^ expected `u64`, found `i32`
+
+For more information about this error, try `rustc --explain E0271`.
+error: could not compile `quetzal-api` (bin "quetzal" test) due to 1 previous error
