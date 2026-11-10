@@ -77,11 +77,36 @@ public reports are retained under `individual/`. The mutual-TLS helper calls the
 runner's unchanged public transport checks; [transport report](transport-mtls.json)
 passes all certificate and plaintext probes and owned-service cleanup.
 
-At the user's requested immediate commit, individual results are: all nine HTTP
-profiles537/537, funded live964/964, DRep6/6, pools134/134, parameters163/163,
-normal pending64/64 and expiry79/79 passed. Byron pending, adversarial retry,
-checkpoint, rollback, era transition and the disconnect setup repeat are still
-running or queued. These remaining profiles are not yet claimed as passing.
+The implementation was committed immediately when requested as `8c8482a`.
+The remaining regression then finished without production changes. All **22
+individual regression profiles passed, 2,628 checks and zero failures**;
+[machine-readable summary](individual/summary.json):
+
+| Profiles | Checks passed |
+| --- | ---: |
+| Nine differential HTTP profiles | 537 |
+| Funded live wallet workflows | 964 |
+| DRep lookup | 6 |
+| Pool lifecycle | 134 |
+| Protocol-parameter updates | 163 |
+| Normal pending / expiry / Byron pending / adversarial retry | 64 / 79 / 180 / 108 |
+| Checkpoint recovery | 29 |
+| Rollback and reapplication | 224 |
+| Live Babbage-to-Conway boundary | 49 |
+| Disconnect and reconnection, corrected private fixture setup | 82 |
+| TLS probes and owned-service/cleanup controls | 9 |
+
+Together with the 16 passing internal profiles (1,241 checks) from the separately
+retained aborted run, all 38 existing regression profiles passed against the
+same frozen candidate/adapter. These are separate executions, **not a completed
+652-obligation/44-profile cohort**. The initial disconnect setup refusal remains
+visible alongside the successful unchanged repeat.
+
+Final binary and borrowed-helper identities match their recorded hashes;
+[identity check](final-identity-check.log). Standard, committee and disconnect
+cleanup receipts plus each owned profile's cleanup checks pass. The final
+[owned-process audit](remaining-owned-processes.log) is empty: no matching owned
+wallet, node, cluster, runner or helper remains.
 
 Supplemental `sync-options.rs` could not capture a stable reference/native-tip/
 wall-clock bracket in 60 seconds and is **inconclusive**, not a pass. Its earlier

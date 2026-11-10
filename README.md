@@ -36,6 +36,10 @@ Its full runner aborts while replacing precreated reports; the
 [harness handoff](evidence/20261110-replacement/HARNESS-BLOCKER.md) documents the
 failure. Unchanged public profiles are executed separately with their own
 receipts. The full cohort remains incomplete, with no imported passing reports.
+All 22 separately executed TLS/HTTP/native regression profiles pass **2,628
+checks**; the aborted run's 16 internal profiles pass another **1,241 checks**
+against the same frozen candidate. These separate executions do not complete
+the current full gate.
 
 The preceding mutual-TLS commit `dd6676e` passed **646/646 obligations, 3,808
 checks and all 38 profiles** against one frozen candidate and adapter. Those

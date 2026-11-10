@@ -26,6 +26,7 @@ Current replacement iteration (652 obligations /44 profiles):
 - [x] Configured registry behavior passes9/9 independent reference/native cases with exact ledger quantities.
 - [x]99 local tests plus formatting, strict Clippy, release and final Nix package checks pass; actual cardano-wallet executable/alias supplied.
 - [x] Full-launch mTLS latest-acknowledged and funded pending EOF recovery verified independently, with exact paused-tip recovery and original-ID confirmation.
+- [x] All22 separately executed TLS/HTTP/native regression profiles pass2628 checks, plus16 internal profiles1241 checks from the aborted full run, with unchanged frozen identities and no owned processes left. These separate executions are not a complete full gate.
 - [ ] Current full catalogue qualification. The full runner aborts on its precreated-report collision; user approved unchanged public profiles individually. Keep these receipts separate.
 - [ ] User-deferred mainnet, lagging/ahead and representative100000block/1GiB historically funded dataset qualification, including global follower performance.
 
