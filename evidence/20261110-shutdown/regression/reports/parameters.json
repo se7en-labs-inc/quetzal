@@ -1,0 +1,1314 @@
+{
+  "format_version": 1,
+  "contract_reference_revision": "2fc5c383c94bb907deaa0cd27b1b407f86224b6c",
+  "suite_sha256": "b7370b72b8e87e3b941b20cfd4ae98eefa280f97e4c53668ce04a3a0f831a58c",
+  "unregistered_inputs": [],
+  "harness_self_test": false,
+  "environment": "quetzal-shutdown-20261110",
+  "target": "http://127.0.0.1:19099/v2/",
+  "evidence": [
+    {
+      "case": "transport:unknown-method",
+      "requirements": [
+        "api.transport-errors"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "transport:unknown-path",
+      "requirements": [
+        "api.transport-errors"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "transport:malformed-json",
+      "requirements": [
+        "api.transport-errors"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "transport:unsupported-content-type",
+      "requirements": [
+        "api.transport-errors"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "transport:unsupported-accept",
+      "requirements": [
+        "api.transport-errors"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "precedence:media-body",
+      "requirements": [
+        "api.error-precedence"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getNetworkInformation:eventually",
+      "requirements": [
+        "api:getNetworkInformation:positive",
+        "api:getNetworkInformation:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getNetworkInformation:eventually",
+      "requirements": [
+        "api:getNetworkInformation:positive",
+        "api:getNetworkInformation:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:block-production",
+      "requirements": [
+        "chain.block-production"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getBlocksLatestHeader",
+      "requirements": [
+        "api:getBlocksLatestHeader:positive",
+        "api:getBlocksLatestHeader:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:independent-latest-header",
+      "requirements": [
+        "chain.header-consistency"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getNetworkParameters",
+      "requirements": [
+        "api:getNetworkParameters:positive",
+        "api:getNetworkParameters:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:postWallet",
+      "requirements": [
+        "api:postWallet:positive",
+        "api:postWallet:status:201"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:postWallet",
+      "requirements": [
+        "api:postWallet:positive",
+        "api:postWallet:status:201"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:constructTransaction",
+      "requirements": [
+        "api:constructTransaction:positive",
+        "api:constructTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:selection-conservation",
+      "requirements": [
+        "selection.ada-conservation",
+        "selection.unique-inputs"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:decodeTransaction",
+      "requirements": [
+        "api:decodeTransaction:positive",
+        "api:decodeTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:submitTransaction",
+      "requirements": [
+        "api:submitTransaction:negative",
+        "api:submitTransaction:status:403"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:unsigned-submit-rejected",
+      "requirements": [
+        "tx.invalid-signature"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:signTransaction",
+      "requirements": [
+        "api:signTransaction:negative",
+        "api:signTransaction:status:403"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:signTransaction",
+      "requirements": [
+        "api:signTransaction:positive",
+        "api:signTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:independent-signature-verification",
+      "requirements": [
+        "tx.witnesses",
+        "tx.body-hash"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:decodeTransaction",
+      "requirements": [
+        "api:decodeTransaction:positive",
+        "api:decodeTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:submitTransaction",
+      "requirements": [
+        "api:submitTransaction:positive",
+        "api:submitTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:trusted-node-utxo-confirmation",
+      "requirements": [
+        "chain.node-utxo-confirmation"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:utxo-snapshot-statistics",
+      "requirements": [
+        "wallet.utxo-snapshot"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:confirmed-transfer",
+      "requirements": [
+        "api:getTransaction:positive",
+        "api:getTransaction:status:200",
+        "chain.confirmation",
+        "tx.ledger-acceptance",
+        "wallet.balance-conservation",
+        "tx.payment-output",
+        "signing.wrong-passphrase"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:deleteWallet",
+      "requirements": [
+        "api:deleteWallet:positive",
+        "api:deleteWallet:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:postWallet",
+      "requirements": [
+        "api:postWallet:positive",
+        "api:postWallet:status:201"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getTransaction",
+      "requirements": [
+        "api:getTransaction:positive",
+        "api:getTransaction:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:restore-from-genesis",
+      "requirements": [
+        "wallet.restoration"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:workflow",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:constructTransaction",
+      "requirements": [
+        "api:constructTransaction:positive",
+        "api:constructTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:signTransaction",
+      "requirements": [
+        "api:signTransaction:positive",
+        "api:signTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getNetworkInformation:eventually",
+      "requirements": [
+        "api:getNetworkInformation:positive",
+        "api:getNetworkInformation:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getAccountKey",
+      "requirements": [
+        "api:getAccountKey:positive",
+        "api:getAccountKey:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:signTransaction",
+      "requirements": [
+        "api:signTransaction:positive",
+        "api:signTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "state:restart-confirmed",
+      "requirements": [
+        "wallet.restart"
+      ],
+      "passed": true,
+      "detail": "{\"assertion\":\"exact persisted snapshots and deterministic signature after owned crash/restart\",\"confirmed_snapshots\":{\"16d44afffeb8d0ebc289772d27c428f031704bf5\":{\"account_key\":\"acct_xvk1gxxay0ugczhdgtdmwxs375pke4qz2q3900u9tz86uemq29gsr7rr5dertxcx48nv74rr3lw3aelws88l5g0acwzddw7neqw2t60yagcl6fn5f\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qpxc73s48xv64xqhll755wyj2p8n9r2795u6uy6prgcpcsk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqlnz7ga\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qz5nkauh6q7rvvss2lwn28vfty7egzjf42z45kwf3dlfwaw6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqfc4cx0\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qqhamfhvusakuck65xaptm4ctpykfjzzda3hddzq0fveaqx6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqe7ckm8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qp066vczvnazkcgur4vkc2gfm6g9zh7zg0qlnkd6r62fdxk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq6hrxcs\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qrqr657h2hg5p2vtzffcqkcm394plmk8nlu8cetxyagfc3w6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqy7luwt\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qpnfwmexqp4t5j79jcn85s3vzl7wyzkpfze3q25vvtgk56x6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqlhqf7x\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qzh78jk30q8gdhpypl7ls87t5xzy68ws9wph56l6mlyjgt76djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqxrvcm6\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qpdufpsa9mds9tpsq6t7w3tf2rahaegr528vz958wej2edx6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqcn6syk\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qpdkn5vqu2gpn42uxee0er4ztu257d77pnd3tl6xehp28876djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqhc8v2a\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qzerre7wy393u23g6jgarrrr6rk8n4n0gkrt3g8g4j6w8px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqmq42c4\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qrmnv5r4k0yrzf3qngs3ceac9xznlxfufxjjj06wlc0hsd76djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqvxwnhd\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qph27x4gf9g0yutzm55arht8hlqd5xawks28fdac8wejjwx6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqfp6qtj\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qq0v4kaf6g8rlzwgvkljmchks86lzzrfsqgsuycswt9mw276djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqnn45dx\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qzucr96tzqh0pr8kkmhgtwmy45q8xeygq0wyqk7z5jy5ltk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqqu22ra\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qpqe5gl87dntm453v3gw6wctzhlfjy2t8fj3ugsz8ncxfs76djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqk5us3x\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qr2w92mrnhnl0tsmln7cadlykrh7v4je738070dv588pj8w6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqntnkds\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qqy5csp886uh7sjf9raatlalmllqeqf5n8mqpvdua8a76gk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq5ujz86\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qz2p4egw2m9glnncc5aeqsq0pekxav5egu4dqpdcl9tn8wk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqudqvaz\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qqu2rcp2ukq7xqa06uykkyhhtz5dkrf5mcm4ksq952pg8sw6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq45wzed\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qpeqwzvxdqxwm43xx9t4wdgtlwrg8scq3m3rwl6njw8tz8w6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq3reujt\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":36749,\"epoch_number\":306,\"slot_number\":29,\"time\":\"2026-11-10T07:24:11.800Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76\",\"inputs\":[{\"assets\":[],\"id\":\"0bfa4e49744db9b75116afdcb37db378bb5ecd56690194c266ea41997e348f6c\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":754,\"epoch_number\":6,\"height\":{\"quantity\":356,\"unit\":\"block\"},\"slot_number\":34,\"time\":\"2026-11-10T05:24:12.800Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"node_utxos\":{\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\":{\"dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76#0\":{\"address\":\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":2000000}}}},\"statistics\":{\"distribution\":{\"10\":0,\"100\":0,\"1000\":0,\"10000\":0,\"100000\":0,\"1000000\":0,\"10000000\":1,\"100000000\":0,\"1000000000\":0,\"10000000000\":0,\"100000000000\":0,\"1000000000000\":0,\"10000000000000\":0,\"100000000000000\":0,\"1000000000000000\":0,\"10000000000000000\":0,\"45000000000000000\":0},\"scale\":\"log10\",\"total\":{\"quantity\":2000000,\"unit\":\"lovelace\"}},\"utxo\":{\"entries\":[{\"ada\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]}]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":2000000,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"16d44afffeb8d0ebc289772d27c428f031704bf5\",\"name\":\"conformance-recipient-restored\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-10T05:24:14.857902079Z\"}}},\"1b3a61f5b1762289b99b709f3d19bf6ea6881d2b\":{\"account_key\":\"acct_xvk1djhalwvkxj09drgj2hxrz95ckf7ne2h5vyunthwm7mexq79jjd2wplqk8ndl3zvmmanq0m8fve9t2muy368r6c2gepdhu9qymekuyeg7pdyq5\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qqgqmgkzf3cq43jll3wgkw5sykx422pde3jv8ka2l42a8647nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sttfyvl\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"],\"id\":\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qqd6vj4l7ml2lnsrh59ym240mm5m6wjcxqz4mzu7nk3eaca7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6srfkqvx\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qphjz5elsv8jda00t433zwa822vj6nryfwsj33pnhpw9ljd7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s5k9npr\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qzfuf4sa4scam2svgc5wx97ketgxf0gz5katfpc28duf3q47nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6st5z0jx\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qzhaa70rcq0h60rx5e6nw0y3qwzjeuewn77t9dgxu4ee8sd7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6stxwyfr\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qq8szskctj0eevj8sqlcfsk2tnmud700s9hl8lztxqwmqfa7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6seezn69\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qpl5pm57dj6ecgetk35xc5qcm3c26qmf6jv7dkj7mxyzlsd7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6ss9u7fm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qq0a333r45525vlfgemj672qrmt20y2tcnuyr3yt09nfhf47nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s7j7xze\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qrslfyg370pqfnkhhk5zk2lcz0x4k30nhywhju20dh07xka7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6skf5xk2\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qpxg4vf9rgm0rys0pp9mlf3309ylvexvu0k7wvjelfmkkl97nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6suh2m4w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qr9vgsxvt403fysnn6qd4j7ls598sskqg92rd39tj3rwyna7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6scu2d3d\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qzd3nrallnt8jupyx480rkgfaj8mhdtu3sdzwxruam2hh4a7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sq7d4ek\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qzesyjcdzuqgp4yqp5ccc53h2cu4g9s2a4rh7ldct85uuaa7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s7fja95\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qrwhe4w7ylvmdtcy690fnxnrhhxl034s0tfg7qwl48tks6d7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6smxgq66\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qzhz4txjyugrvpe3zflrwmnmkemvndalchvllcy03m7vs497nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sllxjzg\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qqqvhkn47vhnkmypfs5h7r35el8lxupla2k9nusymzy3js97nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6scwk2fu\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qq7hn78agfmn5rx7ecww5lm3lzmx0rv08vgs3ynkctr8lwa7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sjm7a6j\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qrn8gd3q2z95su3anadnp2jzcf65hj2sasswe2rjlgl298a7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sel3ktf\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qqsjxmftsfajpknua7nnz8elqw5exz89ez6mem5kgndrxy97nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6ssrt7da\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qpqzwvaged223tr95amtm35k9dsqynweqn87zz35uwtxxf97nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sgjsk30\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qq5tvmg2jum3494twfj25vu8vsxq7xvg6pxt4vk5c09253d7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sfty3y4\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":2129700,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":36749,\"epoch_number\":306,\"slot_number\":29,\"time\":\"2026-11-10T07:24:11.800Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76\",\"inputs\":[{\"address\":\"addr_test1qqgqmgkzf3cq43jll3wgkw5sykx422pde3jv8ka2l42a8647nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sttfyvl\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"0bfa4e49744db9b75116afdcb37db378bb5ecd56690194c266ea41997e348f6c\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":754,\"epoch_number\":6,\"height\":{\"quantity\":356,\"unit\":\"block\"},\"slot_number\":34,\"time\":\"2026-11-10T05:24:12.800Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]},{\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":6000000,\"epoch_number\":50000,\"slot_number\":0,\"time\":\"2026-11-24T02:41:42Z\"},\"fee\":{\"quantity\":999999900000000,\"unit\":\"lovelace\"},\"id\":\"0bfa4e49744db9b75116afdcb37db378bb5ecd56690194c266ea41997e348f6c\",\"inputs\":[{\"assets\":[],\"id\":\"9afd3e67f1591cba9500a8fbdc3b8af93d446f9e327c8d4a0a7693cad15cf1a2\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":743,\"epoch_number\":6,\"height\":{\"quantity\":349,\"unit\":\"block\"},\"slot_number\":23,\"time\":\"2026-11-10T05:24:10.600Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qqgqmgkzf3cq43jll3wgkw5sykx422pde3jv8ka2l42a8647nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sttfyvl\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"node_utxos\":{\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\":{\"dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76#1\":{\"address\":\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":97870300}}}},\"statistics\":{\"distribution\":{\"10\":0,\"100\":0,\"1000\":0,\"10000\":0,\"100000\":0,\"1000000\":0,\"10000000\":0,\"100000000\":1,\"1000000000\":0,\"10000000000\":0,\"100000000000\":0,\"1000000000000\":0,\"10000000000000\":0,\"100000000000000\":0,\"1000000000000000\":0,\"10000000000000000\":0,\"45000000000000000\":0},\"scale\":\"log10\",\"total\":{\"quantity\":97870300,\"unit\":\"lovelace\"}},\"utxo\":{\"entries\":[{\"ada\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":97870300,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"1b3a61f5b1762289b99b709f3d19bf6ea6881d2b\",\"name\":\"conformance-sender\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-10T05:24:09.691525224Z\"}}}},\"executable_sha256\":\"35ba62b1d89022772d3ebcc83f8b7f4b2e9045c92d1d3c01d66ad7a01a3c27a6\",\"generation\":1,\"new_pid\":73515,\"node_after\":\"1a0f4c169da1246ffed3b43c4a85365f9ef02ba693dda3545411233d72dd5c88\",\"node_before\":\"7397cdf9fe942890ff006ac6850dc2537ae4e3c06304ab8aa5a205df28a0551d\",\"old_pid\":73158,\"signed_transaction\":{\"script_validity\":\"valid\",\"status\":\"pending\",\"transaction\":\"84a600d9010281825820dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76010182825839009e0f44e8684a5721ab10a072e921bac68193dfac63dc6a52760c4884da6ca007d208e387daa3fcbbca3f3dfa37b166499b3ba1441d9981f01a001e848082583900d65ff52bfe062416ac67a0b417f99a4f5713271d626d68a3eb6cab6cbe9adf1072c710d8af27705134b259e4196ea959432f9200be9c4a751a05b4e2b8021a0001faa403198fa108000f00a100d901028182582056238382348dd2c887fefbb0748408f35bfced9ec151f30a360dbf7fe2b3cfd85840357d4b636ada1b323c4a6cc2ca255026f9d8c1a59020715531d6c337c4de70c8bde11eea7271550b605fe8797a3701a96b9e9a46a7c2f321295e9f96a14cf606f5f6\"}}"
+    },
+    {
+      "case": "state:restart-key-address-state",
+      "requirements": [
+        "wallet.restart"
+      ],
+      "passed": true,
+      "detail": "{\"assertion\":\"exact persisted snapshots and deterministic signature after owned crash/restart\",\"confirmed_snapshots\":{\"16d44afffeb8d0ebc289772d27c428f031704bf5\":{\"account_key\":\"acct_xvk1gxxay0ugczhdgtdmwxs375pke4qz2q3900u9tz86uemq29gsr7rr5dertxcx48nv74rr3lw3aelws88l5g0acwzddw7neqw2t60yagcl6fn5f\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qpxc73s48xv64xqhll755wyj2p8n9r2795u6uy6prgcpcsk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqlnz7ga\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qz5nkauh6q7rvvss2lwn28vfty7egzjf42z45kwf3dlfwaw6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqfc4cx0\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qqhamfhvusakuck65xaptm4ctpykfjzzda3hddzq0fveaqx6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqe7ckm8\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qp066vczvnazkcgur4vkc2gfm6g9zh7zg0qlnkd6r62fdxk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq6hrxcs\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qrqr657h2hg5p2vtzffcqkcm394plmk8nlu8cetxyagfc3w6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqy7luwt\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qpnfwmexqp4t5j79jcn85s3vzl7wyzkpfze3q25vvtgk56x6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqlhqf7x\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qzh78jk30q8gdhpypl7ls87t5xzy68ws9wph56l6mlyjgt76djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqxrvcm6\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qpdufpsa9mds9tpsq6t7w3tf2rahaegr528vz958wej2edx6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqcn6syk\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qpdkn5vqu2gpn42uxee0er4ztu257d77pnd3tl6xehp28876djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqhc8v2a\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qzerre7wy393u23g6jgarrrr6rk8n4n0gkrt3g8g4j6w8px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqmq42c4\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qrmnv5r4k0yrzf3qngs3ceac9xznlxfufxjjj06wlc0hsd76djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqvxwnhd\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qph27x4gf9g0yutzm55arht8hlqd5xawks28fdac8wejjwx6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqfp6qtj\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qq0v4kaf6g8rlzwgvkljmchks86lzzrfsqgsuycswt9mw276djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqnn45dx\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qzucr96tzqh0pr8kkmhgtwmy45q8xeygq0wyqk7z5jy5ltk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqqu22ra\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qpqe5gl87dntm453v3gw6wctzhlfjy2t8fj3ugsz8ncxfs76djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqk5us3x\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qr2w92mrnhnl0tsmln7cadlykrh7v4je738070dv588pj8w6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqntnkds\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qqy5csp886uh7sjf9raatlalmllqeqf5n8mqpvdua8a76gk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq5ujz86\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qz2p4egw2m9glnncc5aeqsq0pekxav5egu4dqpdcl9tn8wk6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cqudqvaz\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qqu2rcp2ukq7xqa06uykkyhhtz5dkrf5mcm4ksq952pg8sw6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq45wzed\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qpeqwzvxdqxwm43xx9t4wdgtlwrg8scq3m3rwl6njw8tz8w6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq3reujt\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":36749,\"epoch_number\":306,\"slot_number\":29,\"time\":\"2026-11-10T07:24:11.800Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76\",\"inputs\":[{\"assets\":[],\"id\":\"0bfa4e49744db9b75116afdcb37db378bb5ecd56690194c266ea41997e348f6c\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":754,\"epoch_number\":6,\"height\":{\"quantity\":356,\"unit\":\"block\"},\"slot_number\":34,\"time\":\"2026-11-10T05:24:12.800Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"node_utxos\":{\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\":{\"dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76#0\":{\"address\":\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":2000000}}}},\"statistics\":{\"distribution\":{\"10\":0,\"100\":0,\"1000\":0,\"10000\":0,\"100000\":0,\"1000000\":0,\"10000000\":1,\"100000000\":0,\"1000000000\":0,\"10000000000\":0,\"100000000000\":0,\"1000000000000\":0,\"10000000000000\":0,\"100000000000000\":0,\"1000000000000000\":0,\"10000000000000000\":0,\"45000000000000000\":0},\"scale\":\"log10\",\"total\":{\"quantity\":2000000,\"unit\":\"lovelace\"}},\"utxo\":{\"entries\":[{\"ada\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]}]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":2000000,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"16d44afffeb8d0ebc289772d27c428f031704bf5\",\"name\":\"conformance-recipient-restored\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-10T05:24:14.857902079Z\"}}},\"1b3a61f5b1762289b99b709f3d19bf6ea6881d2b\":{\"account_key\":\"acct_xvk1djhalwvkxj09drgj2hxrz95ckf7ne2h5vyunthwm7mexq79jjd2wplqk8ndl3zvmmanq0m8fve9t2muy368r6c2gepdhu9qymekuyeg7pdyq5\",\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qqgqmgkzf3cq43jll3wgkw5sykx422pde3jv8ka2l42a8647nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sttfyvl\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"],\"id\":\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\",\"state\":\"used\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qqd6vj4l7ml2lnsrh59ym240mm5m6wjcxqz4mzu7nk3eaca7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6srfkqvx\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qphjz5elsv8jda00t433zwa822vj6nryfwsj33pnhpw9ljd7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s5k9npr\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qzfuf4sa4scam2svgc5wx97ketgxf0gz5katfpc28duf3q47nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6st5z0jx\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qzhaa70rcq0h60rx5e6nw0y3qwzjeuewn77t9dgxu4ee8sd7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6stxwyfr\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qq8szskctj0eevj8sqlcfsk2tnmud700s9hl8lztxqwmqfa7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6seezn69\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qpl5pm57dj6ecgetk35xc5qcm3c26qmf6jv7dkj7mxyzlsd7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6ss9u7fm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qq0a333r45525vlfgemj672qrmt20y2tcnuyr3yt09nfhf47nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s7j7xze\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qrslfyg370pqfnkhhk5zk2lcz0x4k30nhywhju20dh07xka7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6skf5xk2\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qpxg4vf9rgm0rys0pp9mlf3309ylvexvu0k7wvjelfmkkl97nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6suh2m4w\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qr9vgsxvt403fysnn6qd4j7ls598sskqg92rd39tj3rwyna7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6scu2d3d\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qzd3nrallnt8jupyx480rkgfaj8mhdtu3sdzwxruam2hh4a7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sq7d4ek\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qzesyjcdzuqgp4yqp5ccc53h2cu4g9s2a4rh7ldct85uuaa7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s7fja95\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qrwhe4w7ylvmdtcy690fnxnrhhxl034s0tfg7qwl48tks6d7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6smxgq66\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qzhz4txjyugrvpe3zflrwmnmkemvndalchvllcy03m7vs497nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sllxjzg\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qqqvhkn47vhnkmypfs5h7r35el8lxupla2k9nusymzy3js97nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6scwk2fu\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qq7hn78agfmn5rx7ecww5lm3lzmx0rv08vgs3ynkctr8lwa7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sjm7a6j\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qrn8gd3q2z95su3anadnp2jzcf65hj2sasswe2rjlgl298a7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sel3ktf\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qqsjxmftsfajpknua7nnz8elqw5exz89ez6mem5kgndrxy97nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6ssrt7da\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qpqzwvaged223tr95amtm35k9dsqynweqn87zz35uwtxxf97nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sgjsk30\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"20\"],\"id\":\"addr_test1qq5tvmg2jum3494twfj25vu8vsxq7xvg6pxt4vk5c09253d7nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sfty3y4\",\"state\":\"unused\"}],\"history\":[{\"amount\":{\"quantity\":2129700,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":36749,\"epoch_number\":306,\"slot_number\":29,\"time\":\"2026-11-10T07:24:11.800Z\"},\"fee\":{\"quantity\":129700,\"unit\":\"lovelace\"},\"id\":\"dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76\",\"inputs\":[{\"address\":\"addr_test1qqgqmgkzf3cq43jll3wgkw5sykx422pde3jv8ka2l42a8647nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sttfyvl\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"0bfa4e49744db9b75116afdcb37db378bb5ecd56690194c266ea41997e348f6c\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":754,\"epoch_number\":6,\"height\":{\"quantity\":356,\"unit\":\"block\"},\"slot_number\":34,\"time\":\"2026-11-10T05:24:12.800Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qz0q738gdp99wgdtzzs896fphtrgry7l433ac6jjwcxy3px6djsq05sguwra4gluh09r7006x7ckvjvm8ws5g8ves8cq7mxwc5\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\",\"amount\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]},{\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"incoming\",\"expires_at\":{\"absolute_slot_number\":6000000,\"epoch_number\":50000,\"slot_number\":0,\"time\":\"2026-11-24T02:41:42Z\"},\"fee\":{\"quantity\":999999900000000,\"unit\":\"lovelace\"},\"id\":\"0bfa4e49744db9b75116afdcb37db378bb5ecd56690194c266ea41997e348f6c\",\"inputs\":[{\"assets\":[],\"id\":\"9afd3e67f1591cba9500a8fbdc3b8af93d446f9e327c8d4a0a7693cad15cf1a2\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":743,\"epoch_number\":6,\"height\":{\"quantity\":349,\"unit\":\"block\"},\"slot_number\":23,\"time\":\"2026-11-10T05:24:10.600Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1qqgqmgkzf3cq43jll3wgkw5sykx422pde3jv8ka2l42a8647nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6sttfyvl\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]}],\"node_utxos\":{\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\":{\"dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76#1\":{\"address\":\"addr_test1qpep4dcnnwe98cadyv42h57xqek2u5w5cujps2hw0ntcd597nt03quk8zrv27fms2y6tyk0yr9h2jk2r97fqp05uff6s9zvyp0\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":97870300}}}},\"statistics\":{\"distribution\":{\"10\":0,\"100\":0,\"1000\":0,\"10000\":0,\"100000\":0,\"1000000\":0,\"10000000\":0,\"100000000\":1,\"1000000000\":0,\"10000000000\":0,\"100000000000\":0,\"1000000000000\":0,\"10000000000000\":0,\"100000000000000\":0,\"1000000000000000\":0,\"10000000000000000\":0,\"45000000000000000\":0},\"scale\":\"log10\",\"total\":{\"quantity\":97870300,\"unit\":\"lovelace\"}},\"utxo\":{\"entries\":[{\"ada\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"assets\":[]}]},\"wallet\":{\"address_pool_gap\":20,\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":97870300,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":97870300,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"id\":\"1b3a61f5b1762289b99b709f3d19bf6ea6881d2b\",\"name\":\"conformance-sender\",\"passphrase\":{\"encryption_method\":\"argon2id-v2\",\"last_updated_at\":\"2026-11-10T05:24:09.691525224Z\"}}}},\"executable_sha256\":\"35ba62b1d89022772d3ebcc83f8b7f4b2e9045c92d1d3c01d66ad7a01a3c27a6\",\"generation\":1,\"new_pid\":73515,\"node_after\":\"1a0f4c169da1246ffed3b43c4a85365f9ef02ba693dda3545411233d72dd5c88\",\"node_before\":\"7397cdf9fe942890ff006ac6850dc2537ae4e3c06304ab8aa5a205df28a0551d\",\"old_pid\":73158,\"signed_transaction\":{\"script_validity\":\"valid\",\"status\":\"pending\",\"transaction\":\"84a600d9010281825820dc0a2032bdc3a200bebbff243729a0781bed3425cdfa82e8702f616f9f9dcf76010182825839009e0f44e8684a5721ab10a072e921bac68193dfac63dc6a52760c4884da6ca007d208e387daa3fcbbca3f3dfa37b166499b3ba1441d9981f01a001e848082583900d65ff52bfe062416ac67a0b417f99a4f5713271d626d68a3eb6cab6cbe9adf1072c710d8af27705134b259e4196ea959432f9200be9c4a751a05b4e2b8021a0001faa403198fa108000f00a100d901028182582056238382348dd2c887fefbb0748408f35bfced9ec151f30a360dbf7fe2b3cfd85840357d4b636ada1b323c4a6cc2ca255026f9d8c1a59020715531d6c337c4de70c8bde11eea7271550b605fe8797a3701a96b9e9a46a7c2f321295e9f96a14cf606f5f6\"}}"
+    },
+    {
+      "case": "live:restart-workflow",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listStakePools:eventually",
+      "requirements": [
+        "api:listStakePools:positive",
+        "api:listStakePools:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:postWallet",
+      "requirements": [
+        "api:postWallet:positive",
+        "api:postWallet:status:201"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:joinStakePool",
+      "requirements": [
+        "api:joinStakePool:negative",
+        "api:joinStakePool:status:403"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:joinStakePool",
+      "requirements": [
+        "api:joinStakePool:negative",
+        "api:joinStakePool:status:403"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "delegation:empty-known-pool-join",
+      "requirements": [],
+      "passed": true,
+      "detail": "{\"errors\":[{\"code\":\"no_utxos_available\",\"message\":\"Unable to create a transaction because the wallet has no unspent transaction outputs (UTxOs) available. A transaction must spend at least one UTxO in order to be accepted for inclusion on the Cardano blockchain.\"},{\"code\":\"no_utxos_available\",\"message\":\"Unable to create a transaction because the wallet has no unspent transaction outputs (UTxOs) available. A transaction must spend at least one UTxO in order to be accepted for inclusion on the Cardano blockchain.\"}],\"native_active_pools_after\":[\"pool1hvg5evmawhaq2fsr9rprtg76u226x0gt5e62t6c78etgu2j7xtn\",\"pool1as50x0wtumtyqzs7tceeh5ry0syh8jnvpnuu9wlxswxuv48sw4w\"],\"native_active_pools_before\":[\"pool1hvg5evmawhaq2fsr9rprtg76u226x0gt5e62t6c78etgu2j7xtn\",\"pool1as50x0wtumtyqzs7tceeh5ry0syh8jnvpnuu9wlxswxuv48sw4w\"],\"node_utxos_after\":{\"addr_test1qp3w3m4r78r7r8ycalytfddnz593ey2lmzp4g59cxfe9ul7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q6n47a7\":{},\"addr_test1qp7uze7cvchjfdesnfpv4kvrduqmqwez2j4mc0wnrh8lm8wr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qge9mj2\":{},\"addr_test1qpaufs29emf7r62prt8r0l072nuvs4vezrgve2ty5csvvjwr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qj8n0y9\":{},\"addr_test1qpd8y6hxf3rc9e8p5rye2d8qyttk3cryfy2c53e8yy547c7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qyk27ay\":{},\"addr_test1qpqlyu6ajatagwxlga2gaazaxakv3nsntmxlf09tkc5vh5kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qypjjmk\":{},\"addr_test1qpshdvgxddemdxkdwp493le8yhengzk6fuwsewzx42sjpjkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0quv5u04\":{},\"addr_test1qq7au6rdr643dqs4695y9aw83nvnhw74u29www25f5c4awkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qgkt4gf\":{},\"addr_test1qqe3lrmmf8w7jctxw5yv3mfc05dhjmcc9dk2v9rejekcz07r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qj7d30u\":{},\"addr_test1qqg8whf7u4sjlw0fjapgyf6jzayx7svd9xqsv6thymk7s3kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qlqy8vr\":{},\"addr_test1qqlmtqnst88z4epqjyfh7hp8msswcl4dzdvh203m0tpxdh7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qexpp50\":{},\"addr_test1qqvjnhdk0cusey2pm8ln8cf4qx4l8t8lprfuqj7c95j3fzkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qtvc3vm\":{},\"addr_test1qr5q038lxyc2dftwxqt80fgxm49h2l8pya7s9cvrvx6478xr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qtnynda\":{},\"addr_test1qrchn3ekmz9f44vkzywy93uujpg4pmpgsva7jgkvqf7ahrxr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q04a9re\":{},\"addr_test1qrlw02qcg2cyg96h80q77h9vyhzrg6eagn5cd0fph6axkpxr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q0dhz0k\":{},\"addr_test1qrn7dwu7ja48j7vrh0t958e4srkjj0uf9xnd6yrzgc8qa9xr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qftjh47\":{},\"addr_test1qrprjwnjvtqfhh46plp0fxf9grvsxus0f3rxke6hr52pg4kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qarfvxn\":{},\"addr_test1qzayp65w59ncrlu4wxw65mqzsgcw3wtq8r7uxt8jjwkvpv7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qsu84zj\":{},\"addr_test1qzeel3yg3khkt8epsahkhe29w795nq0lwlyydr0adcrtrewr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qn5zqgs\":{},\"addr_test1qzv9q3hkjjhel8vgvrgfl6fpfyax55wpctuwtqfa7veyj6kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qp68xhy\":{},\"addr_test1qzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969y7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qy0adz0\":{}},\"node_utxos_before\":{\"addr_test1qp3w3m4r78r7r8ycalytfddnz593ey2lmzp4g59cxfe9ul7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q6n47a7\":{},\"addr_test1qp7uze7cvchjfdesnfpv4kvrduqmqwez2j4mc0wnrh8lm8wr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qge9mj2\":{},\"addr_test1qpaufs29emf7r62prt8r0l072nuvs4vezrgve2ty5csvvjwr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qj8n0y9\":{},\"addr_test1qpd8y6hxf3rc9e8p5rye2d8qyttk3cryfy2c53e8yy547c7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qyk27ay\":{},\"addr_test1qpqlyu6ajatagwxlga2gaazaxakv3nsntmxlf09tkc5vh5kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qypjjmk\":{},\"addr_test1qpshdvgxddemdxkdwp493le8yhengzk6fuwsewzx42sjpjkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0quv5u04\":{},\"addr_test1qq7au6rdr643dqs4695y9aw83nvnhw74u29www25f5c4awkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qgkt4gf\":{},\"addr_test1qqe3lrmmf8w7jctxw5yv3mfc05dhjmcc9dk2v9rejekcz07r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qj7d30u\":{},\"addr_test1qqg8whf7u4sjlw0fjapgyf6jzayx7svd9xqsv6thymk7s3kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qlqy8vr\":{},\"addr_test1qqlmtqnst88z4epqjyfh7hp8msswcl4dzdvh203m0tpxdh7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qexpp50\":{},\"addr_test1qqvjnhdk0cusey2pm8ln8cf4qx4l8t8lprfuqj7c95j3fzkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qtvc3vm\":{},\"addr_test1qr5q038lxyc2dftwxqt80fgxm49h2l8pya7s9cvrvx6478xr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qtnynda\":{},\"addr_test1qrchn3ekmz9f44vkzywy93uujpg4pmpgsva7jgkvqf7ahrxr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q04a9re\":{},\"addr_test1qrlw02qcg2cyg96h80q77h9vyhzrg6eagn5cd0fph6axkpxr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q0dhz0k\":{},\"addr_test1qrn7dwu7ja48j7vrh0t958e4srkjj0uf9xnd6yrzgc8qa9xr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qftjh47\":{},\"addr_test1qrprjwnjvtqfhh46plp0fxf9grvsxus0f3rxke6hr52pg4kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qarfvxn\":{},\"addr_test1qzayp65w59ncrlu4wxw65mqzsgcw3wtq8r7uxt8jjwkvpv7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qsu84zj\":{},\"addr_test1qzeel3yg3khkt8epsahkhe29w795nq0lwlyydr0adcrtrewr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qn5zqgs\":{},\"addr_test1qzv9q3hkjjhel8vgvrgfl6fpfyax55wpctuwtqfa7veyj6kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qp68xhy\":{},\"addr_test1qzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969y7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qy0adz0\":{}},\"selected_active_pool\":\"pool1as50x0wtumtyqzs7tceeh5ry0syh8jnvpnuu9wlxswxuv48sw4w\",\"stake_address\":\"stake_test1urpcjgmx7962w6hey5hhsd502araxp26kdtgagakhaqtq8s8ke268\",\"unchanged_wallet_snapshot\":{\"addresses\":[{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"addr_test1qzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969y7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qy0adz0\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"1\"],\"id\":\"addr_test1qqg8whf7u4sjlw0fjapgyf6jzayx7svd9xqsv6thymk7s3kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qlqy8vr\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"2\"],\"id\":\"addr_test1qr5q038lxyc2dftwxqt80fgxm49h2l8pya7s9cvrvx6478xr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qtnynda\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"3\"],\"id\":\"addr_test1qzv9q3hkjjhel8vgvrgfl6fpfyax55wpctuwtqfa7veyj6kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qp68xhy\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"4\"],\"id\":\"addr_test1qrchn3ekmz9f44vkzywy93uujpg4pmpgsva7jgkvqf7ahrxr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q04a9re\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"5\"],\"id\":\"addr_test1qp7uze7cvchjfdesnfpv4kvrduqmqwez2j4mc0wnrh8lm8wr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qge9mj2\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"6\"],\"id\":\"addr_test1qqvjnhdk0cusey2pm8ln8cf4qx4l8t8lprfuqj7c95j3fzkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qtvc3vm\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"7\"],\"id\":\"addr_test1qqlmtqnst88z4epqjyfh7hp8msswcl4dzdvh203m0tpxdh7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qexpp50\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"8\"],\"id\":\"addr_test1qrn7dwu7ja48j7vrh0t958e4srkjj0uf9xnd6yrzgc8qa9xr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qftjh47\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"9\"],\"id\":\"addr_test1qrprjwnjvtqfhh46plp0fxf9grvsxus0f3rxke6hr52pg4kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qarfvxn\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"10\"],\"id\":\"addr_test1qpshdvgxddemdxkdwp493le8yhengzk6fuwsewzx42sjpjkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0quv5u04\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"11\"],\"id\":\"addr_test1qrlw02qcg2cyg96h80q77h9vyhzrg6eagn5cd0fph6axkpxr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q0dhz0k\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"12\"],\"id\":\"addr_test1qzayp65w59ncrlu4wxw65mqzsgcw3wtq8r7uxt8jjwkvpv7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qsu84zj\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"13\"],\"id\":\"addr_test1qq7au6rdr643dqs4695y9aw83nvnhw74u29www25f5c4awkr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qgkt4gf\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"14\"],\"id\":\"addr_test1qpqlyu6ajatagwxlga2gaazaxakv3nsntmxlf09tkc5vh5kr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qypjjmk\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"15\"],\"id\":\"addr_test1qzeel3yg3khkt8epsahkhe29w795nq0lwlyydr0adcrtrewr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qn5zqgs\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"16\"],\"id\":\"addr_test1qpaufs29emf7r62prt8r0l072nuvs4vezrgve2ty5csvvjwr3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qj8n0y9\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"17\"],\"id\":\"addr_test1qp3w3m4r78r7r8ycalytfddnz593ey2lmzp4g59cxfe9ul7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0q6n47a7\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"18\"],\"id\":\"addr_test1qpd8y6hxf3rc9e8p5rye2d8qyttk3cryfy2c53e8yy547c7r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qyk27ay\",\"state\":\"unused\"},{\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"19\"],\"id\":\"addr_test1qqe3lrmmf8w7jctxw5yv3mfc05dhjmcc9dk2v9rejekcz07r3y3kdut55a40jff00qmg74686vz44v6k363md06qkq0qj7d30u\",\"state\":\"unused\"}],\"assets\":{\"available\":[],\"total\":[]},\"balance\":{\"available\":{\"quantity\":0,\"unit\":\"lovelace\"},\"reward\":{\"quantity\":0,\"unit\":\"lovelace\"},\"total\":{\"quantity\":0,\"unit\":\"lovelace\"}},\"delegation\":{\"active\":{\"status\":\"not_delegating\"},\"next\":[]},\"history\":[],\"id\":\"2425e88933b3a065ba3b5787d86fba26ad450a9d\",\"name\":\"conformance-empty-pool-join\",\"utxo\":{\"entries\":[]}},\"unregistered_stake_preserved\":true,\"wallet_known_pools\":[{\"cost\":{\"quantity\":0,\"unit\":\"lovelace\"},\"flags\":[],\"id\":\"pool1as50x0wtumtyqzs7tceeh5ry0syh8jnvpnuu9wlxswxuv48sw4w\",\"margin\":{\"quantity\":10,\"unit\":\"percent\"},\"metrics\":{\"non_myopic_member_rewards\":{\"quantity\":0,\"unit\":\"lovelace\"},\"produced_blocks\":{\"quantity\":154,\"unit\":\"block\"},\"relative_stake\":{\"quantity\":8e-2,\"unit\":\"percent\"},\"saturation\":2.2530434746590882e-3},\"pledge\":{\"quantity\":150000000000000,\"unit\":\"lovelace\"}}]}"
+    },
+    {
+      "case": "live:deleteWallet",
+      "requirements": [
+        "api:deleteWallet:positive",
+        "api:deleteWallet:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:pool-join-guard-workflow",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getNetworkParameters",
+      "requirements": [
+        "api:getNetworkParameters:positive",
+        "api:getNetworkParameters:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:postWallet",
+      "requirements": [
+        "api:postWallet:positive",
+        "api:postWallet:status:201"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:constructTransaction",
+      "requirements": [
+        "api:constructTransaction:negative",
+        "api:constructTransaction:status:403"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:constructTransaction",
+      "requirements": [
+        "api:constructTransaction:positive",
+        "api:constructTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:signTransaction",
+      "requirements": [
+        "api:signTransaction:positive",
+        "api:signTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:submitTransaction",
+      "requirements": [
+        "api:submitTransaction:positive",
+        "api:submitTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getTransaction:confirmed",
+      "requirements": [
+        "api:getTransaction:positive",
+        "api:getTransaction:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getNetworkParameters",
+      "requirements": [
+        "api:getNetworkParameters:positive",
+        "api:getNetworkParameters:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:postWallet",
+      "requirements": [
+        "api:postWallet:positive",
+        "api:postWallet:status:201"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listAddresses",
+      "requirements": [
+        "api:listAddresses:positive",
+        "api:listAddresses:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:constructTransaction",
+      "requirements": [
+        "api:constructTransaction:negative",
+        "api:constructTransaction:status:403"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:listTransactions",
+      "requirements": [
+        "api:listTransactions:positive",
+        "api:listTransactions:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:constructTransaction",
+      "requirements": [
+        "api:constructTransaction:positive",
+        "api:constructTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:signTransaction",
+      "requirements": [
+        "api:signTransaction:positive",
+        "api:signTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:submitTransaction",
+      "requirements": [
+        "api:submitTransaction:positive",
+        "api:submitTransaction:status:202"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getTransaction:confirmed",
+      "requirements": [
+        "api:getTransaction:positive",
+        "api:getTransaction:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWallet:eventually",
+      "requirements": [
+        "api:getWallet:positive",
+        "api:getWallet:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getWalletUtxoSnapshot",
+      "requirements": [
+        "api:getWalletUtxoSnapshot:positive",
+        "api:getWalletUtxoSnapshot:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:getUTxOsStatistics",
+      "requirements": [
+        "api:getUTxOsStatistics:positive",
+        "api:getUTxOsStatistics:status:200"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "chain:node-wallet-protocol-parameters",
+      "requirements": [
+        "chain.protocol-parameters"
+      ],
+      "passed": true,
+      "detail": "{\"after\":{\"byron_start\":1794288102,\"genesis_hash\":\"e1753c504cf88dfec31319f9c6e505134b2876cd1efb51cd5b30c3925e4ffd05\",\"node\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":4,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":101,\"utxoCostPerByte\":4320},\"shelley_slotting\":{\"activeSlotsCoeff\":0.5,\"epochLength\":120,\"securityParam\":10,\"slotLength\":0.2},\"wallet\":{\"active_slot_coefficient\":{\"quantity\":50,\"unit\":\"percent\"},\"blockchain_start_time\":\"2026-11-10T05:21:42Z\",\"decentralization_level\":{\"quantity\":100,\"unit\":\"percent\"},\"desired_pool_number\":4,\"epoch_length\":{\"quantity\":120,\"unit\":\"slot\"},\"eras\":{\"allegra\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"alonzo\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"babbage\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"byron\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"mary\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"shelley\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"}},\"execution_unit_prices\":{\"memory_unit_price\":5.77e-2,\"step_price\":7.21e-5},\"genesis_block_hash\":\"e1753c504cf88dfec31319f9c6e505134b2876cd1efb51cd5b30c3925e4ffd05\",\"maximum_collateral_input_count\":3,\"maximum_token_bundle_size\":{\"quantity\":5000,\"unit\":\"byte\"},\"minimum_collateral_percentage\":150,\"security_parameter\":{\"quantity\":10,\"unit\":\"block\"},\"slot_length\":{\"quantity\":0.2,\"unit\":\"second\"}}},\"before\":{\"byron_start\":1794288102,\"genesis_hash\":\"e1753c504cf88dfec31319f9c6e505134b2876cd1efb51cd5b30c3925e4ffd05\",\"node\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"shelley_slotting\":{\"activeSlotsCoeff\":0.5,\"epochLength\":120,\"securityParam\":10,\"slotLength\":0.2},\"wallet\":{\"active_slot_coefficient\":{\"quantity\":50,\"unit\":\"percent\"},\"blockchain_start_time\":\"2026-11-10T05:21:42Z\",\"decentralization_level\":{\"quantity\":100,\"unit\":\"percent\"},\"desired_pool_number\":3,\"epoch_length\":{\"quantity\":120,\"unit\":\"slot\"},\"eras\":{\"allegra\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"alonzo\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"babbage\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"byron\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"mary\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"},\"shelley\":{\"epoch_number\":0,\"epoch_start_time\":\"2026-11-10T05:21:42Z\"}},\"execution_unit_prices\":{\"memory_unit_price\":5.77e-2,\"step_price\":7.21e-5},\"genesis_block_hash\":\"e1753c504cf88dfec31319f9c6e505134b2876cd1efb51cd5b30c3925e4ffd05\",\"maximum_collateral_input_count\":3,\"maximum_token_bundle_size\":{\"quantity\":5000,\"unit\":\"byte\"},\"minimum_collateral_percentage\":150,\"security_parameter\":{\"quantity\":10,\"unit\":\"block\"},\"slot_length\":{\"quantity\":0.2,\"unit\":\"second\"}}}}"
+    },
+    {
+      "case": "chain:protocol-parameter-update",
+      "requirements": [
+        "chain.protocol-parameters"
+      ],
+      "passed": true,
+      "detail": "{\"after_payment\":{\"confirmed\":{\"amount\":{\"quantity\":2127169,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":37095,\"epoch_number\":309,\"slot_number\":15,\"time\":\"2026-11-10T07:25:21Z\"},\"fee\":{\"quantity\":127169,\"unit\":\"lovelace\"},\"id\":\"0c78540a5c3c2fa3b5b7a7f2bddf658c3a0d5d856cb1981fa8e57f6c12f62fcf\",\"inputs\":[{\"address\":\"addr_test1qzpjgrn8tmfw28wlgk0zx2hvhwx0xkw05qv80zeur3eelx2exssr3vydgfe00hw8ta8g3f4j0pt40durhh966raw3uaqmc2vy6\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"20706af25bc737c47397b7b2c89967ae3375092e5266a04d679fb16fc6daa70f\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":1099,\"epoch_number\":9,\"height\":{\"quantity\":536,\"unit\":\"block\"},\"slot_number\":19,\"time\":\"2026-11-10T05:25:21.800Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1vzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969yc2mg7gf\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qq9z3yhdv36e9r0gysf9rzj06zj6hcn89cp2vawjdpyr3n2exssr3vydgfe00hw8ta8g3f4j0pt40durhh966raw3uaqlut7lf\",\"amount\":{\"quantity\":97872831,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]},\"constructed\":{\"coin_selection\":{\"change\":[{\"address\":\"addr_test1qq9z3yhdv36e9r0gysf9rzj06zj6hcn89cp2vawjdpyr3n2exssr3vydgfe00hw8ta8g3f4j0pt40durhh966raw3uaqlut7lf\",\"amount\":{\"quantity\":97872831,\"unit\":\"lovelace\"},\"assets\":[],\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"]}],\"collateral\":[],\"deposits_returned\":[],\"deposits_taken\":[],\"inputs\":[{\"address\":\"addr_test1qzpjgrn8tmfw28wlgk0zx2hvhwx0xkw05qv80zeur3eelx2exssr3vydgfe00hw8ta8g3f4j0pt40durhh966raw3uaqmc2vy6\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"20706af25bc737c47397b7b2c89967ae3375092e5266a04d679fb16fc6daa70f\",\"index\":0}],\"outputs\":[{\"address\":\"addr_test1vzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969yc2mg7gf\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"withdrawals\":[]},\"fee\":{\"quantity\":127169,\"unit\":\"lovelace\"},\"script_cost\":{\"quantity\":0,\"unit\":\"lovelace\"},\"transaction\":\"84a600d901028182582020706af25bc737c47397b7b2c89967ae3375092e5266a04d679fb16fc6daa70f00018282581d6085abf3eca55024aa1c22b944599b5e890ec12dfb19941229da4ba2931a001e8480825839000a2892ed6475928de82412518a4fd0a5abe2672e02a675d2684838cd59342038b08d4272f7ddc75f4e88a6b2785757b783bdcbad0fae8f3a1a05d56bbf021a0001f0c1031990e708000f00a0f5f6\"},\"fee_proof\":{\"fee\":127169,\"signed_bytes\":270,\"size\":{\"bootstrap_bytes\":0,\"estimated_bytes\":269,\"original_ledger_bytes\":269,\"transaction_id\":\"0c78540a5c3c2fa3b5b7a7f2bddf658c3a0d5d856cb1981fa8e57f6c12f62fcf\",\"within_size_limit\":true},\"transaction_id\":\"0c78540a5c3c2fa3b5b7a7f2bddf658c3a0d5d856cb1981fa8e57f6c12f62fcf\"},\"funding\":{\"20706af25bc737c47397b7b2c89967ae3375092e5266a04d679fb16fc6daa70f#0\":{\"address\":\"addr_test1qzpjgrn8tmfw28wlgk0zx2hvhwx0xkw05qv80zeur3eelx2exssr3vydgfe00hw8ta8g3f4j0pt40durhh966raw3uaqmc2vy6\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":100000000}}},\"label\":\"after\",\"minimum_ada\":868320,\"node_parameters\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":4,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":101,\"utxoCostPerByte\":4320},\"rejection\":{\"code\":\"utxo_too_small\",\"info\":{\"tx_output_index\":0,\"tx_output_lovelace_required_minimum\":{\"quantity\":868320,\"unit\":\"lovelace\"},\"tx_output_lovelace_specified\":{\"quantity\":1,\"unit\":\"lovelace\"}},\"message\":\"One of the outputs you've specified has an ada quantity that is below the minimum required. Either increase the ada quantity to at least the minimum, or specify an ada quantity of zero, in which case the wallet will automatically assign the correct minimum ada quantity to the output.\"},\"remaining\":97872831,\"signed\":{\"script_validity\":\"valid\",\"status\":\"pending\",\"transaction\":\"84a600d901028182582020706af25bc737c47397b7b2c89967ae3375092e5266a04d679fb16fc6daa70f00018282581d6085abf3eca55024aa1c22b944599b5e890ec12dfb19941229da4ba2931a001e8480825839000a2892ed6475928de82412518a4fd0a5abe2672e02a675d2684838cd59342038b08d4272f7ddc75f4e88a6b2785757b783bdcbad0fae8f3a1a05d56bbf021a0001f0c1031990e708000f00a100d90102818258201c779b287639a904931c8271b35dcc001ee0877cf652bde07a4c0eef9f69dae65840ecbf85a1f0d7e2c217c6d66042c1379ed3330913e771a20ed6b6f939eb2a43b670e528e66b3f982174b7e8ac8a786407489170e5d11879a1e5be8f75d97c6a09f5f6\"}},\"before_payment\":{\"confirmed\":{\"amount\":{\"quantity\":2126900,\"unit\":\"lovelace\"},\"deposit_returned\":{\"quantity\":0,\"unit\":\"lovelace\"},\"deposit_taken\":{\"quantity\":0,\"unit\":\"lovelace\"},\"direction\":\"outgoing\",\"expires_at\":{\"absolute_slot_number\":36820,\"epoch_number\":306,\"slot_number\":100,\"time\":\"2026-11-10T07:24:26Z\"},\"fee\":{\"quantity\":126900,\"unit\":\"lovelace\"},\"id\":\"46f4c419bd2b18cdbad12b18ce6f9d8f84d09d2ea7df9f273339bfcd821a8559\",\"inputs\":[{\"address\":\"addr_test1qznefvv8jj0euxwe3gmhsl4k73dck8d2tv933zf6tkvqx9jd79df2ktn80w9rzjpw7v2kd349h44zx3jzdz85sas4gpqgy7fdl\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"id\":\"4efd9bd2cc3fd6c7e2a48a27ce75a4dcde7d5980c2381ba2851a8e5a80e21d8e\",\"index\":0}],\"inserted_at\":{\"absolute_slot_number\":823,\"epoch_number\":6,\"height\":{\"quantity\":396,\"unit\":\"block\"},\"slot_number\":103,\"time\":\"2026-11-10T05:24:26.600Z\"},\"metadata\":null,\"outputs\":[{\"address\":\"addr_test1vzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969yc2mg7gf\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]},{\"address\":\"addr_test1qz3ln55gqglzvte0upr2tz9zpf6dxpz5ry4356u5lmtvmtjd79df2ktn80w9rzjpw7v2kd349h44zx3jzdz85sas4gpqsl6vn9\",\"amount\":{\"quantity\":97873100,\"unit\":\"lovelace\"},\"assets\":[]}],\"pending_since\":null,\"script_validity\":\"valid\",\"status\":\"in_ledger\",\"withdrawals\":[]},\"constructed\":{\"coin_selection\":{\"change\":[{\"address\":\"addr_test1qz3ln55gqglzvte0upr2tz9zpf6dxpz5ry4356u5lmtvmtjd79df2ktn80w9rzjpw7v2kd349h44zx3jzdz85sas4gpqsl6vn9\",\"amount\":{\"quantity\":97873100,\"unit\":\"lovelace\"},\"assets\":[],\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"1\",\"0\"]}],\"collateral\":[],\"deposits_returned\":[],\"deposits_taken\":[],\"inputs\":[{\"address\":\"addr_test1qznefvv8jj0euxwe3gmhsl4k73dck8d2tv933zf6tkvqx9jd79df2ktn80w9rzjpw7v2kd349h44zx3jzdz85sas4gpqgy7fdl\",\"amount\":{\"quantity\":100000000,\"unit\":\"lovelace\"},\"assets\":[],\"derivation_path\":[\"1852H\",\"1815H\",\"0H\",\"0\",\"0\"],\"id\":\"4efd9bd2cc3fd6c7e2a48a27ce75a4dcde7d5980c2381ba2851a8e5a80e21d8e\",\"index\":0}],\"outputs\":[{\"address\":\"addr_test1vzz6hulv54gzf2suy2u5gkvmt6ysasfdlvvegy3fmf969yc2mg7gf\",\"amount\":{\"quantity\":2000000,\"unit\":\"lovelace\"},\"assets\":[]}],\"withdrawals\":[]},\"fee\":{\"quantity\":126900,\"unit\":\"lovelace\"},\"script_cost\":{\"quantity\":0,\"unit\":\"lovelace\"},\"transaction\":\"84a600d90102818258204efd9bd2cc3fd6c7e2a48a27ce75a4dcde7d5980c2381ba2851a8e5a80e21d8e00018282581d6085abf3eca55024aa1c22b944599b5e890ec12dfb19941229da4ba2931a001e848082583900a3f9d288023e262f2fe046a588a20a74d30454192b1a6b94fed6cdae4df15a9559733bdc518a417798ab36352deb511a3213447a43b0aa021a05d56ccc021a0001efb403198fd408000f00a0f5f6\"},\"fee_proof\":{\"fee\":126900,\"signed_bytes\":270,\"size\":{\"bootstrap_bytes\":0,\"estimated_bytes\":269,\"original_ledger_bytes\":269,\"transaction_id\":\"46f4c419bd2b18cdbad12b18ce6f9d8f84d09d2ea7df9f273339bfcd821a8559\",\"within_size_limit\":true},\"transaction_id\":\"46f4c419bd2b18cdbad12b18ce6f9d8f84d09d2ea7df9f273339bfcd821a8559\"},\"funding\":{\"4efd9bd2cc3fd6c7e2a48a27ce75a4dcde7d5980c2381ba2851a8e5a80e21d8e#0\":{\"address\":\"addr_test1qznefvv8jj0euxwe3gmhsl4k73dck8d2tv933zf6tkvqx9jd79df2ktn80w9rzjpw7v2kd349h44zx3jzdz85sas4gpqgy7fdl\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":100000000}}},\"label\":\"before\",\"minimum_ada\":866310,\"node_parameters\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"rejection\":{\"code\":\"utxo_too_small\",\"info\":{\"tx_output_index\":0,\"tx_output_lovelace_required_minimum\":{\"quantity\":866310,\"unit\":\"lovelace\"},\"tx_output_lovelace_specified\":{\"quantity\":1,\"unit\":\"lovelace\"}},\"message\":\"One of the outputs you've specified has an ada quantity that is below the minimum required. Either increase the ada quantity to at least the minimum, or specify an ada quantity of zero, in which case the wallet will automatically assign the correct minimum ada quantity to the output.\"},\"remaining\":97873100,\"signed\":{\"script_validity\":\"valid\",\"status\":\"pending\",\"transaction\":\"84a600d90102818258204efd9bd2cc3fd6c7e2a48a27ce75a4dcde7d5980c2381ba2851a8e5a80e21d8e00018282581d6085abf3eca55024aa1c22b944599b5e890ec12dfb19941229da4ba2931a001e848082583900a3f9d288023e262f2fe046a588a20a74d30454192b1a6b94fed6cdae4df15a9559733bdc518a417798ab36352deb511a3213447a43b0aa021a05d56ccc021a0001efb403198fd408000f00a100d901028182582013bea00e1865110ae55d7a016ea2144089afed744db802910f7e62d8dd65c5a558401f5a0a20bbaa480e174566044b532f0a341105417392295249e8253f49adb0bf3c787c228a3c65f365e168920102908fcb67ab86e45e8a2a37c615056a62f60ff5f6\"}},\"enactment\":{\"after_parameters\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":4,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":101,\"utxoCostPerByte\":4320},\"anchor_hash\":\"9ab30539f63a5e7d65352ed99128fa9b9328293cdddf645ff412dfc16750d173\",\"before_parameters\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"committee_authorized\":{\"committee\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":{\"expiration\":100,\"hotCredsAuthStatus\":{\"contents\":{\"keyHash\":\"d66608958c9b3a7f791e6118a3150d916518772ef88406c4e44ed7ab\"},\"tag\":\"MemberAuthorized\"},\"nextEpochChange\":{\"tag\":\"NoChangeExpected\"},\"status\":\"Active\"}},\"epoch\":6,\"threshold\":1},\"committee_before\":{\"committee\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":{\"expiration\":100,\"hotCredsAuthStatus\":{\"tag\":\"MemberNotAuthorized\"},\"nextEpochChange\":{\"tag\":\"NoChangeExpected\"},\"status\":\"Active\"}},\"epoch\":6,\"threshold\":1},\"counts_as_conformance_evidence\":false,\"format_version\":1,\"governance_after\":{\"committee\":{\"members\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":100},\"threshold\":1},\"constitution\":{\"anchor\":{\"dataHash\":\"ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2\",\"url\":\"ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm\"}},\"currentPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":4,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":101,\"utxoCostPerByte\":4320},\"futurePParams\":{\"tag\":\"NoPParamsUpdate\"},\"nextRatifyState\":{\"enactedGovActions\":[],\"expiredGovActions\":[],\"nextEnactState\":{\"committee\":{\"members\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":100},\"threshold\":1},\"constitution\":{\"anchor\":{\"dataHash\":\"ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2\",\"url\":\"ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm\"}},\"curPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":4,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":101,\"utxoCostPerByte\":4320},\"prevGovActionIds\":{\"Committee\":null,\"Constitution\":null,\"HardFork\":null,\"PParamUpdate\":{\"govActionIx\":0,\"txId\":\"30124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda\"}},\"prevPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310}},\"ratificationDelayed\":false},\"previousPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"proposals\":[]},\"governance_before\":{\"committee\":{\"members\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":100},\"threshold\":1},\"constitution\":{\"anchor\":{\"dataHash\":\"ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2\",\"url\":\"ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm\"}},\"currentPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"futurePParams\":{\"tag\":\"NoPParamsUpdate\"},\"nextRatifyState\":{\"enactedGovActions\":[],\"expiredGovActions\":[],\"nextEnactState\":{\"committee\":{\"members\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":100},\"threshold\":1},\"constitution\":{\"anchor\":{\"dataHash\":\"ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2\",\"url\":\"ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm\"}},\"curPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"prevGovActionIds\":{\"Committee\":null,\"Constitution\":null,\"HardFork\":null,\"PParamUpdate\":null},\"prevPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310}},\"ratificationDelayed\":false},\"previousPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"proposals\":[]},\"governance_proposed\":{\"committee\":{\"members\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":100},\"threshold\":1},\"constitution\":{\"anchor\":{\"dataHash\":\"ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2\",\"url\":\"ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm\"}},\"currentPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"futurePParams\":{\"contents\":null,\"tag\":\"PotentialPParamsUpdate\"},\"nextRatifyState\":{\"enactedGovActions\":[],\"expiredGovActions\":[],\"nextEnactState\":{\"committee\":{\"members\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":100},\"threshold\":1},\"constitution\":{\"anchor\":{\"dataHash\":\"ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2\",\"url\":\"ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm\"}},\"curPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"prevGovActionIds\":{\"Committee\":null,\"Constitution\":null,\"HardFork\":null,\"PParamUpdate\":null},\"prevPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310}},\"ratificationDelayed\":false},\"previousPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"proposals\":[{\"actionId\":{\"govActionIx\":0,\"txId\":\"30124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda\"},\"committeeVotes\":{},\"dRepVotes\":{},\"expiresAfter\":12,\"proposalProcedure\":{\"anchor\":{\"dataHash\":\"9ab30539f63a5e7d65352ed99128fa9b9328293cdddf645ff412dfc16750d173\",\"url\":\"http://127.0.0.1:44671/anchor.json\"},\"deposit\":1000000,\"govAction\":{\"contents\":[null,{\"stakePoolTargetNum\":4,\"txFeePerByte\":101,\"utxoCostPerByte\":4320},null],\"tag\":\"ParameterChange\"},\"returnAddr\":{\"credential\":{\"keyHash\":\"8df6492424a8dafdc9fdbe29814884ac7566a84f8c14cce4227bc751\"},\"network\":\"Testnet\"}},\"proposedIn\":6,\"stakePoolVotes\":{}}]},\"governance_voted\":{\"committee\":{\"members\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":100},\"threshold\":1},\"constitution\":{\"anchor\":{\"dataHash\":\"ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2\",\"url\":\"ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm\"}},\"currentPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"futurePParams\":{\"tag\":\"NoPParamsUpdate\"},\"nextRatifyState\":{\"enactedGovActions\":[],\"expiredGovActions\":[],\"nextEnactState\":{\"committee\":{\"members\":{\"keyHash-213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec14\":100},\"threshold\":1},\"constitution\":{\"anchor\":{\"dataHash\":\"ca41a91f399259bcefe57f9858e91f6d00e1a38d6d9c63d4052914ea7bd70cb2\",\"url\":\"ipfs://bafkreifnwj6zpu3ixa4siz2lndqybyc5wnnt3jkwyutci4e2tmbnj3xrdm\"}},\"curPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"prevGovActionIds\":{\"Committee\":null,\"Constitution\":null,\"HardFork\":null,\"PParamUpdate\":null},\"prevPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310}},\"ratificationDelayed\":false},\"previousPParams\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"proposals\":[{\"actionId\":{\"govActionIx\":0,\"txId\":\"30124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda\"},\"committeeVotes\":{\"keyHash-d66608958c9b3a7f791e6118a3150d916518772ef88406c4e44ed7ab\":\"VoteYes\"},\"dRepVotes\":{},\"expiresAfter\":12,\"proposalProcedure\":{\"anchor\":{\"dataHash\":\"9ab30539f63a5e7d65352ed99128fa9b9328293cdddf645ff412dfc16750d173\",\"url\":\"http://127.0.0.1:44671/anchor.json\"},\"deposit\":1000000,\"govAction\":{\"contents\":[null,{\"stakePoolTargetNum\":4,\"txFeePerByte\":101,\"utxoCostPerByte\":4320},null],\"tag\":\"ParameterChange\"},\"returnAddr\":{\"credential\":{\"keyHash\":\"8df6492424a8dafdc9fdbe29814884ac7566a84f8c14cce4227bc751\"},\"network\":\"Testnet\"}},\"proposedIn\":6,\"stakePoolVotes\":{}}]},\"kind\":\"owned-committee-parameter-enactment\",\"proposal\":{\"after\":{\"30124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda#0\":{\"address\":\"addr_test1vzf03l6vq6yz2yd86ytkk8l6zc8sxzk340ac4ggelkuzenquap84f\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":97676500}}},\"before\":{\"16c0fc676572d4cc4f432dbb0a389268c186ea17536ddd48f70e587466d09afc#0\":{\"address\":\"addr_test1vzf03l6vq6yz2yd86ytkk8l6zc8sxzk340ac4ggelkuzenquap84f\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":98818900}}},\"deposit\":1000000,\"fee\":142400,\"label\":\"proposal\",\"node_parameters\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"signed_transaction\":{\"cborHex\":\"84a400d901028182582016c0fc676572d4cc4f432dbb0a389268c186ea17536ddd48f70e587466d09afc00018182581d6092f8ff4c06882511a7d1176b1ffa160f030ad1abfb8aa119fdb82ccc1a05d26cd4021a00022c4014d9010281841a000f4240581de08df6492424a8dafdc9fdbe29814884ac7566a84f8c14cce4227bc7518400f6a30018650804111910e0f6827822687474703a2f2f3132372e302e302e313a34343637312f616e63686f722e6a736f6e58209ab30539f63a5e7d65352ed99128fa9b9328293cdddf645ff412dfc16750d173a100d901028182582039665647c7f529c57d1c570dfbb389dc10ca3bc51f005af5f0e7a872ac94032e5840fb46c98e479a7494ed99b75f5bb9438d759ce25491958834eecffe9f42633fcdba2e5fd2b23e27a7d900fec1023884d6158088554b9270f4b48e68ab9876250ef5f6\",\"description\":\"Ledger Cddl Format\",\"type\":\"Tx ConwayEra\"},\"transaction_id\":\"30124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda\"},\"proposal_id\":\"30124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda\",\"setup\":{\"after\":{\"16c0fc676572d4cc4f432dbb0a389268c186ea17536ddd48f70e587466d09afc#0\":{\"address\":\"addr_test1vzf03l6vq6yz2yd86ytkk8l6zc8sxzk340ac4ggelkuzenquap84f\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":98818900}}},\"before\":{\"406c601d35423bf91d3992e19d0f8788d735a2ce220f5f40720476b9fe6348ad#0\":{\"address\":\"addr_test1vzf03l6vq6yz2yd86ytkk8l6zc8sxzk340ac4ggelkuzenquap84f\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":100000000}}},\"deposit\":1000000,\"fee\":181100,\"label\":\"authorization\",\"node_parameters\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"signed_transaction\":{\"cborHex\":\"84a400d9010281825820406c601d35423bf91d3992e19d0f8788d735a2ce220f5f40720476b9fe6348ad00018182581d6092f8ff4c06882511a7d1176b1ffa160f030ad1abfb8aa119fdb82ccc1a05e3db54021a0002c36c04d901028283078200581c8df6492424a8dafdc9fdbe29814884ac7566a84f8c14cce4227bc7511a000f4240830e8200581c213563f0ae1e54810e89fed04f13387be990c5c8d2c3afa2b291ec148200581cd66608958c9b3a7f791e6118a3150d916518772ef88406c4e44ed7aba100d9010283825820fba9f8e0988fdc9b4d714f731a9330fdd668e0ce89733b4fb31a4d673d01562b58404e1fec7d4197f4f45bb57436f68c76ca7008a40778a91e0ced26c46fdb41b62fdd051c3e1330733dc8586ed146c4ad93da702a72017889bf3ab5d7f1675b0e02825820793e279919b431a3875c3efa9ed0c3920d95f327f036c5f0e548864d839e1b1d58409440ee8be8fbd03127801f2bb26efa2e67a4a50858b530f82d39c65df1bc81fabbc5206161daea8cf3b33e30e59e9579690bb4b99f664d2c9ad8c1808b99cc0682582039665647c7f529c57d1c570dfbb389dc10ca3bc51f005af5f0e7a872ac94032e5840ee8620099359c75ba9f400457da9d30346aa4e5758da8b81788d2ef84e16656e48b563191eef448fc192670809bfecb517f3be446ce5580b8795dfceb2680b07f5f6\",\"description\":\"Ledger Cddl Format\",\"type\":\"Tx ConwayEra\"},\"transaction_id\":\"16c0fc676572d4cc4f432dbb0a389268c186ea17536ddd48f70e587466d09afc\"},\"vote\":{\"after\":{\"89a6a84038e854ff47f6df08bc51a2db8d5b05ed634ccd7726b7727b840dd5d9#0\":{\"address\":\"addr_test1vzf03l6vq6yz2yd86ytkk8l6zc8sxzk340ac4ggelkuzenquap84f\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":97519200}}},\"before\":{\"30124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda#0\":{\"address\":\"addr_test1vzf03l6vq6yz2yd86ytkk8l6zc8sxzk340ac4ggelkuzenquap84f\",\"datum\":null,\"datumhash\":null,\"inlineDatum\":null,\"inlineDatumRaw\":null,\"referenceScript\":null,\"value\":{\"lovelace\":97676500}}},\"deposit\":0,\"fee\":157300,\"label\":\"vote\",\"node_parameters\":{\"collateralPercentage\":150,\"committeeMaxTermLength\":146,\"committeeMinSize\":1,\"costModels\":{\"PlutusV1\":[197209,0,1,1,396231,621,0,1,150000,1000,0,1,150000,32,2477736,29175,4,29773,100,29773,100,29773,100,29773,100,29773,100,29773,100,100,100,29773,100,150000,32,150000,32,150000,32,150000,1000,0,1,150000,32,150000,1000,0,8,148000,425507,118,0,1,1,150000,1000,0,8,150000,112536,247,1,150000,10000,1,136542,1326,1,1000,150000,1000,1,150000,32,150000,32,150000,32,1,1,150000,1,150000,4,103599,248,1,103599,248,1,145276,1366,1,179690,497,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,148000,425507,118,0,1,1,61516,11218,0,1,150000,32,148000,425507,118,0,1,1,148000,425507,118,0,1,1,2477736,29175,4,0,82363,4,150000,5000,0,1,150000,32,197209,0,1,1,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,150000,32,3345831,1,1],\"PlutusV3\":[100788,420,1,1,1000,173,0,1,1000,59957,4,1,11183,32,201305,8356,4,16000,100,16000,100,16000,100,16000,100,16000,100,16000,100,100,100,16000,100,94375,32,132994,32,61462,4,72010,178,0,1,22151,32,91189,769,4,2,85848,123203,7305,-900,1716,549,57,85848,0,1,1,1000,42921,4,2,24548,29498,38,1,898148,27279,1,51775,558,1,39184,1000,60594,1,141895,32,83150,32,15299,32,76049,1,13169,4,22100,10,28999,74,1,28999,74,1,43285,552,1,44749,541,1,33852,32,68246,32,72362,32,7243,32,7391,32,11546,32,85848,123203,7305,-900,1716,549,57,85848,0,1,90434,519,0,1,74433,32,85848,123203,7305,-900,1716,549,57,85848,0,1,1,85848,123203,7305,-900,1716,549,57,85848,0,1,955506,213312,0,2,270652,22588,4,1457325,64566,4,20467,1,4,0,141992,32,100788,420,1,1,81663,32,59498,32,20142,32,24588,32,20744,32,25933,32,24623,32,43053543,10,53384111,14333,10,43574283,26308,10,16000,100,16000,100,962335,18,2780678,6,442008,1,52538055,3756,18,267929,18,76433006,8868,18,52948122,18,1995836,36,3227919,12,901022,1,166917843,4307,36,284546,36,158221314,26549,36,74698472,36,333849714,1,254006273,72,2174038,72,2261318,64571,4,207616,8310,4,1293828,28716,63,0,1,1006041,43623,251,0,1]},\"dRepActivity\":20,\"dRepDeposit\":500000000,\"dRepVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppEconomicGroup\":0,\"ppGovGroup\":0,\"ppNetworkGroup\":0,\"ppTechnicalGroup\":0,\"treasuryWithdrawal\":0,\"updateToConstitution\":0},\"executionUnitPrices\":{\"priceMemory\":5.77e-2,\"priceSteps\":7.21e-5},\"govActionDeposit\":1000000,\"govActionLifetime\":6,\"maxBlockBodySize\":239857,\"maxBlockExecutionUnits\":{\"memory\":50000000,\"steps\":40000000000},\"maxBlockHeaderSize\":1100,\"maxCollateralInputs\":3,\"maxTxExecutionUnits\":{\"memory\":10000000,\"steps\":10000000000},\"maxTxSize\":16384,\"maxValueSize\":5000,\"minFeeRefScriptCostPerByte\":15,\"minPoolCost\":0,\"monetaryExpansion\":2.0e-2,\"poolPledgeInfluence\":0.1,\"poolRetireMaxEpoch\":1000000,\"poolVotingThresholds\":{\"committeeNoConfidence\":0,\"committeeNormal\":0,\"hardForkInitiation\":0,\"motionNoConfidence\":0,\"ppSecurityGroup\":0},\"protocolVersion\":{\"major\":12,\"minor\":0},\"stakeAddressDeposit\":1000000,\"stakePoolDeposit\":0,\"stakePoolTargetNum\":3,\"treasuryCut\":0.1,\"txFeeFixed\":100000,\"txFeePerByte\":100,\"utxoCostPerByte\":4310},\"signed_transaction\":{\"cborHex\":\"84a400d901028182582030124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda00018182581d6092f8ff4c06882511a7d1176b1ffa160f030ad1abfb8aa119fdb82ccc1a05d00660021a0002667413a18200581cd66608958c9b3a7f791e6118a3150d916518772ef88406c4e44ed7aba182582030124621bb52a42026293a290853b55f3ee2f1cb6b4e0fd70611042894207dda008201f6a100d901028282582039665647c7f529c57d1c570dfbb389dc10ca3bc51f005af5f0e7a872ac94032e584040dcc11ea24ee4a578eefa0dc075caae2b593197ffc81f62f0111beb44bc10a326203f400b69f1669e4272770ad3a632eefbef126e200f10ada0b76c60ae710782582017e912d38f57ff042eb301fe2c50e91bb83cea63a5cf4f8ed5b37e5cf1d8815558407da8de7a5f85e6f8da19457fb10326b3cdf949c4dc78b9d32e1cffb442ab8f270245c4b5d4bfd2abd82d7349a4a24290d0101678ef4392940453c63e85565805f5f6\",\"description\":\"Ledger Cddl Format\",\"type\":\"Tx ConwayEra\"},\"transaction_id\":\"89a6a84038e854ff47f6df08bc51a2db8d5b05ed634ccd7726b7727b840dd5d9\"}}}"
+    },
+    {
+      "case": "live:parameters-workflow",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:deleteWallet",
+      "requirements": [
+        "api:deleteWallet:positive",
+        "api:deleteWallet:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:cleanup-owned-wallet",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:deleteWallet",
+      "requirements": [
+        "api:deleteWallet:positive",
+        "api:deleteWallet:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:cleanup-owned-wallet",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:deleteWallet",
+      "requirements": [
+        "api:deleteWallet:positive",
+        "api:deleteWallet:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:cleanup-owned-wallet",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:deleteWallet",
+      "requirements": [
+        "api:deleteWallet:positive",
+        "api:deleteWallet:status:204"
+      ],
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "case": "live:cleanup-owned-wallet",
+      "requirements": [],
+      "passed": true,
+      "detail": "passed"
+    }
+  ]
+}

@@ -78,7 +78,7 @@ async fn prepare(
         .read()
         .await
         .0
-        .saturating_add(7_200_000 / state.config.slot_millis);
+        .saturating_add(7_200_000 / state.config.current_slot_millis());
     let mut groups = std::collections::VecDeque::from([utxos]);
     let mut built = Vec::new();
     while let Some(inputs) = groups.pop_front() {

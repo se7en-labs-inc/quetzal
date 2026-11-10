@@ -8,9 +8,12 @@ use hyper_util::{
     service::TowerToHyperService,
 };
 use rustls::{server::WebPkiClientVerifier, RootCertStore, ServerConfig};
+use std::future::IntoFuture;
 use std::{fs::File, io::BufReader, path::Path, sync::Arc, time::Duration};
+use tokio::task::JoinSet;
 use tokio::{net::TcpListener, sync::Semaphore};
 use tokio_rustls::TlsAcceptor;
+use tokio_util::sync::CancellationToken;
 
 fn reader(path: &Path) -> Result<BufReader<File>> {
     Ok(BufReader::new(File::open(path).with_context(|| {
@@ -57,27 +60,63 @@ pub async fn serve(
     listener: TcpListener,
     router: Router,
     tls: Option<Arc<ServerConfig>>,
+    stop: CancellationToken,
 ) -> Result<()> {
     let Some(tls) = tls else {
-        axum::serve(listener, router).await?;
+        let serving = axum::serve(listener, router)
+            .with_graceful_shutdown(stop.clone().cancelled_owned())
+            .into_future();
+        tokio::pin!(serving);
+        tokio::select! {
+            result = &mut serving => result?,
+            _ = stop.cancelled() => {
+                tokio::time::timeout(Duration::from_secs(10), serving)
+                    .await.context("HTTP shutdown exceeded its grace period")??;
+            }
+        }
         return Ok(());
     };
     let acceptor = TlsAcceptor::from(tls);
     let capacity = Arc::new(Semaphore::new(1024));
+    let mut connections = JoinSet::new();
     loop {
+        while let Some(result) = connections.try_join_next() {
+            result.context("TLS connection task panicked")?;
+        }
         // Backpressure bounds both unauthenticated handshakes and open connections.
-        let permit = capacity.clone().acquire_owned().await?;
-        let (stream, _) = listener.accept().await?;
+        let permit = tokio::select! {
+            biased;
+            _ = stop.cancelled() => break,
+            permit = capacity.clone().acquire_owned() => permit?,
+        };
+        let (stream, _) = tokio::select! {
+            biased;
+            _ = stop.cancelled() => break,
+            accepted = listener.accept() => accepted?,
+        };
         let acceptor = acceptor.clone();
         let service = TowerToHyperService::new(router.clone());
-        tokio::spawn(async move {
+        let stop = stop.clone();
+        connections.spawn(async move {
             let _permit = permit;
-            match tokio::time::timeout(Duration::from_secs(10), acceptor.accept(stream)).await {
+            let handshake = tokio::select! {
+                biased;
+                _ = stop.cancelled() => return,
+                result = tokio::time::timeout(Duration::from_secs(10), acceptor.accept(stream)) => result,
+            };
+            match handshake {
                 Ok(Ok(stream)) => {
-                    if let Err(error) = Builder::new(TokioExecutor::new())
-                        .serve_connection_with_upgrades(TokioIo::new(stream), service)
-                        .await
-                    {
+                    let builder = Builder::new(TokioExecutor::new());
+                    let connection = builder.serve_connection_with_upgrades(TokioIo::new(stream), service);
+                    tokio::pin!(connection);
+                    let result = tokio::select! {
+                        result = &mut connection => result,
+                        _ = stop.cancelled() => {
+                            connection.as_mut().graceful_shutdown();
+                            connection.await
+                        }
+                    };
+                    if let Err(error) = result {
                         tracing::debug!(%error, "TLS HTTP connection closed");
                     }
                 }
@@ -86,104 +125,24 @@ pub async fn serve(
             }
         });
     }
+    drop(listener);
+    let drained = tokio::time::timeout(Duration::from_secs(10), async {
+        while let Some(result) = connections.join_next().await {
+            result.context("TLS connection task panicked")?;
+        }
+        Ok::<_, anyhow::Error>(())
+    })
+    .await;
+    // On a failed drain, abort and join remaining tasks before releasing state.
+    connections.shutdown().await;
+    drained.context("TLS shutdown exceeded its grace period")?
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use reqwest::{Certificate, Client, Identity};
-    use std::{
-        error::Error,
-        fs,
-        process::{Command, Stdio},
-    };
-
-    fn openssl(root: &Path, args: &[&str]) {
-        let status = Command::new("openssl")
-            .current_dir(root)
-            .args(args)
-            .stdin(Stdio::null())
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .status()
-            .expect("Nix test environment must supply openssl");
-        assert!(status.success(), "openssl fixture generation failed");
-    }
-
-    fn pki(root: &Path) {
-        for ca in ["ca", "foreign"] {
-            openssl(
-                root,
-                &[
-                    "req",
-                    "-x509",
-                    "-newkey",
-                    "rsa:2048",
-                    "-nodes",
-                    "-sha256",
-                    "-days",
-                    "2",
-                    "-subj",
-                    &format!("/CN={ca}"),
-                    "-keyout",
-                    &format!("{ca}.key"),
-                    "-out",
-                    &format!("{ca}.crt"),
-                    "-addext",
-                    "basicConstraints=critical,CA:TRUE",
-                    "-addext",
-                    "keyUsage=critical,keyCertSign,cRLSign",
-                ],
-            );
-        }
-        for (leaf, ca, purpose) in [
-            ("server", "ca", "serverAuth"),
-            ("client", "ca", "clientAuth"),
-            ("untrusted", "foreign", "clientAuth"),
-        ] {
-            openssl(
-                root,
-                &[
-                    "req",
-                    "-new",
-                    "-newkey",
-                    "rsa:2048",
-                    "-nodes",
-                    "-sha256",
-                    "-subj",
-                    &format!("/CN={leaf}"),
-                    "-keyout",
-                    &format!("{leaf}.key"),
-                    "-out",
-                    &format!("{leaf}.csr"),
-                ],
-            );
-            fs::write(root.join("extensions"), format!(
-                "basicConstraints=critical,CA:FALSE\nkeyUsage=critical,digitalSignature,keyEncipherment\nextendedKeyUsage={purpose}\nsubjectAltName=IP:127.0.0.1,DNS:localhost\n"
-            )).unwrap();
-            openssl(
-                root,
-                &[
-                    "x509",
-                    "-req",
-                    "-in",
-                    &format!("{leaf}.csr"),
-                    "-CA",
-                    &format!("{ca}.crt"),
-                    "-CAkey",
-                    &format!("{ca}.key"),
-                    "-CAcreateserial",
-                    "-days",
-                    "2",
-                    "-sha256",
-                    "-extfile",
-                    "extensions",
-                    "-out",
-                    &format!("{leaf}.crt"),
-                ],
-            );
-        }
-    }
+    use std::{error::Error, fs};
 
     fn config(root: &Path) -> Config {
         Config {
@@ -304,18 +263,99 @@ mod tests {
         );
     }
 
+    #[tokio::test]
+    async fn shutdown_drains_an_admitted_request_in_http_and_tls_modes() {
+        for tls in [false, true] {
+            let directory = tempfile::tempdir().unwrap();
+            let root = directory.path();
+            if tls {
+                crate::test_pki::generate(root);
+            }
+            let entered = Arc::new(tokio::sync::Notify::new());
+            let finish = Arc::new(tokio::sync::Notify::new());
+            let handler_entered = entered.clone();
+            let handler_finish = finish.clone();
+            let router = Router::new().route(
+                "/inflight",
+                axum::routing::get(move || {
+                    let entered = handler_entered.clone();
+                    let finish = handler_finish.clone();
+                    async move {
+                        entered.notify_one();
+                        finish.notified().await;
+                        "completed"
+                    }
+                }),
+            );
+            let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
+            let socket = listener.local_addr().unwrap();
+            let stop = CancellationToken::new();
+            let server = tokio::spawn(serve(
+                listener,
+                router,
+                if tls {
+                    load(&config(root)).unwrap()
+                } else {
+                    None
+                },
+                stop.clone(),
+            ));
+            let client = if tls {
+                client(root, "ca.crt", Some("client"), socket)
+            } else {
+                Client::builder().no_proxy().build().unwrap()
+            };
+            let request = tokio::spawn(async move {
+                client
+                    .get(format!(
+                        "{}://{socket}/inflight",
+                        if tls { "https" } else { "http" }
+                    ))
+                    .send()
+                    .await
+                    .unwrap()
+                    .text()
+                    .await
+                    .unwrap()
+            });
+            tokio::time::timeout(Duration::from_secs(3), entered.notified())
+                .await
+                .unwrap();
+            stop.cancel();
+            tokio::time::sleep(Duration::from_millis(30)).await;
+            assert!(
+                !server.is_finished(),
+                "server abandoned an admitted request"
+            );
+            finish.notify_one();
+            assert_eq!(request.await.unwrap(), "completed");
+            tokio::time::timeout(Duration::from_secs(3), server)
+                .await
+                .unwrap()
+                .unwrap()
+                .unwrap();
+            assert!(tokio::net::TcpStream::connect(socket).await.is_err());
+        }
+    }
+
     #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
     async fn production_transport_requires_client_auth_and_rejects_plaintext() {
         let directory = tempfile::tempdir().unwrap();
         let root = directory.path();
-        pki(root);
+        crate::test_pki::generate(root);
         let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
         let socket = listener.local_addr().unwrap();
         let router = Router::new().route(
             "/v2/wallets",
             axum::routing::get(|| async { axum::Json(serde_json::json!([])) }),
         );
-        let server = tokio::spawn(serve(listener, router, load(&config(root)).unwrap()));
+        let stop = CancellationToken::new();
+        let server = tokio::spawn(serve(
+            listener,
+            router,
+            load(&config(root)).unwrap(),
+            stop.clone(),
+        ));
         for _ in 0..10 {
             for identity in [None, Some("untrusted"), Some("server")] {
                 positive(root, socket).await;
@@ -350,8 +390,8 @@ mod tests {
             .expect_err("plaintext reached the API");
         assert!(!error.is_timeout() && !error.is_connect());
         positive(root, socket).await;
-        server.abort();
-        assert!(server.await.unwrap_err().is_cancelled());
+        stop.cancel();
+        server.await.unwrap().unwrap();
 
         // Bad files/key pairs never silently select the HTTP branch.
         let mut invalid = config(root);

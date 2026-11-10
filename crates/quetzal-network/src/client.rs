@@ -10,6 +10,15 @@ pub struct NodeClient {
     inner: PallasNodeClient,
 }
 
+pub struct NetworkSnapshot {
+    pub slot: u64,
+    pub hash: Vec<u8>,
+    pub height: u64,
+    pub era: u16,
+    pub timings: Vec<crate::statequery::EraTiming>,
+    pub genesis: Option<crate::statequery::NativeGenesis>,
+}
+
 // Pallas spawns its multiplexer before negotiating the handshake. Own it until
 // negotiation completes so cancellation cannot detach those background tasks.
 struct Connecting(Option<PallasNodeClient>);
@@ -25,6 +34,38 @@ impl Drop for Connecting {
 }
 
 impl NodeClient {
+    /// Live node header and native clock, independent of historical replay.
+    pub async fn network_snapshot(
+        socket: &str,
+        magic: u64,
+    ) -> Result<NetworkSnapshot, NetworkError> {
+        let connected = Self::connect(socket, magic).await?;
+        let mut owned = Connecting(Some(connected.inner));
+        let client = owned
+            .0
+            .as_mut()
+            .ok_or_else(|| NetworkError::Protocol("missing query connection".into()))?;
+        let result = async {
+            let mut query = crate::StateQuerier::new(client.statequery());
+            let header = query.chain_header().await?;
+            let era = query.current_era().await?;
+            let timing = query.era_timings().await?;
+            let genesis = query.genesis_config().await?;
+            Ok(NetworkSnapshot {
+                slot: header.0,
+                hash: header.1,
+                height: header.2,
+                era,
+                timings: timing,
+                genesis,
+            })
+        }
+        .await;
+        if let Some(client) = owned.0.take() {
+            client.abort().await;
+        }
+        result
+    }
     /// Current native header, independent of background replay progress.
     pub async fn chain_header_at_tip(
         socket: &str,

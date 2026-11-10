@@ -36,6 +36,11 @@ pub struct SharedWalletCreation<'a> {
 }
 
 impl WalletService {
+    /// Flush the service's committed wallet state after all writers stop.
+    pub fn flush(&self) -> Result<(), WalletError> {
+        self.db.flush()
+    }
+
     pub fn new(db_path: &str) -> Result<Self, WalletError> {
         let db = WalletDb::open(db_path)?;
         Ok(WalletService {

@@ -3,6 +3,37 @@
 **Branch**: `001-wallet-rust-backend`
 **Input**: spec.md, plan.md, research.md, data-model.md
 
+## Complete reference server compatibility — 2026-11-10
+
+- [x] C019 Derive and implement the complete pinned public serve parser, defaults, conflicts, literal option spellings and help; make API/UI listeners, temporary database, logging, pool metadata and IPFS settings effective. Updated external CLI profile passes5/5; real process controls exercise fixed/random API/UI and temporary/persistent state.
+- [x] C020 Remove mandatory sibling Shelley-genesis naming; obtain accurate native era timing and query the node tip independently of service replay. Implement configurable tolerance and complete reference sync progress/disconnect behavior. Native clock/bignum/rounding boundaries pass locally; external HTTP network profile passes. Deferred lagging/ahead acceptance remains unqualified.
+- [x] C021 Implement bounded configured token registry lookup and reference property validation, policy isolation, optional/missing/malformed/unavailable/disabled behavior, retaining exact native quantities. Frozen candidate passes updated external registry profile9/9 with reference-prepared/native-confirmed assets.
+- [ ] C022 Verify real-process complete CLI/TLS/EOF acknowledged/pending persistence, configured metadata and tolerance behavior against the pinned reference and independent native/registry fixtures.
+- [ ] C023 Assess service-wide replay/restart, implement justified durable intersections with rollback safety, and execute representative first-init/restart/reconnect comparisons when the required independent fixture is available. Record missing native datasets explicitly.
+- [ ] C024 Run required Nix formatting, strict Clippy, workspace tests, release/package builds and the updated read-only external contract; retain frozen identities, reports, failed attempts and cleanup. Provide the actual ready-to-test binary and exact launch command without wrappers or omitted options.
+
+The user deferred provision of mainnet/lagging/ahead/representative-history fixtures
+(“don't worry about it for now”). C023's dataset qualification is deferred;
+service-wide pool history still replays and no faster restart claim is made.
+The updated full652/44 runner aborts replacing its own precreated acceptance
+reports (`create_new` collision). With explicit user approval, unchanged public
+profiles are executed individually; receipts remain separate from the incomplete
+full cohort. See evidence/20261110-replacement/HARNESS-BLOCKER.md.
+
+## Parent-controlled shutdown — 2026-11-10
+
+- [x] C015 Accept the valueless shutdown-handler flag; monitor stdin until EOF without treating ordinary bytes as shutdown or blocking runtime teardown on signals.
+- [x] C016 Drain HTTP/TLS connections, cancel/join global and wallet workers, flush both database families and return failure on cleanup errors; reuse this path for SIGTERM/Ctrl-C.
+- [x] C017 Verify real HTTP/TLS subprocess open-pipe/input/EOF/immediate-EOF/default controls, listener release and durable wallet recovery; run required Nix-shell checks and release build. All 88 executed workspace tests pass; formatting, strict Clippy, release and Nix package build pass.
+- [x] C018 Verify funded confirmed/pending EOF recovery with independent native observations; distinguish this from metadata-only process tests and the external harness's unimplemented T110 coverage. Candidate-specific mutual-TLS native check passes for Shelley and Icarus Byron, with exact paused-tip recovery and original pending IDs independently confirmed after resume; evidence/20261110-shutdown/native-eof.json.
+
+The frozen shutdown candidate's full catalogue regression covers643/646 with
+36/38 profiles passing. Two native fixtures stalled with NoLedgerView; unchanged
+focused expiry/retry repeats pass79/79 and108/108. The failed cohort remains
+incomplete, with no imported reports or altered assertions. Public receipts and
+owned cleanup are in evidence/20261110-shutdown. Broader external T111 work was
+added during execution and is separate from this requested EOF implementation.
+
 ## Transport and specification correction — 2026-11-09
 
 This section supersedes historical continuation notes below. V58 qualified the
@@ -446,7 +477,7 @@ also remains unreproduced; preserve the harness provenance checks.
 - [ ] T140 Collect golden JSON response fixtures from cardano-wallet reference (capture via curl against Haskell server) into crates/quetzal-api/tests/golden/
 - [ ] T141 Write golden-file comparison tests for all Daedalus-critical endpoints (wallet create/get, tx submit, network info) in crates/quetzal-api/tests/api_wallets.rs
 - [ ] T142 [P] Add tracing::instrument to all WalletService methods in crates/quetzal-wallet/src/wallet.rs
-- [ ] T143 [P] Implement graceful SIGTERM shutdown (axum graceful_shutdown + worker cancellation) in crates/quetzal-api/src/main.rs
+- [x] T143 [P] Implement graceful SIGTERM shutdown (axum graceful_shutdown + worker cancellation) in crates/quetzal-api/src/main.rs
 - [ ] T144 [P] Add CORS headers (allow Daedalus localhost origins) via tower-http CorsLayer in crates/quetzal-api/src/main.rs
 - [ ] T145 [P] Add request timeout middleware (default 30s) via tower-http TimeoutLayer in crates/quetzal-api/src/main.rs
 - [x] T146 Run `cargo clippy --all-targets -- --deny warnings` and fix all warnings across workspace

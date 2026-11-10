@@ -14,6 +14,33 @@ pub(crate) struct WalletWorker {
 }
 
 impl AppState {
+    pub async fn stop_all_wallet_workers(&self) -> anyhow::Result<()> {
+        let workers: Vec<_> = self
+            .wallet_workers
+            .lock()
+            .await
+            .drain()
+            .map(|(_, worker)| worker)
+            .collect();
+        let mut tasks = Vec::with_capacity(workers.len() * 2);
+        for worker in workers {
+            let _ = worker.stop.send(());
+            let _ = worker.retry_stop.send(());
+            tasks.push(worker.task);
+            tasks.push(worker.retry_task);
+        }
+        let mut failure = None;
+        for task in tasks {
+            if let Err(error) = task.await {
+                failure.get_or_insert(error);
+            }
+        }
+        match failure {
+            Some(error) => Err(error.into()),
+            None => Ok(()),
+        }
+    }
+
     pub async fn start_wallet_worker(&self, wallet: WalletId) {
         let mut workers = self.wallet_workers.lock().await;
         if workers
@@ -138,13 +165,9 @@ impl AppState {
             return Ok(());
         }
         let slot = self.chain_tip.read().await.0;
-        let coefficient = if let Some(genesis) = &self.config.shelley_genesis {
-            genesis["activeSlotsCoeff"]
-                .as_f64()
-                .ok_or_else(|| WalletError::TxBuild("invalid active slot coefficient".into()))?
-        } else {
-            0.05
-        };
+        let coefficient = self.config.active_slot_coefficient().ok_or_else(|| {
+            WalletError::TxBuild("native active slot coefficient unavailable".into())
+        })?;
         if !coefficient.is_finite() || coefficient <= 0.0 || coefficient > 1.0 {
             return Err(WalletError::TxBuild(
                 "invalid active slot coefficient".into(),

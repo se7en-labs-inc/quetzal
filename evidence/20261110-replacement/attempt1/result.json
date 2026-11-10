@@ -1,0 +1,73 @@
+{
+  "cleanup_error": null,
+  "complete": false,
+  "config_sha256": "8ab4b5c7a6530fd82a5cf2cb7671a409bda8685fadf6d52e07dab2f000bad0f9",
+  "consumer_code_required": false,
+  "coverage": {
+    "covered": 0,
+    "exhaustive": false,
+    "failures": [
+      "launch:sync-tolerance-effect",
+      "launch:mainnet",
+      "sync:partial-node",
+      "sync:wallet-at-stale-node",
+      "sync:intermediate-progress",
+      "sync:tolerance-boundaries",
+      "sync:node-catchup",
+      "sync:disconnect",
+      "metadata:not-found",
+      "metadata:malformed",
+      "metadata:unavailable",
+      "metadata:disabled",
+      "recovery:first-initialization",
+      "recovery:same-db-restart",
+      "recovery:node-reconnection",
+      "recovery:follower-vs-wallet-checkpoint",
+      "cli:reference-option-inventory"
+    ],
+    "missing": [
+      "process.launch-contract",
+      "network.partial-node-sync",
+      "assets.registry-metadata",
+      "process.shutdown-handler",
+      "performance.chain-follower-recovery",
+      "cli.serve-options"
+    ],
+    "required": 6,
+    "unexecuted_cases": {
+      "assets.registry-metadata": [
+        "metadata:not-found",
+        "metadata:malformed",
+        "metadata:unavailable",
+        "metadata:disabled"
+      ],
+      "cli.serve-options": [
+        "cli:reference-option-inventory"
+      ],
+      "network.partial-node-sync": [
+        "sync:partial-node",
+        "sync:wallet-at-stale-node",
+        "sync:intermediate-progress",
+        "sync:tolerance-boundaries",
+        "sync:node-catchup",
+        "sync:disconnect"
+      ],
+      "performance.chain-follower-recovery": [
+        "recovery:first-initialization",
+        "recovery:same-db-restart",
+        "recovery:node-reconnection",
+        "recovery:follower-vs-wallet-checkpoint"
+      ],
+      "process.launch-contract": [
+        "launch:mainnet",
+        "launch:sync-tolerance-effect"
+      ],
+      "process.shutdown-handler": [
+        "shutdown:flush-pending"
+      ]
+    }
+  },
+  "funded_pending_eof_case_requires_full_owned_pending_profile": true,
+  "identities_unchanged": true,
+  "owned_cleanup_passed": true
+}

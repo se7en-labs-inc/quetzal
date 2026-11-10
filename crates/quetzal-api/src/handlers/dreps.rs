@@ -66,7 +66,7 @@ pub(crate) async fn refresh(state: &AppState) -> Result<(), String> {
             .zip(entry.anchor_data_hash.as_ref())
         {
             if entry.metadata.is_none() {
-                entry.metadata = fetch_metadata(url, hash).await;
+                entry.metadata = fetch_metadata(url, hash, &state.config.ipfs_gateway_url).await;
             }
         }
     }
@@ -74,12 +74,13 @@ pub(crate) async fn refresh(state: &AppState) -> Result<(), String> {
     Ok(())
 }
 
-async fn fetch_metadata(url: &str, hash: &str) -> Option<quetzal_wallet::drep::DRepMetadata> {
+async fn fetch_metadata(
+    url: &str,
+    hash: &str,
+    gateway: &str,
+) -> Option<quetzal_wallet::drep::DRepMetadata> {
     let url = if let Some(path) = url.strip_prefix("ipfs://") {
-        format!(
-            "https://ipfs.blockfrost.dev/ipfs/{}",
-            path.strip_prefix("ipfs/").unwrap_or(path)
-        )
+        format!("{gateway}{}", path.strip_prefix("ipfs/").unwrap_or(path))
     } else {
         url.to_string()
     };
@@ -296,7 +297,7 @@ mod tests {
             let address = listener.local_addr().unwrap();
             let app = Router::new().route("/",get(move ||{let raw=raw.clone(); async move {raw}}));
             let task = tokio::spawn(async move {axum::serve(listener,app).await.unwrap()});
-            let result = fetch_metadata(&format!("http://{address}/"),&hash).await;
+            let result = fetch_metadata(&format!("http://{address}/"),&hash,"https://ipfs.blockfrost.dev/ipfs/").await;
             assert_eq!(result.is_some(),accepted);
             task.abort();
             let _ = task.await;

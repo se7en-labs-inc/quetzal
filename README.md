@@ -18,30 +18,35 @@ and watchful posture represent local verification and resilient wallet state.
 
 ## Validation status
 
-The mutual-TLS implementation passes the corrected independent contract:
+The current replacement implements the pinned public `cardano-wallet serve`
+options, configured token metadata, native sync progress, mutual TLS and stdin
+EOF shutdown. See the [replacement validation report](evidence/20261110-replacement/VALIDATION.md)
+for exact results and remaining qualification gaps.
 
 | Validation | Result |
 | --- | --- |
-| Required conformance obligations | **646 / 646** |
-| Executed checks | **3,808 passed, zero failures** |
-| Fresh execution profiles | **38 / 38** |
-| Mutual TLS, server authentication and plaintext rejection | **Pass** |
-| Native rollback and reapplication | **224 / 224 checks** |
-| Workspace tests, strict Clippy, formatting, release and Nix package build | **Pass** |
+| Open stdin / ordinary bytes / EOF / immediate EOF / flag absent | **Pass over HTTP and mutual TLS** |
+| Same-database latest-acknowledged/funded/pending EOF recovery | **Pass: Shelley and Icarus Byron over mutual TLS** |
+| Pinned public CLI / configured token registry profiles | **Pass: 5/5 and 9/9 cases** |
+| Workspace tests | **99 passed, zero failures; one existing live-node test ignored** |
+| Strict Clippy, formatting, release and Nix package build | **Pass** |
 
-These receipts describe one complete run against one frozen candidate and adapter,
-with unchanged binary identities throughout. The suite includes differential HTTP checks against
-the Haskell wallet, independent internal vectors, and real native-node controls.
+The current independent catalogue contains **652 obligations and 44 profiles**.
+Its full runner aborts while replacing precreated reports; the
+[harness handoff](evidence/20261110-replacement/HARNESS-BLOCKER.md) documents the
+failure. Unchanged public profiles are executed separately with their own
+receipts. The full cohort remains incomplete, with no imported passing reports.
 
-Start with the [validation report](evidence/20261109-mtls/VALIDATION.md),
-[machine-readable result](evidence/20261109-mtls/result.json), and
-[coverage gate](evidence/20261109-mtls/coverage.json). All
-[38 reports](evidence/20261109-mtls/reports/) and earlier failed attempts are
-retained for review. The conformance suite is maintained separately; its assertions
-were not changed to make Quetzal pass.
+The preceding mutual-TLS commit `dd6676e` passed **646/646 obligations, 3,808
+checks and all 38 profiles** against one frozen candidate and adapter. Those
+[historical receipts](evidence/20261109-mtls/VALIDATION.md) include differential
+HTTP checks against the Haskell wallet, independent internal vectors and real
+native-node controls. The conformance suite is maintained separately; its
+assertions were not changed to make Quetzal pass.
 
-Actual Daedalus launch-and-use and performance acceptance remain separate and
-unqualified. The earlier [V58 receipts](evidence/20261109-v58-gate/VALIDATION.md)
+Actual Daedalus launch-and-use and the user-deferred mainnet, lagging/ahead and
+representative-history performance qualification remain outstanding. The earlier
+[V58 receipts](evidence/20261109-v58-gate/VALIDATION.md)
 remain historical evidence for the old 643/37 contract without TLS.
 
 ## Wallet capabilities
@@ -71,6 +76,7 @@ The flake currently targets **x86_64 Linux**.
 
 ```sh
 nix --quiet develop --command cargo build --locked --release --workspace
+nix --quiet develop --command install -Dm755 target/release/quetzal target/daedalus/cardano-wallet
 ```
 
 This produces:
@@ -78,6 +84,7 @@ This produces:
 | Executable | Purpose |
 | --- | --- |
 | `target/release/quetzal` | Wallet HTTP service |
+| `target/daedalus/cardano-wallet` | Tested drop-in copy of the same release binary |
 | `target/release/quetzal-conformance-adapter` | JSON-line adapter exposing real wallet internals to the independent suite |
 
 ## Connect to your node
@@ -96,16 +103,18 @@ For a testnet or dedicated local cluster:
 ```
 
 The `--testnet` argument is the **Byron genesis file**, not a network name or magic
-number. Quetzal also reads `shelley-genesis.json` in the same directory to obtain
-slot and epoch lengths. Both files and the socket must belong to the same network.
+number. Native node queries supply era timing and Shelley genesis parameters;
+no neighboring file named `shelley-genesis.json` is required.
+The genesis and socket must belong to the same network.
 Use a separate database directory for each network.
 
-For mainnet, omit `--testnet`:
+For mainnet, pass `--mainnet`:
 
 ```sh
 ./target/release/quetzal serve \
   --database ./state/mainnet-wallet \
   --node-socket /path/to/mainnet/node.socket \
+  --mainnet \
   --port 8090
 ```
 
@@ -116,9 +125,10 @@ curl --fail http://127.0.0.1:8090/v2/network/information
 curl --fail http://127.0.0.1:8090/v2/blocks/latest/header
 ```
 
-The default configuration uses mainnet, `/tmp/cardano-node.socket`, loopback
-`127.0.0.1`, port `8090`, and `./quetzal.sled`. Pass explicit paths when operating
-more than one instance. Without TLS flags the loopback listener serves HTTP for
+`--node-socket` and exactly one of `--mainnet` or `--testnet FILE` are required.
+The default listener is loopback `127.0.0.1:8090`. Omitting `--database` uses a
+temporary database; pass a persistent directory for real wallets.
+Without TLS flags the loopback listener serves HTTP for
 local development and semantic fixtures; it does not satisfy transport conformance.
 
 ## Mutual TLS
@@ -129,6 +139,7 @@ Daedalus requires mutually authenticated TLS. Supply all three certificate paths
 ./target/release/quetzal serve \
   --database ./state/mainnet-wallet \
   --node-socket /path/to/mainnet/node.socket \
+  --mainnet \
   --port 8090 \
   --tls-ca-cert /private/tls/ca.crt \
   --tls-sv-cert /private/tls/server.crt \
@@ -148,10 +159,60 @@ the owning application or deployment.
 
 Missing or malformed TLS files, mismatched certificate/key pairs and partial flag
 sets fail startup. TLS mode exposes
-one secure listener and rejects plaintext and unauthenticated TLS clients.
-`--host` accepts an explicit IP, including `::1`; non-loopback binds require TLS.
+secure listeners and rejects plaintext and unauthenticated TLS clients.
+`--listen-address` accepts an IP, hostname or supported wildcard; `--host` remains
+an alias. Non-loopback binds require TLS. The optional UI uses the same TLS policy.
 These flags support the secure conformance launch. An actual pinned Daedalus
 launch-and-use run is still required before claiming drop-in application compatibility.
+
+## Drop-in executable and server options
+
+The tested artifact is `target/daedalus/cardano-wallet`, copied byte-for-byte from
+the qualified release binary. The Nix package installs `bin/cardano-wallet` as an
+alias of `quetzal`:
+
+```sh
+nix build .#quetzal
+./result/bin/cardano-wallet serve --help
+```
+
+Point Daedalus's wallet executable setting at the absolute `cardano-wallet` path.
+Its public `serve` arguments go directly to the binary. No argument-filtering
+wrapper is needed. `version` and `--version` report Quetzal's actual identity.
+
+Fixed or random API/UI ports, `--listen-address`, `--sync-tolerance`,
+`--pool-metadata-fetching`, `--token-metadata-server`, `--ipfs-gateway-url`,
+`--log-level` and the named tracing options are effective. Use `serve --help` and
+`serve --help-tracing` for their syntax and conflicts. The optional UI is Quetzal's
+read-only wallet view. Pool metadata configuration persists in the wallet database.
+
+`--sync-tolerance 300s` is the default. Network progress uses the connected node's
+actual tip and native era clock independently of historical pool replay. Syncing
+responses include the reference percentage; a disconnected node reports
+`not_responding` without a percentage.
+
+`--token-metadata-server URL` queries the registry's `metadata/query` endpoint
+for subjects formed from policy ID and asset name. Asset list/detail responses
+include validated name/description and available ticker, URL, logo and decimals.
+Missing metadata is omitted; fetch/parse failures expose the reference metadata
+error. Omitting the option disables registry requests. Decimals never scale
+ledger quantities.
+
+## Parent-controlled shutdown
+
+Pass the valueless `--shutdown-handler` flag when a parent application owns
+Quetzal's stdin pipe. The service keeps running while that pipe is open; ordinary
+input bytes do not stop it. Closing the last writer sends EOF and requests a clean
+shutdown. The flag works with the mutual TLS options above.
+
+Shutdown stops accepting connections, drains admitted requests, joins background
+and wallet workers, and flushes both wallet database families before returning
+success. SIGTERM and Ctrl-C use the same cleanup path. A failed cleanup returns
+a nonzero exit status.
+
+With the flag, an already closed stdin (including `/dev/null`) requests immediate
+shutdown. Without it, stdin EOF is ignored. Parents that use the flag must keep
+the pipe open for the service's lifetime and allow up to 30 seconds for shutdown.
 
 ## Security model
 
@@ -197,7 +258,7 @@ wallet-conformance conform \
 ```
 
 The workspace must be new. The runner owns fresh fixtures and services, executes
-all 38 profiles and writes `result.json`, `coverage.json` and individual reports.
+all configured profiles and writes `result.json`, `coverage.json` and individual reports.
 The committed [TLS configuration](evidence/20261109-mtls/execution-config.json)
 and [identity manifest](evidence/20261109-mtls/identities.json) record the qualified
 setup; their machine-specific paths must be provisioned for another host. The

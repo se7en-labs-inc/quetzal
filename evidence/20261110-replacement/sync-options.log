@@ -1,0 +1,13 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/master' is dirty
+error[E0603]: function `authenticated_api` is private
+  --> evidence/20261110-replacement/sync-options.rs:92:26
+   |
+92 |     let api = transport::authenticated_api(&url, pki, TIMEOUT)?;
+   |                          ^^^^^^^^^^^^^^^^^ private function
+   |
+note: the function `authenticated_api` is defined here
+  --> src/transport.rs:273:0
+
+error: aborting due to 1 previous error
+
+For more information about this error, try `rustc --explain E0603`.

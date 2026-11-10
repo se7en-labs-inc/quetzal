@@ -1,0 +1,230 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/master' is dirty
+   Compiling quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/master/crates/quetzal-api)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.72s
+     Running unittests src/lib.rs (target/debug/deps/quetzal_address-7fef36d05d096472)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/quetzal-a41fb6b4cb0d211e)
+
+running 27 tests
+test config::tests::configurable_tolerance_and_reference_percentage_rounding_are_independent_of_replay ... ok
+test config::tests::fractional_slot_rounding_is_exact_on_testnet_and_mainnet ... ok
+test config::tests::isolated_service_paths_and_port ... ok
+test config::tests::native_clock_is_shared_across_config_clones_and_respects_era_boundaries ... ok
+test cli::tests::logging_global_threshold_caps_component_levels_and_off_disables_component ... ok
+test cli::tests::complete_options_have_real_configuration_and_defaults ... ok
+test config::tests::invalid_options_are_rejected ... ok
+test config::tests::shutdown_handler_is_a_valueless_opt_in_flag ... ok
+test cli::tests::malformed_and_conflicting_options_fail_with_otherwise_valid_launch ... ok
+test config::tests::mainnet_slot_clock_crosses_shelley_boundary ... ok
+test config::tests::wallet_progress_accounts_for_mainnet_byron_slot_lengths ... ok
+test cli::tests::byron_genesis_alone_is_accepted_and_conflicting_networks_are_rejected ... ok
+test config::tests::transport_configuration_is_complete_and_http_is_loopback_only ... ok
+test config::tests::wallet_progress_uses_wall_time_and_the_reference_tolerance_boundary ... ok
+test handlers::settings::tests::captured_node_validity_rejection_preserves_ledger_bounds_and_slot ... ok
+test metadata::tests::required_and_optional_properties_follow_reference_validation ... ok
+test metadata::tests::real_registry_batches_subjects_preserves_policy_and_bounds_failures ... ok
+test handlers::network::tests::disconnected_node_never_inherits_replay_ready_or_a_percentage ... ok
+test handlers::settings::tests::smash_health_uses_real_status_endpoint_and_bounds_responses ... ok
+test handlers::pool_catalogue::tests::fetched_metadata_requires_the_registered_hash_and_bounded_valid_fields ... ok
+test handlers::pool_catalogue::tests::smash_gc_fetches_actual_delisted_ids_and_persists_the_result ... ok
+test handlers::dreps::tests::metadata_requires_authentic_bytes_and_well_typed_cip119_fields ... ok
+test transport::tests::shutdown_drains_an_admitted_request_in_http_and_tls_modes ... ok
+test handlers::transactions::transaction_tests::history_accepts_zero_limit_and_filters_individual_withdrawals ... ok
+test workers::tests::stopping_a_worker_during_handshake_releases_its_socket ... ok
+test transport::tests::production_transport_requires_client_auth_and_rejects_plaintext ... ok
+test handlers::transactions::transaction_tests::repeated_signing_preserves_other_witnesses_and_body ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.65s
+
+     Running unittests src/bin/conformance.rs (target/debug/deps/quetzal_conformance_adapter-f6d6eb62473bfdb2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/shutdown.rs (target/debug/deps/shutdown-2c0352f496ee491f)
+
+running 1 test
+test real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.97s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_crypto-87d13c07dce84528)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/derivation.rs (target/debug/deps/derivation-2dcb4354d581aa82)
+
+running 7 tests
+test public_key_length ... ok
+test cip1854_account_index_deterministic ... ok
+test cip1854_shared_key_differs_from_cip1852 ... ok
+test account_key_from_root ... ok
+test child_key_derivation ... ok
+test different_entropy_different_key ... ok
+test icarus_master_key_deterministic ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.37s
+
+     Running tests/passphrase.rs (target/debug/deps/passphrase-2d3968b1119794a8)
+
+running 4 tests
+test byron_protection_survives_storage_and_authenticates_the_password ... ok
+test wrong_passphrase_returns_error ... ok
+test encrypt_decrypt_roundtrip ... ok
+test fresh_salt_nonce_each_time ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 9.39s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_network-1701b746fa348d59)
+
+running 4 tests
+test statequery::era_clock_tests::native_interpreter_decodes_picosecond_bignums_and_millisecond_slot_lengths ... ok
+test txsubmit::tests::retry_admission_requires_the_complete_typed_node_mempool_guard ... ok
+test client::tests::cancelled_handshake_closes_the_socket ... ok
+test client::tests::stalled_handshake_times_out_and_closes_the_socket ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+     Running tests/node_query.rs (target/debug/deps/node_query-6190c17aaaa21579)
+
+running 1 test
+test live_protocol_and_era_history ... ignored, requires an explicitly configured private node
+
+test result: ok. 0 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_primitives-b05ffe1bc7cd8c36)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (target/debug/deps/roundtrip-0552df346b9b9384)
+
+running 12 tests
+test checkpoint_default_is_origin ... ok
+test coin_checked_add_overflow ... ok
+test coin_checked_sub_underflow ... ok
+test coin_json_roundtrip ... ok
+test cbor_roundtrip_wallet_meta ... ok
+test tx_history_key_ordering ... ok
+test tx_hash_hex_roundtrip ... ok
+test utxo_key_different_outputs ... ok
+test slot_key_ordering ... ok
+test value_pure_ada ... ok
+test wallet_id_hex_roundtrip ... ok
+test prop::coin_add_sub_inverse ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_wallet-6d6466ce160d0d5a)
+
+running 27 tests
+test balancing::tests::collateral_guards_precede_funding_and_follow_reference_order ... ok
+test metadatum::tests::metadata_reports_overflow_without_rounding_the_integer ... ok
+test metadatum::tests::metadata_retains_full_unsigned_and_negative_ledger_boundaries ... ok
+test pool_metrics::tests::rounds_percentage_ties_even_and_preserves_exact_saturation ... ok
+test seeded_selection::tests::splitmix_matches_upstream_published_examples ... ok
+test policy::tests::policy_rejects_missing_repeated_and_foreign_cosigners ... ok
+test staking::tests::withdrawal_benefit_uses_the_pinned_conservative_cost_boundary ... ok
+test policy::tests::policy_hash_resolves_the_template_and_includes_native_script_domain ... ok
+test stake::tests::groups_by_stake_credential_including_script_and_unassigned ... ok
+test db::pending_retry_tests::retry_slot_survives_reopen_and_never_recreates_a_forgotten_transaction ... ok
+test db::pool_chain::tests::rolls_back_the_earlier_unreleased_production_only_record_format ... ok
+test db::chain::tests::aborted_block_leaves_no_utxo_checkpoint_or_journal ... ok
+test db::chain::tests::replay_and_rollback_restore_spent_inputs_addresses_and_checkpoints ... ok
+test db::pool_chain::tests::counts_registrations_replay_same_slot_blocks_and_rollback_atomically ... ok
+test db::chain::tests::rollback_restores_stake_deposits_and_votes_without_reverting_credentials ... ok
+test shared::tests::shared_delegation_indices_match_pinned_reference_addresses ... ok
+test balancing::tests::input_boundaries_preserve_body_identity_and_exact_signed_size ... ok
+test db::submissions::tests::confirmed_and_forgotten_rediscovered_submissions_retain_distinct_durable_status ... ok
+test payment::tests::payment_conserves_native_assets_and_authenticates_metadata ... ok
+test balancing::tests::preselected_balance_conserves_assets_and_preserves_wallet_state ... ok
+test byron_addresses::tests::random_address_creation_and_import_are_atomic_and_durable ... ok
+test db::change::tests::allocation_is_atomic_survives_forgetting_and_does_not_expose_the_unused_pool ... ok
+test bootstrap::tests::random_and_icarus_bootstrap_witnesses_authenticate_inputs_without_changing_the_body ... ok
+test policy::tests::policy_key_requires_authorization_and_is_persisted ... ok
+test shared::tests::peers_activate_atomically_and_sign_with_their_shared_account_keys ... ok
+test credentials::tests::mnemonic_recovery_authenticates_identity_and_persists_only_the_new_credentials ... ok
+test credentials::tests::migration_failure_is_durable_and_commit_preserves_a_concurrent_chain_tip ... ok
+
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 14.66s
+
+     Running tests/namespaces.rs (target/debug/deps/namespaces-c6e27fcb1abb5948)
+
+running 1 test
+test identical_family_ids_have_independent_durable_credentials_and_lifecycle ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.04s
+
+     Running tests/wallet.rs (target/debug/deps/wallet-789d280b9fa048d9)
+
+running 15 tests
+test get_wallet_not_found ... ok
+test get_addresses_returns_gap_limit_count ... ok
+test watch_wallet_reproduces_addresses_without_private_derivation ... ok
+test shared_wallet_deterministic_id ... ok
+test account_xpub_stored_at_creation ... ok
+test initial_balance_is_zero ... ok
+test create_shared_wallet_single_cosigner_self ... ok
+test delete_wallet ... ok
+test create_and_list_wallet ... ok
+test wallet_identity_matches_published_haskell_root_vector ... ok
+test delete_shared_wallet ... ok
+test duplicate_wallet_rejected ... ok
+test update_passphrase_wrong_old ... ok
+test derive_account_xpub_at_requires_correct_passphrase ... ok
+test update_passphrase_success ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.93s
+
+   Doc-tests quetzal_address
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_crypto
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_network
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_primitives
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_wallet
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Checking quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/master/crates/quetzal-api)
+error: manual implementation of `.is_multiple_of()`
+   --> crates/quetzal-api/src/config.rs:173:71
+    |
+173 |             + u128::from(fraction > 500_000 || fraction == 500_000 && millis % 2 != 0))
+    |                                                                       ^^^^^^^^^^^^^^^ help: replace with: `!millis.is_multiple_of(2)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#manual_is_multiple_of
+    = note: `-D clippy::manual-is-multiple-of` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_is_multiple_of)]`
+
+error: could not compile `quetzal-api` (bin "quetzal") due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `quetzal-api` (bin "quetzal" test) due to 1 previous error

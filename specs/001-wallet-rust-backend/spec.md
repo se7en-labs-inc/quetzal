@@ -2,10 +2,47 @@
 
 **Feature Branch**: `001-wallet-rust-backend`
 **Created**: 2026-08-22
-**Status**: Transport correction qualified: 646/646 obligations, 38 profiles; actual Daedalus/performance acceptance remains open
+**Status**: Public serve/runtime/registry/sync/EOF implementation complete; current independent qualification partial; historical transport qualification 646/646, 38 profiles; deferred fixtures and actual Daedalus use remain open
 **Project**: Quetzal (se7en-labs-inc/quetzal)
 
 ## Overview
+
+### Complete reference server compatibility — 2026-11-10
+
+The user requires a usable cardano-wallet replacement for Daedalus, including
+the complete pinned public `serve` command and its runtime effects. Implement
+the consumer-independent T111 / FR-019–024 contract in the external read-only
+conformance checkout (currently652 obligations/44 profiles). Preserve the
+existing EOF implementation and all historical receipts with their original
+fingerprints. No flag stripping, compatibility wrapper, ignored options or
+candidate-specific genesis filename convention may earn compatibility credit.
+
+- Match explicit mainnet/testnet selection, `--listen-address`, fixed/random API
+  and UI listeners, database/socket options, TLS, duration parsing/defaults,
+  token/pool metadata sources, IPFS gateway and reference logging controls.
+  Missing/malformed/conflicting inputs fail explicitly. Help advertises the
+  implemented public inventory. Preserve legacy Quetzal aliases where harmless.
+- Honor the supplied Byron genesis without requiring a neighboring specially
+  named Shelley file; use native era information for slot/epoch timing.
+- Report actual connected-node tip and reference-derived wall-time sync progress,
+  including numeric percent while syncing, configured tolerance and disconnect
+  behavior. Per-wallet/service replay catch-up must not manufacture network-ready.
+- Query the configured registry via pinned POST metadata/query. Match required
+  and optional metadata validation, policy/name isolation and graceful missing,
+  malformed/unavailable/disabled results. Keep ledger quantities unscaled.
+- Preserve latest acknowledged metadata and pending submissions across actual
+  EOF and same-database restart with TLS and complete public launch settings.
+- Measure service-follower initialization/restart/reconnection separately from
+  wallet checkpoints against the reference on the same hash-pinned representative
+  native fixture. The current external policy requires100000blocks/1GiB and a
+  genuinely historically funded wallet. Missing fixtures remain explicit gaps;
+  a tiny cluster or source review cannot qualify that workload.
+
+Acceptance includes real reference/candidate native/registry executions and a
+ready-to-test release binary with the unchanged public command. Consumer source
+and UI builds are not prerequisites under the corrected external specification.
+The user deferred supplying mainnet/lagging/ahead and representative-history
+fixtures for this iteration; their missing qualifications must remain explicit.
 
 ### Continuation — 2026-11-06
 
@@ -31,6 +68,30 @@ Quetzal reimplements the Cardano wallet backend in Rust. Its API target is all 7
 ---
 
 ## User Scenarios & Testing
+
+### Parent-controlled shutdown — 2026-11-10
+
+The external contract's T110 / FR-017–018 requires the literal valueless
+`--shutdown-handler` flag as an exception to general CLI compatibility exclusions.
+With this flag, read and discard stdin bytes until EOF. An open pipe and ordinary
+input must leave HTTP/TLS serving; EOF, including immediate EOF, starts clean
+shutdown. Without the flag, stdin EOF has no lifecycle effect.
+
+Clean shutdown stops accepting connections, drains admitted requests with a
+bounded grace period, cancels TLS handshakes and wallet/background workers, flushes
+Shelley/shared and Byron stores, releases listeners and exits successfully within
+the reference 30-second deadline. SIGTERM and Ctrl-C use the same cleanup path;
+they are separate from EOF acceptance. Cleanup/storage errors must fail the process
+rather than report successful clean exit. Avoid an uncancellable Tokio stdin read
+that prevents runtime teardown on another shutdown trigger.
+
+Verify actual owned HTTP and mutual-TLS subprocesses with open-pipe, ordinary-byte,
+EOF, immediate-EOF and flag-absent controls, stalled handshakes, bounded successful
+exit, released ports and same-database wallet identity/keys/addresses recovery.
+Funded confirmed/pending state acceptance needs independent native observations;
+mock or empty-wallet recovery does not qualify those cases. The external executable
+646/38 catalogue does not yet implement T110; its prior receipts cannot qualify
+this extension or a new binary by association.
 
 ### User Story 1 — Wallet Lifecycle Management (Priority: P1)
 
@@ -262,7 +323,7 @@ A Daedalus user can list available stake pools, delegate their wallet's stake to
 
 ### Measurable Outcomes
 
-- **SC-001**: A fresh full execution of the corrected independent contract passes all 646 obligations and 38 profiles with unchanged identities and owned cleanup. Historical or mock-only evidence cannot satisfy this criterion.
+- **SC-001**: A fresh full execution of the current independent contract passes all 652 obligations and 44 profiles with unchanged identities and owned cleanup. Historical or mock-only evidence cannot satisfy this criterion. The earlier646/38 result remains a historical transport qualification.
 - **SC-002**: Target, not current qualification: create/fund/send within 10 seconds excluding chain sync. Define the measurement boundary, faucet and node-inclusion conditions before asserting this on preprod; external faucet/network delays cannot be hidden.
 - **SC-003**: Target, not current qualification: at least 500 blocks per second. A benchmark must pin hardware, era/block corpus, wallet count/address discovery and persistence settings before measuring.
 - **SC-004**: Unit and property test coverage covers all domain functions in the primitives, crypto, and address crates.

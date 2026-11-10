@@ -117,18 +117,10 @@ fn float(value: f64) -> Result<Value, ApiError> {
 }
 
 fn retirement(epoch: u64, state: &AppState) -> Result<PoolRetirement, ApiError> {
-    let slot = if state.config.network == crate::config::Network::Mainnet {
-        if epoch < 208 {
-            epoch.checked_mul(21600)
-        } else {
-            (epoch - 208)
-                .checked_mul(432000)
-                .and_then(|slot| slot.checked_add(4492800))
-        }
-    } else {
-        epoch.checked_mul(state.config.epoch_length)
-    }
-    .ok_or_else(|| ApiError::internal("retirement slot overflow"))?;
+    let slot = state
+        .config
+        .epoch_first_slot(epoch)
+        .ok_or_else(|| ApiError::internal("retirement slot overflow"))?;
     Ok(PoolRetirement {
         epoch_number: epoch
             .try_into()

@@ -1,0 +1,24 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/master' is dirty
+   Compiling quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/master/crates/quetzal-api)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.58s
+     Running tests/shutdown.rs (target/debug/deps/shutdown-5352581ad5ea06c9)
+
+running 2 tests
+test random_api_and_ui_ports_are_live_and_omitted_database_does_not_persist_wallets ... ok
+test real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families ... FAILED
+
+failures:
+
+---- real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families stdout ----
+
+thread 'real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families' (121150) panicked at crates/quetzal-api/tests/shutdown.rs:307:41:
+called `Result::unwrap()` on an `Err` value: reqwest::Error { kind: Request, url: "http://127.0.0.1:34497/v2/wallets", source: TimedOut }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.36s
+
+error: test failed, to rerun pass `-p quetzal-api --test shutdown`

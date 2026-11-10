@@ -5,6 +5,126 @@ use pallas_network::miniprotocols::localstate::Client;
 
 use crate::NetworkError;
 
+#[derive(Debug, Clone, serde::Deserialize, serde::Serialize, PartialEq, Eq)]
+pub struct EraTiming {
+    pub start_slot: u64,
+    pub start_epoch: u64,
+    pub relative_millis: u64,
+    pub slot_millis: u64,
+    pub epoch_length: u64,
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct NativeGenesis {
+    pub security_parameter: u64,
+    pub active_slot_coefficient: f64,
+}
+
+fn decode_era_timings(bytes: &[u8]) -> Result<Vec<EraTiming>, NetworkError> {
+    use ciborium::Value;
+    fn error() -> NetworkError {
+        NetworkError::StateQuery("invalid native era interpreter".into())
+    }
+    fn array(v: &Value) -> Result<&[Value], NetworkError> {
+        v.as_array().map(Vec::as_slice).ok_or_else(error)
+    }
+    fn number(v: &Value) -> Result<u128, NetworkError> {
+        match v {
+            Value::Integer(i) => u128::try_from(*i).map_err(|_| error()),
+            Value::Tag(2, inner) => {
+                inner
+                    .as_bytes()
+                    .ok_or_else(error)?
+                    .iter()
+                    .try_fold(0u128, |n, b| {
+                        n.checked_mul(256)
+                            .and_then(|n| n.checked_add(u128::from(*b)))
+                            .ok_or_else(error)
+                    })
+            }
+            _ => Err(error()),
+        }
+    }
+    let raw: Value =
+        ciborium::from_reader(bytes).map_err(|e| NetworkError::StateQuery(e.to_string()))?;
+    let mut result = Vec::new();
+    for summary in array(&raw)? {
+        let fields = array(summary)?;
+        let start = array(fields.first().ok_or_else(error)?)?;
+        let parameters = array(fields.get(2).ok_or_else(error)?)?;
+        if start.len() < 3 || parameters.len() < 2 {
+            return Err(error());
+        }
+        let convert = |n: u128| u64::try_from(n).map_err(|_| error());
+        // Bound RelativeTime uses Fixed Pico; SlotLength is integer milliseconds.
+        let era = EraTiming {
+            relative_millis: convert(number(&start[0])? / 1_000_000_000)?,
+            start_slot: convert(number(&start[1])?)?,
+            start_epoch: convert(number(&start[2])?)?,
+            epoch_length: convert(number(&parameters[0])?)?,
+            slot_millis: convert(number(&parameters[1])?)?,
+        };
+        if era.slot_millis == 0 || era.epoch_length == 0 {
+            return Err(error());
+        }
+        if result.last().is_some_and(|last: &EraTiming| {
+            last.start_slot > era.start_slot || last.relative_millis > era.relative_millis
+        }) {
+            return Err(error());
+        }
+        result.push(era);
+    }
+    if result.is_empty() {
+        return Err(error());
+    }
+    Ok(result)
+}
+
+#[cfg(test)]
+mod era_clock_tests {
+    use super::*;
+    use ciborium::Value;
+    fn number(n: u128) -> Value {
+        if let Ok(n) = u64::try_from(n) {
+            Value::Integer(n.into())
+        } else {
+            Value::Tag(2, Box::new(Value::Bytes(n.to_be_bytes().to_vec())))
+        }
+    }
+    #[test]
+    fn native_interpreter_decodes_picosecond_bignums_and_millisecond_slot_lengths() {
+        let summary = |time, slot, epoch, length, size| {
+            Value::Array(vec![
+                Value::Array(vec![number(time), number(slot), number(epoch)]),
+                Value::Null,
+                Value::Array(vec![number(size), number(length), Value::Null, number(0)]),
+            ])
+        };
+        let raw = Value::Array(vec![
+            summary(0, 0, 0, 20000, 21600),
+            summary(89_856_000_000_000_000_000, 4_492_800, 208, 1000, 432000),
+        ]);
+        let mut bytes = Vec::new();
+        ciborium::into_writer(&raw, &mut bytes).unwrap();
+        let eras = decode_era_timings(&bytes).unwrap();
+        assert_eq!(eras[0].slot_millis, 20000);
+        assert_eq!(
+            eras[1],
+            EraTiming {
+                start_slot: 4_492_800,
+                start_epoch: 208,
+                relative_millis: 89_856_000_000,
+                slot_millis: 1000,
+                epoch_length: 432000
+            }
+        );
+        let invalid = Value::Array(vec![summary(0, 0, 0, 0, 120)]);
+        bytes.clear();
+        ciborium::into_writer(&invalid, &mut bytes).unwrap();
+        assert!(decode_era_timings(&bytes).is_err());
+    }
+}
+
 /// Protocol parameters extracted from the node.
 #[derive(Debug, Clone)]
 pub struct ProtocolParams {
@@ -46,6 +166,41 @@ pub struct StakeAccount {
 }
 
 impl<'a> StateQuerier<'a> {
+    /// Shelley genesis parameters come from the selected node, not an adjacent file.
+    pub async fn genesis_config(&mut self) -> Result<Option<NativeGenesis>, NetworkError> {
+        self.client
+            .acquire(None)
+            .await
+            .map_err(|e| NetworkError::StateQuery(e.to_string()))?;
+        let result = async {
+            let era = queries_v16::get_current_era(self.client).await?;
+            if era == 0 {
+                return Ok(None);
+            }
+            let values = queries_v16::get_genesis_config(self.client, era).await?;
+            Ok::<_, pallas_network::miniprotocols::localstate::ClientError>(
+                values.into_iter().next(),
+            )
+        }
+        .await;
+        let release = self.client.send_release().await;
+        let value = result.map_err(|e| NetworkError::StateQuery(e.to_string()))?;
+        release.map_err(|e| NetworkError::StateQuery(e.to_string()))?;
+        value
+            .map(|genesis| {
+                let fraction = genesis.active_slots_coefficient;
+                if fraction.den == 0 || fraction.num == 0 || fraction.num > fraction.den {
+                    return Err(NetworkError::StateQuery(
+                        "invalid native active slot coefficient".into(),
+                    ));
+                }
+                Ok(NativeGenesis {
+                    security_parameter: u64::from(genesis.security_param),
+                    active_slot_coefficient: fraction.num as f64 / fraction.den as f64,
+                })
+            })
+            .transpose()
+    }
     /// Read the point and height from the same acquired native chain snapshot.
     pub async fn chain_header(&mut self) -> Result<(u64, Vec<u8>, u64), NetworkError> {
         self.client
@@ -153,6 +308,16 @@ impl<'a> StateQuerier<'a> {
     }
     /// Start slot and epoch for each hard-fork era, in consensus order.
     pub async fn era_history(&mut self) -> Result<Vec<(u64, u64)>, NetworkError> {
+        Ok(self
+            .era_timings()
+            .await?
+            .into_iter()
+            .map(|era| (era.start_slot, era.start_epoch))
+            .collect())
+    }
+
+    /// Native hard-fork clock; no genesis filename convention is involved.
+    pub async fn era_timings(&mut self) -> Result<Vec<EraTiming>, NetworkError> {
         use pallas_codec::utils::AnyCbor;
         self.client
             .acquire(None)
@@ -166,36 +331,9 @@ impl<'a> StateQuerier<'a> {
             .await;
         let _ = self.client.send_release().await;
         let raw = result.map_err(|e| NetworkError::StateQuery(e.to_string()))?;
-        let summaries: Vec<AnyCbor> = raw
-            .into_decode()
-            .map_err(|e| NetworkError::StateQuery(format!("era interpreter: {e}")))?;
-        summaries
-            .into_iter()
-            .map(|summary| {
-                let fields: Vec<AnyCbor> = summary
-                    .into_decode()
-                    .map_err(|e| NetworkError::StateQuery(e.to_string()))?;
-                let start = fields
-                    .first()
-                    .ok_or_else(|| NetworkError::StateQuery("missing era bound".into()))?;
-                let bound: Vec<AnyCbor> = start
-                    .clone()
-                    .into_decode()
-                    .map_err(|e| NetworkError::StateQuery(e.to_string()))?;
-                if bound.len() != 3 {
-                    return Err(NetworkError::StateQuery("invalid era bound".into()));
-                }
-                let slot: u64 = bound[1]
-                    .clone()
-                    .into_decode()
-                    .map_err(|e| NetworkError::StateQuery(e.to_string()))?;
-                let epoch: u64 = bound[2]
-                    .clone()
-                    .into_decode()
-                    .map_err(|e| NetworkError::StateQuery(e.to_string()))?;
-                Ok((slot, epoch))
-            })
-            .collect()
+        let bytes = pallas_codec::minicbor::to_vec(raw)
+            .map_err(|e| NetworkError::StateQuery(e.to_string()))?;
+        decode_era_timings(&bytes)
     }
 
     /// Create a querier that borrows a mutable reference to a pallas

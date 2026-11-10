@@ -6,6 +6,26 @@ pub struct Config {
     pub socket_path: String,
     pub db_path: String,
     pub port: u16,
+    #[serde(default)]
+    pub ui_port: Option<u16>,
+    #[serde(default)]
+    pub temporary_database: bool,
+    #[serde(default)]
+    pub listen_address: Option<String>,
+    #[serde(default = "default_tolerance")]
+    pub sync_tolerance_seconds: u64,
+    #[serde(default, deserialize_with = "deserialize_metadata_server")]
+    pub token_metadata_server: Option<reqwest::Url>,
+    #[serde(default)]
+    pub pool_metadata_source: Option<String>,
+    #[serde(default = "default_gateway")]
+    pub ipfs_gateway_url: String,
+    #[serde(default = "default_log_level")]
+    pub log_level: String,
+    #[serde(default)]
+    pub tracers: std::collections::BTreeMap<String, String>,
+    #[serde(default)]
+    pub shutdown_handler: bool,
     #[serde(default = "loopback")]
     pub host: IpAddr,
     #[serde(default)]
@@ -21,10 +41,32 @@ pub struct Config {
     pub epoch_length: u64,
     pub genesis_hash: String,
     pub shelley_genesis: Option<serde_json::Value>,
+    #[serde(skip)]
+    pub native_eras: std::sync::Arc<std::sync::RwLock<Vec<quetzal_network::statequery::EraTiming>>>,
+    #[serde(skip)]
+    pub native_genesis:
+        std::sync::Arc<std::sync::RwLock<Option<quetzal_network::statequery::NativeGenesis>>>,
 }
 
 fn loopback() -> IpAddr {
     IpAddr::from([127, 0, 0, 1])
+}
+
+fn default_tolerance() -> u64 {
+    300
+}
+fn default_gateway() -> String {
+    "https://ipfs.blockfrost.dev/ipfs/".into()
+}
+fn default_log_level() -> String {
+    "debug".into()
+}
+fn deserialize_metadata_server<'de, D: serde::Deserializer<'de>>(
+    d: D,
+) -> Result<Option<reqwest::Url>, D::Error> {
+    Option::<String>::deserialize(d)?
+        .map(|s| crate::cli::url(&s).map_err(serde::de::Error::custom))
+        .transpose()
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
@@ -51,6 +93,16 @@ impl Default for Config {
             socket_path: "/tmp/cardano-node.socket".to_string(),
             db_path: "./quetzal.sled".to_string(),
             port: 8090,
+            ui_port: None,
+            temporary_database: false,
+            listen_address: None,
+            sync_tolerance_seconds: default_tolerance(),
+            token_metadata_server: None,
+            pool_metadata_source: None,
+            ipfs_gateway_url: default_gateway(),
+            log_level: default_log_level(),
+            tracers: Default::default(),
+            shutdown_handler: false,
             host: loopback(),
             tls_ca_cert: None,
             tls_server_cert: None,
@@ -62,29 +114,113 @@ impl Default for Config {
             epoch_length: 432000,
             genesis_hash: "5f20df933584822601f9e3f8c024eb5eb252fe8cefb24d1317dc3d432e940ebb".into(),
             shelley_genesis: None,
+            native_eras: Default::default(),
+            native_genesis: Default::default(),
         }
     }
 }
 
 impl Config {
+    pub fn set_native_genesis(&self, genesis: Option<quetzal_network::statequery::NativeGenesis>) {
+        match self.native_genesis.write() {
+            Ok(mut guard) => *guard = genesis,
+            Err(poisoned) => *poisoned.into_inner() = genesis,
+        }
+    }
+    pub fn active_slot_coefficient(&self) -> Option<f64> {
+        self.native_genesis
+            .read()
+            .ok()
+            .and_then(|g| g.as_ref().map(|g| g.active_slot_coefficient))
+            .or_else(|| {
+                self.shelley_genesis
+                    .as_ref()
+                    .and_then(|g| g["activeSlotsCoeff"].as_f64())
+            })
+            .or_else(|| (self.network == Network::Mainnet).then_some(0.05))
+    }
+    pub fn security_parameter(&self) -> Option<u64> {
+        self.native_genesis
+            .read()
+            .ok()
+            .and_then(|g| g.as_ref().map(|g| g.security_parameter))
+            .or_else(|| {
+                self.shelley_genesis
+                    .as_ref()
+                    .and_then(|g| g["securityParam"].as_u64())
+            })
+            .or_else(|| (self.network == Network::Mainnet).then_some(2160))
+    }
+    pub fn set_native_eras(&self, eras: Vec<quetzal_network::statequery::EraTiming>) {
+        match self.native_eras.write() {
+            Ok(mut guard) => *guard = eras,
+            Err(poisoned) => *poisoned.into_inner() = eras,
+        }
+    }
+    fn era_at_slot(&self, slot: u64) -> Option<quetzal_network::statequery::EraTiming> {
+        self.native_eras
+            .read()
+            .ok()?
+            .iter()
+            .rev()
+            .find(|era| era.start_slot <= slot)
+            .cloned()
+    }
+    pub fn current_slot_millis(&self) -> u64 {
+        self.native_eras
+            .read()
+            .ok()
+            .and_then(|eras| eras.last().map(|era| era.slot_millis))
+            .unwrap_or(self.slot_millis)
+    }
+    pub fn current_epoch_length(&self) -> u64 {
+        self.native_eras
+            .read()
+            .ok()
+            .and_then(|eras| eras.last().map(|era| era.epoch_length))
+            .unwrap_or(self.epoch_length)
+    }
     /// The pinned wallet's default sync tolerance is five minutes. Public
     /// progress is relative to wall time, independently of worker catch-up.
     pub fn wallet_sync_progress_at(&self, slot: u64, now: std::time::SystemTime) -> Option<f64> {
-        let now = now
+        let (covered, now) = self.sync_progress_times_at(slot, now)?;
+        let scaled = covered * 10000;
+        let floor = scaled / now;
+        let remainder = scaled % now;
+        let round_up = remainder * 2 > now || remainder * 2 == now && !floor.is_multiple_of(2);
+        Some((floor + u128::from(round_up)) as f64 / 100.0)
+    }
+
+    fn sync_progress_times_at(
+        &self,
+        slot: u64,
+        now: std::time::SystemTime,
+    ) -> Option<(u128, u128)> {
+        let elapsed_nanos = now
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap_or_default()
-            .as_millis()
-            .saturating_sub(u128::from(self.genesis_start) * 1000);
-        let covered = if self.network == Network::Mainnet {
+            .as_nanos()
+            .saturating_sub(u128::from(self.genesis_start) * 1_000_000_000);
+        let millis = elapsed_nanos / 1_000_000;
+        let fraction = elapsed_nanos % 1_000_000;
+        let now = (millis
+            + u128::from(fraction > 500_000 || fraction == 500_000 && !millis.is_multiple_of(2)))
+        .max(1);
+        let covered = if let Some(era) = self.era_at_slot(slot) {
+            u128::from(era.relative_millis)
+                + u128::from(slot - era.start_slot) * u128::from(era.slot_millis)
+        } else if self.network == Network::Mainnet {
             u128::from(slot.min(4_492_800)) * 20_000
                 + u128::from(slot.saturating_sub(4_492_800)) * 1000
         } else {
             u128::from(slot) * u128::from(self.slot_millis)
         };
-        if now.saturating_sub(covered) <= 300_000 {
+        if elapsed_nanos.saturating_sub(covered * 1_000_000)
+            <= u128::from(self.sync_tolerance_seconds) * 1_000_000_000
+        {
             None
         } else {
-            Some(100.0 * covered as f64 / now as f64)
+            Some((covered, now))
         }
     }
 
@@ -101,6 +237,24 @@ impl Config {
             .ok()?
             .as_nanos()
             .checked_add(u128::from(seconds) * 1_000_000_000)?;
+        let relative = target.checked_sub(u128::from(self.genesis_start) * 1_000_000_000)?;
+        if let Some(era) = self
+            .native_eras
+            .read()
+            .ok()?
+            .iter()
+            .rev()
+            .find(|era| u128::from(era.relative_millis) * 1_000_000 <= relative)
+        {
+            let elapsed = relative.checked_sub(u128::from(era.relative_millis) * 1_000_000)?;
+            let length = u128::from(era.slot_millis) * 1_000_000;
+            return era.start_slot.checked_add(
+                u64::try_from(
+                    elapsed / length + u128::from(ceiling && !elapsed.is_multiple_of(length)),
+                )
+                .ok()?,
+            );
+        }
         let (origin, initial_slot, length) =
             if self.network == Network::Mainnet && target >= 1_596_059_091_000_000_000 {
                 (1_596_059_091u64, 4_492_800u64, 1_000_000_000u128)
@@ -121,63 +275,7 @@ impl Config {
 
     /// Parse explicit service paths so conformance runs own isolated state.
     pub fn from_args(args: impl IntoIterator<Item = String>) -> anyhow::Result<Self> {
-        let mut config = Self::default();
-        let mut args = args.into_iter();
-        while let Some(flag) = args.next() {
-            if flag == "serve" {
-                continue;
-            }
-            let value = args
-                .next()
-                .ok_or_else(|| anyhow::anyhow!("missing value for {flag}"))?;
-            match flag.as_str() {
-                "--database" => config.db_path = value,
-                "--node-socket" => config.socket_path = value,
-                "--port" => config.port = value.parse()?,
-                "--host" => config.host = value.parse()?,
-                "--tls-ca-cert" => config.tls_ca_cert = Some(value.into()),
-                "--tls-sv-cert" => config.tls_server_cert = Some(value.into()),
-                "--tls-sv-key" => config.tls_server_key = Some(value.into()),
-                "--testnet" => {
-                    let genesis_path = std::path::PathBuf::from(&value);
-                    let genesis: serde_json::Value =
-                        serde_json::from_slice(&std::fs::read(value)?)?;
-                    config.network_magic = genesis
-                        .pointer("/protocolConsts/protocolMagic")
-                        .and_then(serde_json::Value::as_u64)
-                        .ok_or_else(|| {
-                            anyhow::anyhow!("Byron genesis lacks protocolConsts.protocolMagic")
-                        })?;
-                    config.network = Network::Testnet;
-                    config.genesis_hash = hex::encode(pallas_crypto::hash::Hasher::<256>::hash(
-                        &serde_json::to_vec(&genesis)?,
-                    ));
-                    config.genesis_start = genesis["startTime"]
-                        .as_u64()
-                        .ok_or_else(|| anyhow::anyhow!("Byron genesis lacks startTime"))?;
-                    let shelley: serde_json::Value = serde_json::from_slice(&std::fs::read(
-                        genesis_path.with_file_name("shelley-genesis.json"),
-                    )?)?;
-                    let seconds = shelley["slotLength"]
-                        .as_f64()
-                        .ok_or_else(|| anyhow::anyhow!("Shelley genesis lacks slotLength"))?;
-                    anyhow::ensure!(seconds.is_finite() && seconds > 0.0, "invalid slotLength");
-                    config.slot_millis = (seconds * 1000.0).round() as u64;
-                    anyhow::ensure!(
-                        config.slot_millis > 0,
-                        "slotLength must be at least one millisecond"
-                    );
-                    config.epoch_length = shelley["epochLength"]
-                        .as_u64()
-                        .filter(|n| *n > 0)
-                        .ok_or_else(|| anyhow::anyhow!("invalid epochLength"))?;
-                    config.shelley_genesis = Some(shelley);
-                }
-                _ => anyhow::bail!("unknown option {flag}"),
-            }
-        }
-        config.validate_transport()?;
-        Ok(config)
+        crate::cli::parse(args)
     }
 
     pub fn validate_transport(&self) -> anyhow::Result<()> {
@@ -198,7 +296,16 @@ impl Config {
     }
 
     pub fn slot_reference(&self, slot: u64) -> (u64, u64, String) {
-        let (epoch, local_slot, start, elapsed) = if self.network == Network::Mainnet {
+        let (epoch, local_slot, start, elapsed) = if let Some(era) = self.era_at_slot(slot) {
+            let delta = slot - era.start_slot;
+            (
+                era.start_epoch + delta / era.epoch_length,
+                delta % era.epoch_length,
+                self.genesis_start.saturating_mul(1000),
+                era.relative_millis
+                    .saturating_add(delta.saturating_mul(era.slot_millis)),
+            )
+        } else if self.network == Network::Mainnet {
             if slot < 4492800 {
                 (
                     slot / 21600,
@@ -233,6 +340,18 @@ impl Config {
     }
 
     pub fn epoch_first_slot(&self, epoch: u64) -> Option<u64> {
+        if let Some(era) = self
+            .native_eras
+            .read()
+            .ok()?
+            .iter()
+            .rev()
+            .find(|era| era.start_epoch <= epoch)
+        {
+            return (epoch - era.start_epoch)
+                .checked_mul(era.epoch_length)?
+                .checked_add(era.start_slot);
+        }
         if self.network == Network::Mainnet {
             if epoch < 208 {
                 epoch.checked_mul(21600)
@@ -250,6 +369,59 @@ mod tests {
     use super::*;
 
     #[test]
+    fn native_clock_is_shared_across_config_clones_and_respects_era_boundaries() {
+        use quetzal_network::statequery::EraTiming;
+        let config = Config::default();
+        let cloned = config.clone();
+        config.set_native_eras(vec![
+            EraTiming {
+                start_slot: 0,
+                start_epoch: 0,
+                relative_millis: 0,
+                slot_millis: 20000,
+                epoch_length: 21600,
+            },
+            EraTiming {
+                start_slot: 4_492_800,
+                start_epoch: 208,
+                relative_millis: 89_856_000_000,
+                slot_millis: 1000,
+                epoch_length: 432000,
+            },
+        ]);
+        assert_eq!(
+            cloned.slot_reference(4_492_801),
+            (208, 1, "2020-07-29T21:44:52Z".into())
+        );
+        assert_eq!(cloned.epoch_first_slot(209), Some(4_924_800));
+        assert_eq!(
+            cloned.time_to_slot(
+                std::time::UNIX_EPOCH + std::time::Duration::from_secs(1_596_059_092),
+                0,
+                false
+            ),
+            Some(4_492_801)
+        );
+    }
+    #[test]
+    fn configurable_tolerance_and_reference_percentage_rounding_are_independent_of_replay() {
+        let mut config = Config {
+            network: Network::Testnet,
+            genesis_start: 1000,
+            slot_millis: 1,
+            sync_tolerance_seconds: 0,
+            ..Default::default()
+        };
+        let now = std::time::UNIX_EPOCH + std::time::Duration::from_millis(1_020_000);
+        assert_eq!(config.wallet_sync_progress_at(6667, now), Some(33.34));
+        assert_eq!(config.wallet_sync_progress_at(6665, now), Some(33.32));
+        config.sync_tolerance_seconds = 14;
+        assert_eq!(config.wallet_sync_progress_at(6665, now), None);
+        config.sync_tolerance_seconds = 0;
+        assert_eq!(config.wallet_sync_progress_at(20000, now), None);
+    }
+
+    #[test]
     fn wallet_progress_uses_wall_time_and_the_reference_tolerance_boundary() {
         let config = Config {
             network: Network::Testnet,
@@ -265,7 +437,7 @@ mod tests {
         assert_eq!(config.wallet_sync_progress_at(1000, now(500_000)), None);
         assert_eq!(
             config.wallet_sync_progress_at(1000, now(600_000)),
-            Some(100.0 / 3.0)
+            Some(33.33)
         );
         assert_eq!(config.wallet_sync_progress_at(1000, now(100_000)), None);
     }
@@ -275,7 +447,7 @@ mod tests {
         let config = Config::default();
         let now =
             std::time::UNIX_EPOCH + std::time::Duration::from_secs(config.genesis_start + 600);
-        assert_eq!(config.wallet_sync_progress_at(10, now), Some(100.0 / 3.0));
+        assert_eq!(config.wallet_sync_progress_at(10, now), Some(33.33));
         let fork = std::time::UNIX_EPOCH + std::time::Duration::from_secs(1_596_059_091 + 300);
         assert_eq!(config.wallet_sync_progress_at(4_492_800, fork), None);
         assert!(config
@@ -287,6 +459,7 @@ mod tests {
     fn isolated_service_paths_and_port() {
         let args = [
             "serve",
+            "--mainnet",
             "--database",
             "/tmp/owned-wallet",
             "--node-socket",
@@ -312,6 +485,38 @@ mod tests {
     }
 
     #[test]
+    fn shutdown_handler_is_a_valueless_opt_in_flag() {
+        assert!(!Config::default().shutdown_handler);
+        for arguments in [
+            vec!["serve", "--shutdown-handler", "--port", "8091"],
+            vec!["serve", "--port", "8091", "--shutdown-handler"],
+        ] {
+            let config = Config::from_args(
+                arguments
+                    .into_iter()
+                    .chain(["--mainnet", "--node-socket", "/tmp/owned.socket"])
+                    .map(str::to_owned),
+            )
+            .unwrap();
+            assert!(config.shutdown_handler);
+            assert_eq!(config.port, 8091);
+        }
+        assert!(
+            Config::from_args(
+                [
+                    "--shutdown-handler",
+                    "--mainnet",
+                    "--node-socket",
+                    "/tmp/owned.socket"
+                ]
+                .map(str::to_owned)
+            )
+            .unwrap()
+            .shutdown_handler
+        );
+    }
+
+    #[test]
     fn transport_configuration_is_complete_and_http_is_loopback_only() {
         for mask in 1..7 {
             let mut config = Config::default();
@@ -326,7 +531,14 @@ mod tests {
             }
             assert!(config.validate_transport().is_err());
         }
-        let parse = |args: &[&str]| Config::from_args(args.iter().map(|arg| (*arg).to_owned()));
+        let parse = |args: &[&str]| {
+            Config::from_args(
+                ["--mainnet", "--node-socket", "/tmp/owned.socket"]
+                    .into_iter()
+                    .chain(args.iter().copied())
+                    .map(str::to_owned),
+            )
+        };
         assert!(parse(&["--host", "0.0.0.0"]).is_err());
         assert!(parse(&["--host", "::"]).is_err());
         assert!(parse(&["--host", "::1"]).is_ok());

@@ -38,6 +38,34 @@ fn render(policy: &str, name: &str) -> Result<Value, ApiError> {
         .map_err(|_| ApiError::bad_request("bad_request", "Invalid asset name"))?;
     Ok(json!({"policy_id":policy,"asset_name":name,"fingerprint":fingerprint}))
 }
+
+async fn attach(state: &AppState, mut assets: Vec<Value>) -> Vec<Value> {
+    let subjects: Vec<_> = assets
+        .iter()
+        .map(|asset| {
+            format!(
+                "{}{}",
+                asset["policy_id"].as_str().unwrap_or_default(),
+                asset["asset_name"].as_str().unwrap_or_default()
+            )
+        })
+        .collect();
+    let metadata =
+        crate::metadata::fetch(state.config.token_metadata_server.as_ref(), &subjects).await;
+    for (asset, subject) in assets.iter_mut().zip(subjects) {
+        match &metadata {
+            Ok(rows) => {
+                if let Some(metadata) = rows.get(&subject) {
+                    asset["metadata"] = metadata.clone();
+                }
+            }
+            Err(error) => {
+                asset["metadata_error"] = json!(error);
+            }
+        }
+    }
+    assets
+}
 pub async fn list_assets(
     State(state): State<AppState>,
     Path(id): Path<String>,
@@ -48,13 +76,12 @@ pub async fn list_assets(
         .get_wallet(&id)
         .await
         .map_err(ApiError::from)?;
-    Ok(Json(
-        wallet
-            .assets_total
-            .iter()
-            .map(|asset| render(&asset.policy_id, &asset.asset_name))
-            .collect::<Result<_, _>>()?,
-    ))
+    let assets = wallet
+        .assets_total
+        .iter()
+        .map(|asset| render(&asset.policy_id, &asset.asset_name))
+        .collect::<Result<_, _>>()?;
+    Ok(Json(attach(&state, assets).await))
 }
 pub async fn get_asset_by_policy(
     State(state): State<AppState>,
@@ -93,5 +120,6 @@ pub async fn get_asset(
             "The requested asset is not present in the wallet.",
         ));
     }
-    Ok(Json(render(&normalized_policy, &normalized_name)?))
+    let mut assets = attach(&state, vec![render(&normalized_policy, &normalized_name)?]).await;
+    Ok(Json(assets.remove(0)))
 }

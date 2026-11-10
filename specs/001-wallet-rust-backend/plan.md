@@ -4,6 +4,51 @@
 
 ## Summary
 
+### Complete reference server compatibility — 2026-11-10
+
+Reuse feature001 and the uncommitted shutdown changes. Derive the complete serve
+parser and defaults from pinned cardano-wallet2fc5c383's actual help and source.
+Separate pure parsing/validation from async native clock/bootstrap and listener
+creation. Make option effects real: resolve host specifications, own API/UI
+listeners, honor temporary databases, logging, pool and token registry settings,
+and apply IPFS gateway configuration. Keep mutual-TLS fail-closed behavior.
+
+Use native era interpreter bounds and parameters to remove the required sibling
+Shelley filename. Query the native tip independently of historical service replay
+for network information and project progress using configured reference tolerance.
+Implement a bounded registry client with per-subject validated properties and
+no mutation of ledger amounts. Extend real-process tests and independent registry
+fixtures. Evaluate persistent service-follower intersections with atomic pool
+observations and rollback-safe restart tests; record real benchmark limitations.
+
+Build the updated external runner read-only with all artifacts under Quetzal
+target. Run its replacement profiles, funded/EOF workflows and regression suite
+with owned native fixtures. Use independently prepared large-chain/partial-sync
+fixtures when available; do not forge or weaken unavailable evidence. Preserve
+failed attempts, binary/source identities and process cleanup. Run formatting,
+strict all-target Clippy, workspace tests, release and Nix package validation.
+
+Execution state: implementation is frozen and99 local tests, strict Clippy,
+formatting, release and final Nix package checks pass. Current CLI5/5 and
+registry9/9 profiles pass. The full652/44 orchestration aborts replacing its own
+precreated reports; user-authorized unchanged public profiles run individually,
+with separate receipts. The user deferred the mainnet/partial-sync/representative
+dataset qualification; global follower replay remains explicit. See
+`evidence/20261110-replacement/VALIDATION.md` and `HARNESS-BLOCKER.md`.
+
+### Parent-controlled shutdown — 2026-11-10
+
+Parse `--shutdown-handler` before the generic value-taking option parser. Use a
+dedicated standard input reader thread that reports only EOF/error to an async
+receiver; do not use Tokio's uncancellable blocking stdin adapter. Share a
+CancellationToken between the main lifecycle and HTTP/TLS serving. Drain existing
+HTTP requests, cancel pending TLS handshakes, track TLS tasks and bound connection
+drain to ten seconds. Stop and join all global and family wallet workers before
+explicitly flushing both stores. Signal shutdown shares the same cleanup path.
+Use real subprocess tests with piped stdin and fresh TLS certificates, verifying
+EOF/default controls and database reopening. Preserve and distinguish existing
+finite conformance receipts from the new lifecycle qualification.
+
 ### Transport and contract reconciliation — 2026-11-09
 
 Reuse this feature's completed wallet implementation. Reconcile the original prose

@@ -11,19 +11,34 @@ use axum::{extract::State, Json};
 pub async fn get_network_info(
     State(state): State<AppState>,
 ) -> Result<Json<NetworkInfoResponse>, ApiError> {
-    let (tip_slot, tip_height) = *state.chain_tip.read().await;
-    let (epoch, slot, time) = state.config.slot_reference(tip_slot);
-    let now_millis = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .map_err(|e| ApiError::internal(e.to_string()))?
-        .as_millis() as u64;
-    let wall_slot = if state.config.network == crate::config::Network::Mainnet {
-        4492800 + now_millis.saturating_sub(1596059091000) / 1000
-    } else {
-        now_millis.saturating_sub(state.config.genesis_start * 1000) / state.config.slot_millis
+    let observed = tokio::time::timeout(
+        std::time::Duration::from_secs(3),
+        quetzal_network::NodeClient::network_snapshot(
+            &state.config.socket_path,
+            state.config.network_magic,
+        ),
+    )
+    .await;
+    let (tip_slot, tip_height, connected, era) = match observed {
+        Ok(Ok(snapshot)) => {
+            state.config.set_native_eras(snapshot.timings);
+            state.config.set_native_genesis(snapshot.genesis);
+            (snapshot.slot, snapshot.height, true, snapshot.era)
+        }
+        _ => {
+            let (slot, height) = *state.chain_tip.read().await;
+            (slot, height, false, 6)
+        }
     };
+    let (epoch, slot, time) = state.config.slot_reference(tip_slot);
+    let now = std::time::SystemTime::now();
+    let wall_slot = state.config.time_to_slot(now, 0, false).unwrap_or(0);
     let (wall_epoch, wall_local_slot, wall_time) = state.config.slot_reference(wall_slot);
-    let next_slot = wall_slot + state.config.epoch_length - wall_local_slot;
+    let next_slot = state
+        .config
+        .epoch_first_slot(wall_epoch + 1)
+        .unwrap_or(wall_slot);
+    let progress = state.config.wallet_sync_progress_at(tip_slot, now);
 
     Ok(Json(NetworkInfoResponse {
         node_tip: NodeTipInfo {
@@ -47,16 +62,29 @@ pub async fn get_network_info(
             epoch_number: wall_epoch + 1,
             epoch_start_time: state.config.slot_reference(next_slot).2,
         }),
-        node_era: "conway".to_string(),
+        node_era: [
+            "byron", "shelley", "allegra", "mary", "alonzo", "babbage", "conway",
+        ]
+        .get(usize::from(era))
+        .unwrap_or(&"conway")
+        .to_string(),
         sync_progress: SyncProgress {
-            status: if state.chain_ready.load(std::sync::atomic::Ordering::Acquire) {
-                "ready".to_string()
-            } else if tip_slot > 0 {
-                "syncing".to_string()
+            status: if !connected {
+                "not_responding"
+            } else if progress.is_some() {
+                "syncing"
             } else {
-                "not_responding".to_string()
+                "ready"
+            }
+            .into(),
+            progress: if connected {
+                progress.map(|quantity| crate::json::network::ProgressValue {
+                    quantity,
+                    unit: "percent".into(),
+                })
+            } else {
+                None
             },
-            progress: None,
         },
         network_info: crate::json::network::NetworkIdentity {
             protocol_magic: state.config.network_magic,
@@ -81,7 +109,15 @@ pub async fn get_network_parameters(
     let result = async {
         let mut query = quetzal_network::StateQuerier::new(client.statequery());
         let parameters = query.protocol_params().await?;
-        let eras = query.era_history().await?;
+        let native = query.era_timings().await?;
+        let eras = native
+            .iter()
+            .map(|era| (era.start_slot, era.start_epoch))
+            .collect::<Vec<_>>();
+        state.config.set_native_eras(native);
+        state
+            .config
+            .set_native_genesis(query.genesis_config().await?);
         Ok::<_, quetzal_network::NetworkError>((parameters, eras))
     }
     .await;
@@ -97,29 +133,30 @@ pub async fn get_network_parameters(
         let value = history.get(index).map(|(slot, epoch)| serde_json::json!({"epoch_number":epoch,"epoch_start_time":state.config.slot_reference(*slot).2})).unwrap_or(serde_json::Value::Null);
         eras.insert((*name).into(), value);
     }
-    let genesis = state.config.shelley_genesis.as_ref();
     Ok(Json(NetworkParamsResponse {
         genesis_block_hash: state.config.genesis_hash.clone(),
         blockchain_start_time: state.config.slot_reference(0).2,
         slot_length: SlotLength {
-            quantity: state.config.slot_millis as f64 / 1000.0,
+            quantity: state.config.current_slot_millis() as f64 / 1000.0,
             unit: "second".to_string(),
         },
         epoch_length: EpochLength {
-            quantity: state.config.epoch_length,
+            quantity: state.config.current_epoch_length(),
             unit: "slot".to_string(),
         },
         security_parameter: BlockHeight {
-            quantity: genesis
-                .and_then(|v| v["securityParam"].as_u64())
-                .unwrap_or(2160),
+            quantity: state
+                .config
+                .security_parameter()
+                .ok_or_else(|| ApiError::internal("native genesis parameters unavailable"))?,
             unit: "block".into(),
         },
         active_slot_coefficient: ProgressValue {
             quantity: 100.0
-                * genesis
-                    .and_then(|v| v["activeSlotsCoeff"].as_f64())
-                    .unwrap_or(0.05),
+                * state
+                    .config
+                    .active_slot_coefficient()
+                    .ok_or_else(|| ApiError::internal("native genesis parameters unavailable"))?,
             unit: "percent".into(),
         },
         decentralization_level: ProgressValue {
@@ -173,4 +210,34 @@ pub async fn get_blocks_latest_header(
         "header_hash": hex::encode(tip_hash),
         "block_height": { "quantity": tip_height, "unit": "block" }
     })))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[tokio::test]
+    async fn disconnected_node_never_inherits_replay_ready_or_a_percentage() {
+        let directory = tempfile::tempdir().unwrap();
+        let config = crate::config::Config {
+            socket_path: directory
+                .path()
+                .join("absent.socket")
+                .to_string_lossy()
+                .into_owned(),
+            ..Default::default()
+        };
+        let state = AppState::new(
+            quetzal_wallet::WalletService::new(directory.path().join("wallet").to_str().unwrap())
+                .unwrap(),
+            config,
+        )
+        .unwrap();
+        state
+            .chain_ready
+            .store(true, std::sync::atomic::Ordering::Release);
+        *state.chain_tip.write().await = (200000000, 1000000);
+        let Json(response) = get_network_info(State(state)).await.unwrap();
+        assert_eq!(response.sync_progress.status, "not_responding");
+        assert!(response.sync_progress.progress.is_none());
+    }
 }

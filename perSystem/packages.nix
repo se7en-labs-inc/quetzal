@@ -68,6 +68,9 @@
         // {
           inherit cargoArtifacts;
           doCheck = true;
+          postInstall = ''
+            ln -s quetzal "$out/bin/cardano-wallet"
+          '';
         });
     };
   };
