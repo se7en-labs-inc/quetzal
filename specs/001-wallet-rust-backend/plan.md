@@ -4,6 +4,29 @@
 
 ## Summary
 
+### Transport and contract reconciliation — 2026-11-09
+
+Reuse this feature's completed wallet implementation. Reconcile the original prose
+with the reviewed executable contract before implementation. Keep the external
+conformance checkout read-only and preserve the historical V58 evidence.
+
+Add complete TLS configuration and an IP bind address (loopback default). Validate
+the three TLS paths together before opening wallet state. Use Rustls with
+WebPkiClientVerifier and only the supplied CA roots, validating the server
+certificate/private key at startup. Require client-auth purpose, reject anonymous
+clients, and serve HTTP/1.1 and HTTP/2 through the unchanged Axum router. Bound
+TLS handshake duration and concurrent connections, and close plaintext on the
+secure listener. Keep HTTP on loopback for isolated semantic fixtures; reject
+explicit non-loopback HTTP configuration.
+
+Verify configuration failures and real TLS positive/rejection cases using fresh
+private certificates against production transport. Run workspace tests, formatting,
+Clippy and release build through Nix. Build the unchanged external runner with
+outputs outside its checkout, then run the full 646/38 contract against fresh
+candidate/adapter binaries and independent provisioned oracles. Record unavailable
+fixtures/tools separately from failures. Actual Daedalus startup and performance
+qualification remain separate acceptance gates.
+
 ### Continuation plan — 2026-11-06
 
 1. Repair stale worktree paths after the repository directory rename and retain
@@ -83,7 +106,7 @@ splitting and structured shortfalls. Keep intermediate quantities exact and
 preserve deterministic ordering. Verify upstream RNG examples and the entire
 independent seeded corpus before using the algorithm in other wallet paths.
 
-Implement a Rust wallet backend for Cardano that is wire-compatible with the cardano-wallet REST API, enabling Daedalus to switch backends without protocol changes. Uses pallas 0.32 for Cardano primitives, sled for embedded key-value storage, axum for HTTP, and the node-to-client ChainSync miniprotocol for chain synchronisation.
+Implement a Rust wallet backend matching the pinned cardano-wallet API behavior and client-authenticated TLS. Actual Daedalus launch-and-use compatibility remains unqualified until a pinned client is exercised. Uses Pallas, Sled, Axum and native node-to-client protocols.
 
 ---
 
@@ -106,7 +129,7 @@ Implement a Rust wallet backend for Cardano that is wire-compatible with the car
 **Testing**: `cargo test`, `proptest`, axum test helpers, integration tests against live node socket
 **Target Platform**: Linux x86_64
 **Project Type**: HTTP service (Daedalus backend)
-**Performance Goals**: ≥500 blocks/sec chain sync; ≤100ms p95 API latency
+**Performance Targets (unqualified)**: ≥500 blocks/sec chain sync; ≤100ms p95 API latency; require an agreed reproducible workload before acceptance
 **Constraints**: <512 MB RAM for 10k-address wallet; crash-safe (no partial blocks in sled)
 **Scale/Scope**: Single-user embedded service; 1 instance per Daedalus installation
 
@@ -161,7 +184,7 @@ crates/
     lib.rs
     key.rs                              ← Bip32PrivateKey, Bip32PublicKey
     derivation.rs                       ← CIP-1852 and BIP-44 derivation paths
-    passphrase.rs                       ← argon2id KDF + AES-256-GCM encrypt/decrypt
+    passphrase.rs                       ← authenticated storage envelopes; mnemonic derivation retains PBKDF2
     signing.rs                          ← Ed25519Signer impl
   quetzal-crypto/tests/
     derivation.rs                       ← CIP-1852 known-answer vectors
@@ -249,7 +272,9 @@ No constitution violations.
 
 ## REST API Surface
 
-All 78 paths from `swagger.yaml` (ground truth):
+The pinned `swagger.yaml` and reviewed Haskell corrections define all 78 paths
+and 96 operations. The route overview below is an index, not an independent
+contract; the executable assertions control methods, payloads and side effects.
 
 ```
 # Shelley single-sig wallets
@@ -271,19 +296,19 @@ POST   /wallets/:id/transactions-decode
 POST   /wallets/:id/transactions-submit
 POST   /wallets/:id/transactions-balance
 POST   /wallets/:id/payment-fees
-GET    /wallets/:id/coin-selections/random
+POST   /wallets/:id/coin-selections/random
 GET    /wallets/:id/assets
 GET    /wallets/:id/assets/:policy_id
 GET    /wallets/:id/assets/:policy_id/:asset_name
 GET    /wallets/:id/keys
-GET    /wallets/:id/keys/:index
+POST   /wallets/:id/keys/:index
 GET    /wallets/:id/keys/:role/:index
 POST   /wallets/:id/signatures/:role/:index
 GET    /wallets/:id/stake-keys
 GET    /wallets/:id/delegation-fees
-GET    /wallets/:id/migrations
+POST   /wallets/:id/migrations
 POST   /wallets/:id/migrations/plan
-GET    /wallets/:id/policy-id
+POST   /wallets/:id/policy-id
 GET    /wallets/:id/policy-key
 
 # Byron wallets
@@ -292,7 +317,7 @@ GET    /byron-wallets/:id
 DELETE /byron-wallets/:id
 PUT    /byron-wallets/:id/passphrase
 GET    /byron-wallets/:id/addresses
-POST   /byron-wallets/:id/addresses/:address_id  (import address)
+PUT    /byron-wallets/:id/addresses/:address_id  (import address)
 GET    /byron-wallets/:id/assets
 GET    /byron-wallets/:id/assets/:policy_id
 GET    /byron-wallets/:id/assets/:policy_id/:asset_name
@@ -301,8 +326,8 @@ GET    /byron-wallets/:id/statistics/utxos
 GET    /byron-wallets/:id/transactions
 GET    /byron-wallets/:id/transactions/:txid
 POST   /byron-wallets/:id/payment-fees
-GET    /byron-wallets/:id/coin-selections/random
-GET    /byron-wallets/:id/migrations
+POST   /byron-wallets/:id/coin-selections/random
+POST   /byron-wallets/:id/migrations
 POST   /byron-wallets/:id/migrations/plan
 
 # Shared (multi-sig) wallets
@@ -319,10 +344,10 @@ POST   /shared-wallets/:id/transactions-sign
 POST   /shared-wallets/:id/transactions-decode
 POST   /shared-wallets/:id/transactions-submit
 GET    /shared-wallets/:id/keys
-GET    /shared-wallets/:id/keys/:index
+POST   /shared-wallets/:id/keys/:index
 GET    /shared-wallets/:id/keys/:role/:index
-GET    /shared-wallets/:id/payment-script-template
-GET    /shared-wallets/:id/delegation-script-template
+PATCH  /shared-wallets/:id/payment-script-template
+PATCH  /shared-wallets/:id/delegation-script-template
 
 # Stake pools
 GET    /stake-pools
@@ -346,7 +371,7 @@ GET    /network/clock
 GET    /blocks/latest/header
 
 # Addresses
-GET    /addresses
+POST   /addresses
 GET    /addresses/:address_id
 
 # Settings
@@ -360,18 +385,9 @@ POST   /proxy/transactions
 
 ## Additional Workspace Crate
 
-Add `quetzal-shared-wallet` crate for multi-sig wallet logic (native script templates, cosigner key management, partial transaction accumulation). This crate depends on `quetzal-primitives` and `quetzal-crypto` but NOT on `quetzal-wallet` (parallel peer).
-
-Updated workspace members:
-```
-crates/quetzal-primitives
-crates/quetzal-crypto
-crates/quetzal-address
-crates/quetzal-network
-crates/quetzal-wallet          ← Shelley + Byron single-sig
-crates/quetzal-shared-wallet   ← multi-sig / shared wallets  [NEW]
-crates/quetzal-api             ← all HTTP handlers
-```
+Shared wallet logic lives in the existing `quetzal-wallet` crate and reuses its
+transaction, persistence and signing paths. No additional shared-wallet crate or
+hidden server-side witness accumulator is required.
 # Pending submission continuation
 
 Persist allocated internal change addresses independently of pending transaction

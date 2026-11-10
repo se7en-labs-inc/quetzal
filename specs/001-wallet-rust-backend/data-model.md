@@ -3,7 +3,7 @@
 ## Core Entities
 
 ### WalletMeta
-- `id: WalletId` (32-byte Blake2b-256 of root public key)
+- `id: WalletId` (20-byte Blake2b-160 of the reference extended public key including chain code; root key for mnemonic wallets, account key for public-account restoration)
 - `name: String`
 - `state: WalletStatus` (syncing { progress: f32 } | ready)
 - `tip: Option<Checkpoint>`
@@ -67,14 +67,19 @@
 
 | Tree | Key encoding | Value encoding |
 |---|---|---|
-| `wallets` | wallet_id[32] | WalletMeta (CBOR) |
+| `wallets` | wallet_id[20] | WalletMeta (CBOR) |
 | `utxos:{wallet_id_hex}` | tx_hash[32] ++ out_idx[4 BE] | UtxoEntry (CBOR) |
 | `txs:{wallet_id_hex}` | slot[8 BE] ++ tx_hash[32] | TxRecord (CBOR) |
 | `addrs:{wallet_id_hex}` | addr_bytes (raw) | AddressState (CBOR) |
 | `checkpoints:{wallet_id_hex}` | slot[8 BE] | block_hash[32] |
 | `pending:{wallet_id_hex}` | tx_hash[32] | PendingTx (CBOR) |
 | `pools` | pool_id[28] | PoolMeta (CBOR) |
-| `idx:addr_wallet` | addr_bytes | wallet_id[32] |
+| `idx:addr_wallet` | addr_bytes | wallet_id[20] |
+
+These are logical collections; physical storage also includes family isolation,
+undo records and settings. Shelley and Byron may independently hold the same
+public ID. No migration from the earlier 32-byte-ID prototype or Haskell databases
+is qualified. Preserve old data and restore recovery material into a fresh database.
 
 ## State Transitions
 
@@ -87,8 +92,15 @@ Ready  --[delete]--> (none)
 ### Transaction
 ```
 (none) --[submit]--> Pending --[confirmed on chain]--> InLedger
-Pending --[rolled back + slot expired]--> Expired
+InLedger --[rollback of local submission, still valid]--> Pending
+InLedger --[rollback of discovered-only transaction]--> (none)
+Pending --[validity upper bound reached]--> Expired
+Pending --[explicit forget]--> (none)
 ```
+
+Rollback must undo older spent-input removal and received-output creation,
+history, balances and checkpoints atomically. Preserve local signed bytes and
+submission provenance for retry; reapplication must not duplicate history/credit.
 
 ### Address
 ```

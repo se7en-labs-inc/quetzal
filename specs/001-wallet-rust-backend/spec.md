@@ -2,7 +2,7 @@
 
 **Feature Branch**: `001-wallet-rust-backend`
 **Created**: 2026-08-22
-**Status**: Draft
+**Status**: Transport correction qualified: 646/646 obligations, 38 profiles; actual Daedalus/performance acceptance remains open
 **Project**: Quetzal (se7en-labs-inc/quetzal)
 
 ## Overview
@@ -11,13 +11,22 @@
 
 The project is renamed Quetzal. Continue the existing wallet implementation and
 preserve in-progress changes. The acceptance contract is the reviewed executable
-suite in `../../cardano-wallet-conformance/master`: 643 active obligations across
-37 HTTP, internal-vector and owned real-node profiles. Supply a thin adapter
+suite in `../../cardano-wallet-conformance/master`: the corrected contract has
+646 active obligations across 38 transport, HTTP, internal-vector and owned real-node profiles. The V58 643/37 receipts qualify only the historical contract. Supply a thin adapter
 calling actual wallet internals; unsupported operations fail explicitly. Passing
 unit tests or a subset of profiles does not establish full conformance. Retain
 fresh reports and report missing coverage separately from failures.
 
-Quetzal is a full reimplementation of the Cardano wallet backend in Rust, designed as a drop-in replacement for the Haskell `cardano-wallet` service. The primary consumer is Daedalus desktop wallet. Quetzal must expose **all 78 paths** in `swagger.yaml` so that Daedalus requires zero protocol-level changes to switch backends. This includes Shelley single-sig wallets, Byron wallets, shared multi-sig wallets, stake pool operations, DRep governance, chain data, SMASH integration, and network endpoints.
+Quetzal reimplements the Cardano wallet backend in Rust. Its API target is all 78 paths (96 operations) in `swagger.yaml`, with the reviewed Haskell behavior corrections in the independent conformance contract. This includes Shelley, Byron and shared wallets, stake pools, governance, chain data, SMASH and network endpoints. Daedalus is the intended consumer; endpoint parity alone does not establish a drop-in replacement. Authenticated transport and a pinned actual-client launch-and-use acceptance run are required before claiming Daedalus compatibility. Existing Haskell wallet databases are not imported; supported wallets are restored from their recovery material into a fresh Quetzal database.
+
+### Transport correction — 2026-11-09
+
+1. With all three `--tls-ca-cert`, `--tls-sv-cert` and `--tls-sv-key` paths, serve the API over TLS and require a client certificate with client-auth purpose chained to the supplied CA. Reject absent, foreign-CA and wrong-purpose credentials during TLS negotiation.
+2. A trusted client must receive a schema-valid API response. Strict clients must validate server trust and hostname. Plaintext must not reach API handlers or redirect to them on the TLS listener.
+3. Missing/unreadable files, malformed PEM, empty client trust, mismatched server certificate/private key or partial TLS arguments must fail startup before wallet workers start; never fall back to HTTP. Clients remain responsible for verifying server trust, validity dates, purpose and hostname during negotiation.
+4. Bind to loopback by default. Permit an explicit IP bind via `--host`; unauthenticated HTTP must remain confined to loopback. HTTP fixture mode is separate from the secure launch and cannot earn transport credit.
+5. Preserve the same router and wallet behavior in HTTP and TLS modes, with bounded TLS handshakes. Own and stop all test services. Keep fixture keys and runtime databases private.
+6. Run the corrected independent suite without modifying its repository. Record fresh source/binary identities, configuration, coverage and cleanup; do not relabel V58 evidence. Actual Daedalus startup and performance remain separate, unqualified acceptance items until exercised.
 
 ---
 
@@ -29,12 +38,12 @@ A Daedalus user can create a new Shelley wallet from a freshly generated mnemoni
 
 **Why this priority**: Without wallets there is no product. Every other story depends on a wallet existing and being accessible via its ID.
 
-**Independent Test**: Create a Shelley wallet via `POST /wallets`, verify the response contains a wallet ID and "syncing" status, list it via `GET /wallets`, then delete it via `DELETE /wallets/{id}` and confirm it no longer appears.
+**Independent Test**: Create a Shelley wallet via `POST /wallets`, verify its reference identity and public sync state, list it via `GET /wallets`, then delete it and confirm it no longer appears. Readiness may be immediate within the reference sync tolerance; it does not replace historical restoration checks.
 
 **Acceptance Scenarios**:
 
-1. **Given** no wallets exist, **When** a user POSTs a valid 24-word mnemonic and passphrase to `/wallets`, **Then** a wallet is created, a unique wallet ID is returned, and the wallet appears in `GET /wallets` with a balance of 0 and sync status "syncing".
-2. **Given** an existing wallet mnemonic, **When** the user POSTs that mnemonic to `/wallets`, **Then** the wallet is restored with the same wallet ID as the original and begins chain synchronisation.
+1. **Given** no wallets exist and the new mnemonic has no historical funds, **When** a user POSTs it with a passphrase to `/wallets`, **Then** a wallet is created with its deterministic ID, zero balance and the reference-consistent sync state.
+2. **Given** recovery material for a wallet absent from this service, **When** the user POSTs it to `/wallets`, **Then** the wallet is restored with its original deterministic ID and recovers historical funds. An already-present same-family wallet instead returns 409.
 3. **Given** a wallet ID, **When** the user sends `DELETE /wallets/{walletId}`, **Then** the wallet and all associated data are removed and subsequent `GET /wallets/{walletId}` returns 404.
 4. **Given** an invalid or short mnemonic, **When** the user attempts to create a wallet, **Then** the request is rejected with a clear error message identifying the validation failure.
 5. **Given** multiple wallets, **When** the user calls `GET /wallets`, **Then** all wallets are returned with accurate balances and sync states.
@@ -80,11 +89,11 @@ A Daedalus user can construct a payment transaction to one or more recipients, g
 
 **Why this priority**: Sending funds is the primary financial operation a wallet performs.
 
-**Independent Test**: Use `POST /wallets/{walletId}/transactions` with a target address and amount; verify the returned transaction contains a valid CBOR body, correct fee, and can be submitted via `POST /wallets/{walletId}/transactions-submit`.
+**Independent Test**: POST a payment and passphrase to `/wallets/{walletId}/transactions`; require a 202 transaction record and independently confirm its ID on the node. Separately construct through `/transactions-construct`, sign the returned bytes through `/transactions-sign`, submit through `/transactions-submit`, and verify the same signed transaction confirms exactly once.
 
 **Acceptance Scenarios**:
 
-1. **Given** a funded wallet, **When** the user POSTs a payment to `/wallets/{walletId}/transactions` with a valid recipient address and amount, **Then** a signed transaction is returned with a fee and the transaction ID.
+1. **Given** a funded wallet, **When** the user POSTs a payment and passphrase to `/wallets/{walletId}/transactions`, **Then** the wallet creates, signs and submits the payment and returns a 202 transaction record with its fee and ID; node inclusion and resulting balances are checked independently.
 2. **Given** a valid unsigned transaction, **When** the user POSTs to `/wallets/{walletId}/transactions-sign` with their passphrase, **Then** the transaction is returned with valid witness signatures.
 3. **Given** a signed transaction, **When** the user POSTs to `/wallets/{walletId}/transactions-submit`, **Then** the transaction is forwarded to the Cardano node and a transaction ID is returned.
 4. **Given** insufficient funds, **When** the user attempts a payment exceeding their balance, **Then** the request is rejected with an error indicating the shortfall amount.
@@ -96,7 +105,7 @@ A Daedalus user can construct a payment transaction to one or more recipients, g
 
 ### User Story 5 — Transaction History (Priority: P5)
 
-A Daedalus user can view a paginated, chronologically-ordered list of all transactions affecting their wallet, filtered by time range or status.
+A user can view transaction history in the reference order, with supported time-range, order, maximum-count, address and withdrawal filters. There is no public status selector in the pinned API; pending and expired entries are checked in mixed history explicitly.
 
 **Why this priority**: Transaction history is essential for financial record-keeping.
 
@@ -105,7 +114,7 @@ A Daedalus user can view a paginated, chronologically-ordered list of all transa
 **Acceptance Scenarios**:
 
 1. **Given** a wallet with transaction history, **When** the user calls `GET /wallets/{walletId}/transactions`, **Then** transactions are returned newest-first with amount, fee, inputs, outputs, and status fields.
-2. **Given** a large transaction history, **When** the user supplies `start`, `end`, or pagination parameters, **Then** only transactions within the specified range are returned.
+2. **Given** mixed confirmed, pending and expired history, **When** the user supplies supported `start`, `end`, `order` or `max_count` parameters, **Then** list/get results match the pinned reference, including unconfirmed ordering and limits; do not invent offset/cursor pagination or a status query.
 3. **Given** an unconfirmed transaction, **When** the user queries history, **Then** the transaction appears with status "pending" until it is confirmed on-chain.
 4. **Given** a confirmed transaction, **When** the user queries `GET /wallets/{walletId}/transactions/{transactionId}`, **Then** full transaction detail including block height and slot is returned.
 
@@ -121,10 +130,10 @@ The Quetzal service automatically synchronises with the Cardano node via the nod
 
 **Acceptance Scenarios**:
 
-1. **Given** a running Cardano node and a configured socket path, **When** Quetzal starts, **Then** it connects via the chain-sync miniprotocol and begins requesting blocks from the node's tip.
+1. **Given** a running Cardano node and a configured socket path, **When** Quetzal starts, **Then** it intersects a valid persisted checkpoint or restores from genesis when no checkpoint is available. Recreating a previously funded wallet must recover historical addresses, transactions and exact funds; following only new tip blocks is insufficient.
 2. **Given** an active chain-sync session, **When** a new block is received, **Then** wallet UTxO sets and transaction histories are updated atomically before the next block is processed.
 3. **Given** a node restart or connection drop, **When** the connection is lost, **Then** Quetzal reconnects automatically and resumes from its last known checkpoint without data loss.
-4. **Given** a fully synced wallet, **When** the user queries `GET /network/information`, **Then** the response shows the current tip slot, sync progress as a percentage, and network parameters.
+4. **Given** a synced service, **When** the user queries `GET /network/information`, **Then** it receives the reference network/node tip and sync-state shape. Network parameters are available through `/network/parameters`; a ready state has no progress field.
 5. **Given** a wallet checkpoint within the reference default five-minute wall-clock sync tolerance, **When** its public state is rendered, **Then** it reports `ready` without a progress field. Older checkpoints report their elapsed-time percentage. This projection does not advance or alter the checkpoint or balances.
 
 ---
@@ -135,13 +144,13 @@ A Daedalus user with existing Byron-era ADA can restore a Byron wallet (random o
 
 **Why this priority**: Byron wallet holders need a migration path; required for full API parity.
 
-**Independent Test**: `POST /byron-wallets` with an Icarus mnemonic creates a Byron wallet; `GET /byron-wallets/{id}/addresses` returns base58 addresses; `GET /byron-wallets/{id}/migrations/plan` returns a migration plan.
+**Independent Test**: Restore funded random and Icarus wallets; require base58 addresses, POST a migration plan with destination addresses, execute it through POST migrations and independently confirm the resulting transfers and history.
 
 **Acceptance Scenarios**:
 
 1. **Given** a Byron Icarus mnemonic, **When** the user POSTs to `/byron-wallets`, **Then** a Byron wallet is created with correct base58 addresses.
-2. **Given** a Byron wallet with funds, **When** the user requests `GET /byron-wallets/{id}/migrations/plan`, **Then** a plan is returned showing inputs, outputs, and fees for migrating to a Shelley address.
-3. **Given** a migration plan, **When** the user POSTs to `/byron-wallets/{id}/migrations`, **Then** signed migration transactions are returned, ready to submit.
+2. **Given** a funded Byron wallet, **When** the user POSTs destination addresses to `/byron-wallets/{id}/migrations/plan`, **Then** a plan with selections and fees is returned without submitting transactions.
+3. **Given** valid destinations and a passphrase, **When** the user POSTs to `/byron-wallets/{id}/migrations`, **Then** the wallet creates and submits the migration transactions; returned records, exact native transfers and remaining balance must reconcile, including best-effort partial migration.
 
 ---
 
@@ -157,7 +166,7 @@ A Daedalus user participating in a multi-signature wallet can create or restore 
 
 1. **Given** a payment script template with cosigner keys, **When** the user POSTs to `/shared-wallets`, **Then** a shared wallet is created with a unique wallet ID and script-derived addresses.
 2. **Given** a funded shared wallet, **When** the user constructs a transaction via `/shared-wallets/{id}/transactions-construct`, **Then** an unsigned transaction is returned that requires the script-specified signatures.
-3. **Given** an unsigned shared transaction, **When** each cosigner POSTs to `/shared-wallets/{id}/transactions-sign`, **Then** witness signatures accumulate until the script threshold is met.
+3. **Given** a shared transaction, **When** each cosigner signs the returned bytes via `/shared-wallets/{id}/transactions-sign`, **Then** existing witnesses and the body identity are preserved and returned witnesses can be merged until the script threshold is met. Do not assume hidden server-side accumulation.
 4. **Given** a fully-witnessed shared transaction, **When** submitted via `/shared-wallets/{id}/transactions-submit`, **Then** it is accepted by the node.
 
 ---
@@ -173,8 +182,8 @@ A Daedalus user can browse available DReps, delegate their vote to a DRep, view 
 **Acceptance Scenarios**:
 
 1. **Given** a synced Conway-era service, **When** the user calls `GET /dreps`, **Then** registered DReps are returned with their metadata and stake.
-2. **Given** a wallet, **When** the user calls `GET /dreps/suggested`, **Then** suggested DReps are returned based on stake distribution.
-3. **Given** a wallet with ADA, **When** the user delegates votes via `PUT /dreps/{drepId}/wallets/{walletId}`, **Then** a vote delegation certificate transaction is constructed and returned.
+2. **Given** the pinned suggested-DRep behavior, **When** the user calls `GET /dreps/suggested`, **Then** the result matches that behavior; do not invent a stake-ranking policy.
+3. **Given** a wallet with ADA and a valid passphrase, **When** the user delegates votes via `PUT /dreps/{drepId}/wallets/{walletId}`, **Then** a vote delegation transaction is signed and submitted, a 202 record is returned, and native confirmation and delegation state are verified.
 
 ---
 
@@ -189,7 +198,7 @@ A Daedalus user can list available stake pools, delegate their wallet's stake to
 **Acceptance Scenarios**:
 
 1. **Given** a synced service, **When** the user calls `GET /stake-pools`, **Then** known stake pools are returned with their ticker, name, saturation, and estimated ROA.
-2. **Given** a wallet with ADA, **When** the user delegates to a pool via `PUT /stake-pools/{poolId}/wallets/{walletId}`, **Then** a delegation certificate transaction is constructed and returned for signing.
+2. **Given** a wallet with ADA, **When** the user delegates with a passphrase via `PUT /stake-pools/{poolId}/wallets/{walletId}`, **Then** the transaction is signed and submitted, a 202 transaction record is returned, and native confirmation and subsequent delegation state are verified.
 3. **Given** a wallet with accumulated rewards, **When** the user queries `GET /wallets/{walletId}`, **Then** `balance.reward` reflects the current reward balance in lovelace.
 4. **Given** accrued rewards, **When** the user submits a withdrawal transaction, **Then** rewards are swept into the wallet's available balance.
 
@@ -198,12 +207,12 @@ A Daedalus user can list available stake pools, delegate their wallet's stake to
 ### Edge Cases
 
 - What happens when a node socket is unavailable at startup? Service starts, reports degraded status via `/network/information`, and retries connection automatically.
-- How does the system handle restoring the same mnemonic twice? Idempotent — returns the existing wallet without duplicating it.
+- How does the system handle restoring the same mnemonic twice in one wallet family? Return 409 `wallet_already_exists`, preserving the existing wallet. Delete/recreate restores its deterministic identity; different API families may independently contain the same public ID.
 - What happens during a Cardano hard fork / era transition? Chain-sync resumes correctly; era-specific block decoders switch automatically.
 - How are transactions with reference scripts shown in history? Decoded and displayed; script execution is not re-run by the wallet.
 - What if the sled database is corrupted on startup? Service fails with a clear error and refuses to start rather than operating on bad state.
 - How are large wallets (>100k addresses) handled? Address discovery gap limit is configurable; default is 20 sequential unused addresses.
-- What happens if a submitted transaction is rolled back? Transaction is marked "expired" in history when the rollback is detected during chain sync.
+- What happens when confirmed transactions are rolled back? Undo all affected ledger mutations, including restoring older spent inputs. Preserve local submission provenance: valid local transactions return to pending with their unchanged bytes and retry schedule; discovered-only transactions disappear. Expire only according to validity bounds. Reapplication must consume inputs and credit outputs exactly once.
 
 ---
 
@@ -211,13 +220,13 @@ A Daedalus user can list available stake pools, delegate their wallet's stake to
 
 ### Functional Requirements
 
-- **FR-001**: System MUST expose a REST API compatible with the cardano-wallet OpenAPI specification for all Shelley wallet endpoints used by Daedalus.
-- **FR-002**: System MUST support wallet creation and restoration from 15-word and 24-word BIP-39 mnemonics.
+- **FR-001**: System MUST implement all 96 operations across the 78 pinned API paths, including exact status, media, errors, identity, values, ordering and observable side effects under the reviewed reference corrections.
+- **FR-002**: System MUST support the pinned wallet-family mnemonic lengths, checksums, optional mnemonic second factor and public-account-key restoration. Mnemonic derivation is independent of storage encryption and must reproduce reference keys and addresses.
 - **FR-003**: System MUST derive Shelley (CIP-1852), Icarus, and Byron address types from the appropriate key hierarchies.
-- **FR-004**: System MUST discover used addresses during chain synchronisation using the sequential address discovery algorithm (configurable gap limit, default 20).
+- **FR-004**: System MUST use family-appropriate sequential or random address discovery. Sequential discovery has configurable gap limit, default 20, and must recover historical funds independently of live readiness reporting.
 - **FR-005**: System MUST maintain a per-wallet UTxO set updated atomically as blocks are processed.
-- **FR-006**: System MUST implement coin selection (largest-first and random-improve strategies) for transaction construction.
-- **FR-007**: System MUST construct, balance, and sign transactions compatible with the current Cardano era (Conway and later).
+- **FR-006**: System MUST implement the pinned reference coin-selection behavior for the supported operations, including exact seeded component results, eligible inputs, conservation, change, collateral, fee accounting and structured shortfalls. Strategy labels alone are insufficient acceptance evidence.
+- **FR-007**: System MUST construct, balance and sign transactions in the qualified Conway era and explicitly reject unsupported writing eras. Future eras require independent qualification, not an automatic compatibility claim.
 - **FR-008**: System MUST submit signed transactions to a connected cardano-node via the local-tx-submission miniprotocol.
 - **FR-009**: System MUST persist all wallet state, UTxO sets, transaction history, and chain checkpoints using embedded storage.
 - **FR-010**: System MUST maintain per-wallet transaction history with slot-ordered range query support.
@@ -236,6 +245,7 @@ A Daedalus user can list available stake pools, delegate their wallet's stake to
 - **FR-023**: System MUST expose `/blocks/latest/header` returning the current chain tip block header.
 - **FR-024**: System MUST expose `/smash/health` proxying to a configured SMASH server.
 - **FR-025**: System MUST expose `/proxy/transactions` for raw CBOR transaction submission.
+- **FR-026**: System MUST provide mandatory client-authenticated TLS when configured, fail closed for invalid TLS inputs and default to loopback binding as specified above.
 
 ### Key Entities
 
@@ -252,23 +262,23 @@ A Daedalus user can list available stake pools, delegate their wallet's stake to
 
 ### Measurable Outcomes
 
-- **SC-001**: All cardano-wallet REST API endpoints used by Daedalus return responses structurally identical to the Haskell reference implementation.
-- **SC-002**: A Shelley wallet can be created, funded (via test faucet), and a payment sent end-to-end in under 10 seconds on preprod network (excluding chain sync time).
-- **SC-003**: Chain synchronisation processes at least 500 blocks per second on commodity hardware (i7/Ryzen 5 class, 16 GB RAM).
+- **SC-001**: A fresh full execution of the corrected independent contract passes all 646 obligations and 38 profiles with unchanged identities and owned cleanup. Historical or mock-only evidence cannot satisfy this criterion.
+- **SC-002**: Target, not current qualification: create/fund/send within 10 seconds excluding chain sync. Define the measurement boundary, faucet and node-inclusion conditions before asserting this on preprod; external faucet/network delays cannot be hidden.
+- **SC-003**: Target, not current qualification: at least 500 blocks per second. A benchmark must pin hardware, era/block corpus, wallet count/address discovery and persistence settings before measuring.
 - **SC-004**: Unit and property test coverage covers all domain functions in the primitives, crypto, and address crates.
-- **SC-005**: Integration tests against a local cluster pass for all P1–P5 user story acceptance scenarios.
-- **SC-006**: The service handles 100 concurrent Daedalus API requests without error or significant response time degradation.
+- **SC-005**: Integration acceptance covers every wallet story, including historical restoration, shared signing, Byron migration, governance, restart, rollback, retry, era transitions and authenticated transport.
+- **SC-006**: A separately recorded benchmark must define hardware, dataset, request mix, duration and latency/error thresholds before measuring 100 concurrent clients. This target is unqualified until that benchmark is agreed and run.
 - **SC-007**: Wallet state is recoverable after a crash at any point during block processing — no partial-block corruption.
-- **SC-008**: Memory usage for a fully synced wallet with 10,000 addresses and 50,000 transactions stays below 512 MB.
+- **SC-008**: Target, not current qualification: peak process RSS below 512 MB for a 10,000-address/50,000-transaction wallet under a pinned workload and observation interval. Record corpus, assets, concurrency and measurement method before claiming success.
 
 ---
 
 ## Assumptions
 
-- Daedalus will connect to Quetzal over localhost HTTP; TLS is a follow-on.
+- Daedalus requires mutually authenticated TLS. Actual launch arguments, certificate provisioning, platform support and a pinned client create/restore/read/send workflow require separate acceptance; no drop-in claim is made before that run.
 - All 78 paths in `swagger.yaml` are in scope, including Shelley wallets, Byron wallets, shared/multi-sig wallets, stake pools, DRep governance, and chain data endpoints.
 - The cardano-node socket path is provided via configuration; Quetzal does not launch the node.
-- Plutus script *execution* (phase-2 validation) is out of scope; Quetzal constructs and submits transactions containing Plutus scripts but does not evaluate them locally.
+- Plutus phase-2 evaluation is out of scope. Reading/decoding script-bearing transactions does not imply support for every script-writing workflow; unsupported operations must return the pinned error rather than fabricate execution units or successful construction.
 - The project targets Linux x86_64 as the primary platform.
 - pallas 0.32 is the pinned Cardano primitives library.
 - SMASH integration (`/smash/health`) requires a configured SMASH server URL; the endpoint proxies health checks to it.

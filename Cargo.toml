@@ -28,6 +28,11 @@ ed25519-bip32 = "0.4"
 ed25519-bip32-legacy = { package = "ed25519-bip32", version = "=0.3.2" }
 tokio = { version = "1", features = ["full"] }
 axum = "0.8"
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+rustls-pemfile = "2"
+tokio-rustls = { version = "0.26", default-features = false, features = ["ring", "tls12"] }
+hyper-util = { version = "0.1", features = ["server-auto", "service", "tokio"] }
+tempfile = "3"
 reqwest = { version = "=0.12.24", default-features = false, features = ["rustls-tls"] }
 tower = "0.5"
 tower-http = { version = "0.6", features = ["trace", "timeout", "cors"] }

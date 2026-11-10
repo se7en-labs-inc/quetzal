@@ -1,10 +1,19 @@
 use serde::Deserialize;
+use std::{net::IpAddr, path::PathBuf};
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Config {
     pub socket_path: String,
     pub db_path: String,
     pub port: u16,
+    #[serde(default = "loopback")]
+    pub host: IpAddr,
+    #[serde(default)]
+    pub tls_ca_cert: Option<PathBuf>,
+    #[serde(default)]
+    pub tls_server_cert: Option<PathBuf>,
+    #[serde(default)]
+    pub tls_server_key: Option<PathBuf>,
     pub network_magic: u64,
     pub network: Network,
     pub genesis_start: u64,
@@ -12,6 +21,10 @@ pub struct Config {
     pub epoch_length: u64,
     pub genesis_hash: String,
     pub shelley_genesis: Option<serde_json::Value>,
+}
+
+fn loopback() -> IpAddr {
+    IpAddr::from([127, 0, 0, 1])
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
@@ -38,6 +51,10 @@ impl Default for Config {
             socket_path: "/tmp/cardano-node.socket".to_string(),
             db_path: "./quetzal.sled".to_string(),
             port: 8090,
+            host: loopback(),
+            tls_ca_cert: None,
+            tls_server_cert: None,
+            tls_server_key: None,
             network_magic: 764824073,
             network: Network::Mainnet,
             genesis_start: 1506203091,
@@ -117,6 +134,10 @@ impl Config {
                 "--database" => config.db_path = value,
                 "--node-socket" => config.socket_path = value,
                 "--port" => config.port = value.parse()?,
+                "--host" => config.host = value.parse()?,
+                "--tls-ca-cert" => config.tls_ca_cert = Some(value.into()),
+                "--tls-sv-cert" => config.tls_server_cert = Some(value.into()),
+                "--tls-sv-key" => config.tls_server_key = Some(value.into()),
                 "--testnet" => {
                     let genesis_path = std::path::PathBuf::from(&value);
                     let genesis: serde_json::Value =
@@ -155,7 +176,25 @@ impl Config {
                 _ => anyhow::bail!("unknown option {flag}"),
             }
         }
+        config.validate_transport()?;
         Ok(config)
+    }
+
+    pub fn validate_transport(&self) -> anyhow::Result<()> {
+        let supplied = [
+            self.tls_ca_cert.is_some(),
+            self.tls_server_cert.is_some(),
+            self.tls_server_key.is_some(),
+        ];
+        anyhow::ensure!(
+            supplied.iter().all(|present| *present) || supplied.iter().all(|present| !present),
+            "TLS requires --tls-ca-cert, --tls-sv-cert and --tls-sv-key together"
+        );
+        anyhow::ensure!(
+            self.tls_ca_cert.is_some() || self.host.is_loopback(),
+            "unauthenticated HTTP requires a loopback --host; configure mutual TLS for remote access"
+        );
+        Ok(())
     }
 
     pub fn slot_reference(&self, slot: u64) -> (u64, u64, String) {
@@ -270,6 +309,39 @@ mod tests {
         ] {
             assert!(Config::from_args(args.into_iter().map(str::to_owned)).is_err());
         }
+    }
+
+    #[test]
+    fn transport_configuration_is_complete_and_http_is_loopback_only() {
+        for mask in 1..7 {
+            let mut config = Config::default();
+            if mask & 1 != 0 {
+                config.tls_ca_cert = Some("ca.pem".into());
+            }
+            if mask & 2 != 0 {
+                config.tls_server_cert = Some("server.pem".into());
+            }
+            if mask & 4 != 0 {
+                config.tls_server_key = Some("server.key".into());
+            }
+            assert!(config.validate_transport().is_err());
+        }
+        let parse = |args: &[&str]| Config::from_args(args.iter().map(|arg| (*arg).to_owned()));
+        assert!(parse(&["--host", "0.0.0.0"]).is_err());
+        assert!(parse(&["--host", "::"]).is_err());
+        assert!(parse(&["--host", "::1"]).is_ok());
+        assert_eq!(Config::default().host.to_string(), "127.0.0.1");
+        assert!(parse(&[
+            "--host",
+            "0.0.0.0",
+            "--tls-ca-cert",
+            "ca.pem",
+            "--tls-sv-cert",
+            "server.pem",
+            "--tls-sv-key",
+            "server.key"
+        ])
+        .is_ok());
     }
 
     #[test]

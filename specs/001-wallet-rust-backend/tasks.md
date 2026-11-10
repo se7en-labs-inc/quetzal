@@ -3,6 +3,18 @@
 **Branch**: `001-wallet-rust-backend`
 **Input**: spec.md, plan.md, research.md, data-model.md
 
+## Transport and specification correction — 2026-11-09
+
+This section supersedes historical continuation notes below. V58 qualified the
+old 643/37 contract only. The corrected contract requires 646/38.
+
+- [x] C009 Reconcile API side effects, duplicate conflict, identity, mnemonic derivation, historical restoration, rollback and acceptance boundaries; replace the stale checklist.
+- [x] C010 Add fail-closed complete TLS configuration, loopback default and explicit safe IP binding.
+- [x] C011 Serve the unchanged router with mandatory client-authenticated TLS, bounded handshakes/connections and no plaintext API on the secure listener.
+- [x] C012 Verify real TLS acceptance/rejection and startup failures; run workspace tests, formatting, strict Clippy and release build through Nix. Preserve the initial test-client alert race under evidence/20261109-mtls; with user approval, use direct Rustls rejection reads while retaining strict alert assertions, repeated 30 times with authenticated brackets. All 85 executed workspace tests pass; the existing standalone live-node test remains ignored in this command and real-node qualification is performed by C013.
+- [x] C013 Run the corrected external contract with outputs outside its read-only checkout. Fresh complete=true: 646/646 obligations, 3,808 checks, zero failures, 38 reports, unchanged identities, all attempts passed and owned cleanup verified. Receipts: evidence/20261109-mtls. The Nix package also builds and passes its tests; the conformance candidate is the separately measured local release binary.
+- [ ] C014 Qualify actual pinned Daedalus launch-and-use and a defined performance workload; do not infer these from conformance counts.
+
 ## Continuation — 2026-11-06
 
 Resumed after reboot on 2026-11-07. Latest checkpoint is
@@ -74,7 +86,7 @@ also remains unreproduced; preserve the harness provenance checks.
 **Purpose**: Core domain types that all higher crates depend on. BLOCKS all user stories.
 
 - [ ] T008 Implement Coin newtype (u64 lovelace, #[must_use] checked arithmetic, Display) in crates/quetzal-primitives/src/coin.rs
-- [ ] T009 [P] Implement WalletId newtype ([u8; 32] Blake2b-256 digest) and WalletStatus enum in crates/quetzal-primitives/src/wallet.rs
+- [x] T009 [P] Implement reference WalletId ([u8; 20] Blake2b-160 extended-public-key digest) and WalletStatus in crates/quetzal-primitives/src/wallet.rs
 - [ ] T010 [P] Implement TxHash newtype ([u8; 32]), TxStatus enum, TxDirection enum in crates/quetzal-primitives/src/tx.rs
 - [ ] T011 [P] Implement UtxoId (TxHash + output_index u32), Value struct (Coin + BTreeMap assets) in crates/quetzal-primitives/src/utxo.rs
 - [ ] T012 [P] Implement Address newtype (String, Bech32/base58), AddressState enum, DerivationPath, AddressRole in crates/quetzal-primitives/src/address.rs
@@ -100,7 +112,7 @@ also remains unreproduced; preserve the harness provenance checks.
 - [ ] T019 Implement Bip32PrivateKey and Bip32PublicKey wrappers around ed25519_bip32::{XPrv, XPub} with Zeroize in crates/quetzal-crypto/src/key.rs
 - [ ] T020 [P] Implement derive_shelley_root(mnemonic_bytes) -> Bip32PrivateKey using Icarus master key derivation (PBKDF2-SHA512) in crates/quetzal-crypto/src/derivation.rs
 - [ ] T021 [P] Implement derive_child(parent, index, hardened) and CIP-1852 path helpers (account, role, address indexes) in crates/quetzal-crypto/src/derivation.rs
-- [ ] T022 [P] Implement PassphraseProtected<T>: argon2id KDF + AES-256-GCM encrypt/decrypt in crates/quetzal-crypto/src/passphrase.rs
+- [x] T022 [P] Implement authenticated current/legacy root envelopes and storage KDFs; retain reference mnemonic derivation independently.
 - [ ] T023 Implement Ed25519Signer trait impl for Bip32PrivateKey (pallas_txbuilder compatible) in crates/quetzal-crypto/src/signing.rs
 - [ ] T024 [P] Write CIP-1852 known-answer tests in crates/quetzal-crypto/tests/derivation.rs
 - [ ] T025 [P] Write passphrase encrypt/decrypt roundtrip tests in crates/quetzal-crypto/tests/passphrase.rs
@@ -142,7 +154,7 @@ also remains unreproduced; preserve the harness provenance checks.
 
 - [ ] T040 Implement WalletService::new(db, node_client) in crates/quetzal-wallet/src/wallet.rs
 - [ ] T041 Implement WalletService::create_wallet(name, mnemonic_words, passphrase) -> Result<WalletId>: validate mnemonic, derive root key, encrypt with passphrase, store WalletMeta in crates/quetzal-wallet/src/wallet.rs
-- [ ] T042 Implement WalletService::restore_wallet (idempotent: return existing if same WalletId) in crates/quetzal-wallet/src/wallet.rs
+- [x] T042 Implement restoration with deterministic reference identity; same-family duplicate creation returns 409 wallet_already_exists without mutation.
 - [ ] T043 [P] Implement WalletService::delete_wallet(id): remove all trees for wallet in crates/quetzal-wallet/src/wallet.rs
 - [ ] T044 [P] Implement WalletService::list_wallets() and get_wallet(id) in crates/quetzal-wallet/src/wallet.rs
 - [ ] T045 Write wallet lifecycle integration tests using sled in-memory (sled::Config::new().temporary(true)) in crates/quetzal-wallet/tests/wallet.rs
@@ -292,7 +304,7 @@ also remains unreproduced; preserve the harness provenance checks.
 
 - [ ] T104 Implement ChainSyncWorker::new(chainsync_driver, wallet_db, address_discovery) in crates/quetzal-wallet/src/sync.rs
 - [ ] T105 Implement block processing in sync.rs: for each MultiEraBlock → scan outputs for wallet addresses → update UTxO set → record TxRecords → advance checkpoint (all in one sled batch)
-- [x] T106 Implement rollback handling: on RollBackward(slot) → delete all UTxOs/txs/checkpoints with slot > rollback_slot in sled batch in crates/quetzal-wallet/src/sync.rs
+- [x] T106 Implement atomic rollback via undo data, restoring older spent inputs, reversing received outputs/history, preserving valid local pending provenance and removing discovered-only effects; verify exact native reapplication without duplicate credit.
 - [x] T106a Query the latest native header from one acquired node snapshot across reconnects and validate with unchanged native rollback/reapplication assertions (V57: 224/224).
 - [ ] T107 Implement pending tx confirmation: on block scan, check pending txs; mark confirmed or expired in crates/quetzal-wallet/src/sync.rs
 - [ ] T108 Implement startup checkpoint restore: load last checkpoint from sled, send as FindIntersect points to chainsync driver in crates/quetzal-wallet/src/sync.rs
@@ -352,7 +364,7 @@ also remains unreproduced; preserve the harness provenance checks.
 - [ ] T134 [P] Implement POST /wallets/:id/signatures/:role/:index handler in crates/quetzal-api/src/handlers/keys.rs
 - [ ] T135 [P] Implement PUT /wallets/:id/passphrase handler (re-encrypt root key) in crates/quetzal-api/src/handlers/passphrase.rs
 - [ ] T136 [P] Implement GET /wallets/:id/coin-selections/random handler in crates/quetzal-api/src/handlers/transactions.rs
-- [ ] T137 [P] Implement GET /wallets/:id/migrations and POST /wallets/:id/migrations/plan handlers in crates/quetzal-api/src/handlers/migration.rs
+- [x] T137 [P] Implement POST /wallets/:id/migrations and POST /wallets/:id/migrations/plan; executing migrations submits the resulting transactions.
 - [ ] T138 [P] Implement GET/PUT /settings handlers in crates/quetzal-api/src/handlers/settings.rs
 - [ ] T139 [P] Implement GET /addresses and GET /addresses/:address handlers in crates/quetzal-api/src/handlers/addresses.rs
 - [ ] T140 [P] Implement GET /wallets/:id/policy-id and GET /wallets/:id/policy-key handlers in crates/quetzal-api/src/handlers/keys.rs
@@ -376,7 +388,7 @@ also remains unreproduced; preserve the harness provenance checks.
 - [ ] T151 [P] Implement GET /byron-wallets/:id/utxo, GET /byron-wallets/:id/statistics/utxos handlers in crates/quetzal-api/src/handlers/byron_wallets.rs
 - [ ] T152 [P] Implement POST /byron-wallets/:id/payment-fees handler in crates/quetzal-api/src/handlers/byron_wallets.rs
 - [ ] T153 [P] Implement GET /byron-wallets/:id/coin-selections/random handler in crates/quetzal-api/src/handlers/byron_wallets.rs
-- [ ] T154 [P] Implement GET /byron-wallets/:id/migrations, POST /byron-wallets/:id/migrations/plan handlers in crates/quetzal-api/src/handlers/byron_wallets.rs
+- [x] T154 [P] Implement POST /byron-wallets/:id/migrations and POST /byron-wallets/:id/migrations/plan with native transfer/history verification.
 - [ ] T155 [P] Implement GET/PUT /byron-wallets/:id/assets* handlers in crates/quetzal-api/src/handlers/byron_wallets.rs
 - [ ] T156 [P] Implement PUT /byron-wallets/:id/passphrase handler in crates/quetzal-api/src/handlers/byron_wallets.rs
 - [ ] T157 Add all /byron-wallets/* routes to router in crates/quetzal-api/src/main.rs

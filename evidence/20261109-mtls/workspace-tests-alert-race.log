@@ -1,0 +1,44 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/master' is dirty
+   Compiling quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/master/crates/quetzal-api)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.87s
+     Running unittests src/lib.rs (target/debug/deps/quetzal_address-7fef36d05d096472)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/quetzal-c0ddda1aa278ecd5)
+
+running 16 tests
+test config::tests::fractional_slot_rounding_is_exact_on_testnet_and_mainnet ... ok
+test config::tests::invalid_options_are_rejected ... ok
+test config::tests::wallet_progress_accounts_for_mainnet_byron_slot_lengths ... ok
+test config::tests::wallet_progress_uses_wall_time_and_the_reference_tolerance_boundary ... ok
+test config::tests::isolated_service_paths_and_port ... ok
+test config::tests::transport_configuration_is_complete_and_http_is_loopback_only ... ok
+test config::tests::mainnet_slot_clock_crosses_shelley_boundary ... ok
+test handlers::settings::tests::captured_node_validity_rejection_preserves_ledger_bounds_and_slot ... ok
+test handlers::settings::tests::smash_health_uses_real_status_endpoint_and_bounds_responses ... ok
+test handlers::pool_catalogue::tests::fetched_metadata_requires_the_registered_hash_and_bounded_valid_fields ... ok
+test handlers::pool_catalogue::tests::smash_gc_fetches_actual_delisted_ids_and_persists_the_result ... ok
+test handlers::dreps::tests::metadata_requires_authentic_bytes_and_well_typed_cip119_fields ... ok
+test transport::tests::production_transport_requires_client_auth_and_rejects_plaintext ... FAILED
+test workers::tests::stopping_a_worker_during_handshake_releases_its_socket ... ok
+test handlers::transactions::transaction_tests::history_accepts_zero_limit_and_filters_individual_withdrawals ... ok
+test handlers::transactions::transaction_tests::repeated_signing_preserves_other_witnesses_and_body ... ok
+
+failures:
+
+---- transport::tests::production_transport_requires_client_auth_and_rejects_plaintext stdout ----
+
+thread 'transport::tests::production_transport_requires_client_auth_and_rejects_plaintext' (19998) panicked at crates/quetzal-api/src/transport.rs:265:13:
+expected certificate rejection alert: reqwest::Error { kind: Request, url: "https://127.0.0.1:45207/v2/wallets", source: hyper_util::client::legacy::Error(Canceled, hyper::Error(Canceled, "connection was not ready")) }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    transport::tests::production_transport_requires_client_auth_and_rejects_plaintext
+
+test result: FAILED. 15 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.83s
+
+error: test failed, to rerun pass `-p quetzal-api --bin quetzal`

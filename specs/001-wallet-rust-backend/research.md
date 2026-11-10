@@ -33,34 +33,21 @@
 
 ## Decision: Root Key Encryption at Rest
 
-**Decision**: argon2id KDF + AES-256-GCM AEAD for encrypting root keys stored in sled. No PBKDF2.
+**Decision**: current authenticated root envelopes follow the pinned
+cardano-crypto-wallet backend, implemented in `quetzal-crypto/src/rootkey.rs`.
+They use Argon2id and XChaCha20-Poly1305 with the production parameters recorded
+in `PRODUCTION_KDF_PARAMETERS`. Preserve the distinction between envelope metadata
+and the actual backend KDF invocation; frozen independent vectors check the bytes.
+The earlier AES-GCM-only design is superseded by these reference-compatible
+current/legacy envelope and wallet credential transitions.
 
-**Rationale**: argon2id is the current best-practice password hashing / KDF (memory-hard, side-channel resistant, winner of PHC). The Haskell cardano-wallet uses scrypt; we use argon2id as a strict improvement. AES-256-GCM provides authenticated encryption — any tampering with the ciphertext is detected before decryption.
+**Critical invariants**: normal encryption uses OS entropy for fresh salt/nonce;
+authenticate before exposing key material; zeroize plaintext keys and wrapping
+buffers; preserve identity through rotation/migration; failed authentication must
+not mutate credentials. Supported legacy formats retain their exact family-aware
+password schemes. The deterministic entropy seam exists only for conformance.
 
-**Encryption scheme** (`PassphraseProtected` struct stored in sled):
-```
-struct EncryptedKey {
-    argon2_salt: [u8; 32],   // random 32 bytes, generated fresh on every encrypt
-    aes_nonce: [u8; 12],     // random 12 bytes (96-bit), generated fresh on every encrypt
-    ciphertext: Vec<u8>,     // AES-256-GCM ciphertext of the 96-byte XPrv extended key
-    tag: [u8; 16],           // AES-256-GCM authentication tag (appended by aes-gcm crate)
-}
-```
-
-**Key derivation parameters** (argon2id):
-- `m_cost = 65536` (64 MiB memory) — prevents GPU brute-force
-- `t_cost = 3` (3 iterations)
-- `p_cost = 4` (4 parallel lanes)
-- Output length: 32 bytes → used directly as AES-256 key
-
-**Critical invariants**:
-1. `argon2_salt` and `aes_nonce` MUST be independently generated via `rand::rngs::OsRng` on every call to `encrypt()`. Never reuse.
-2. The 32-byte derived key is `zeroize`d immediately after AES-GCM encrypt/decrypt completes.
-3. The decrypted `XPrv` bytes are wrapped in a `Zeroizing<[u8; 96]>` and zeroed on drop.
-4. `ciphertext` includes the 16-byte GCM tag (appended by `aes_gcm::AeadInPlace::encrypt_in_place`); decryption verifies this tag before returning plaintext.
-5. Wrong passphrase returns `Err(PassphraseError::InvalidPassphrase)` — never panics or leaks timing info beyond the argon2 computation itself.
-
-**No PBKDF2 anywhere in the codebase.** The `pbkdf2` crate has been removed from workspace dependencies.
+**PBKDF2 remains required for reference-compatible root derivation and credential operations.** Storage policy must not change wallet keys, addresses or identity. Independent vectors and restoration verify these.
 
 ---
 
@@ -72,7 +59,7 @@ struct EncryptedKey {
 
 **Intersection strategy**: On startup, send the last N checkpoints (slots+block hashes) as `FindIntersect` points. Roll back to the intersection point if the node has forked. If no intersection found, sync from genesis.
 
-**Rollback handling**: Keep a configurable rollback window (default 2160 blocks = k parameter). On `RollBackward`, revert the sled trees to the checkpoint at the rollback target slot using a sled transaction that deletes entries created after that slot.
+**Rollback handling**: use undo records or equivalent reconstruction to restore all ledger mutations, including older inputs spent on the abandoned branch. Deleting newer entries alone is insufficient. Restore still-valid local submissions to pending, remove discovered-only effects, preserve retry provenance and verify exact native balances/history before and after reapplication. Retention and deeper recovery must follow actual network configuration rather than assume a universal 2160-block window.
 
 ---
 
@@ -86,14 +73,14 @@ struct EncryptedKey {
 
 | Tree name | Key | Value |
 |---|---|---|
-| `wallets` | wallet_id[32] | WalletMeta (CBOR) |
+| `wallets` | wallet_id[20] | WalletMeta (CBOR) |
 | `utxos:{wid}` | tx_hash[32] ++ out_idx[4 BE] | UtxoEntry (CBOR) |
 | `txs:{wid}` | slot[8 BE] ++ tx_hash[32] | TxRecord (CBOR) |
 | `addrs:{wid}` | addr_bytes | AddressState (CBOR) |
 | `checkpoints:{wid}` | slot[8 BE] | block_hash[32] |
 | `pending:{wid}` | tx_hash[32] | PendingTx (CBOR) |
 | `pools` | pool_id[28] | PoolMeta (CBOR) |
-| `idx:addr_wid:{addr}` | addr_bytes | wallet_id[32] |
+| `idx:addr_wid:{addr}` | addr_bytes | wallet_id[20] |
 
 ---
 
@@ -105,10 +92,10 @@ struct EncryptedKey {
 
 **Error format**: All errors follow the cardano-wallet format:
 ```json
-{"code": "wallet_not_found", "message": "No wallet with id: ..."}
+{"code": "no_such_wallet", "message": "I couldn't find a wallet with the given id: ..."}
 ```
 
-**Daedalus-critical endpoints** (must be byte-for-byte JSON-compatible):
+**Examples of consumer-critical endpoints** (statuses, media, schemas, deterministic values and side effects must match; JSON object key order is not a compatibility rule):
 - `POST /wallets`, `GET /wallets`, `GET /wallets/{id}`, `DELETE /wallets/{id}`
 - `GET /wallets/{id}/addresses`
 - `GET /wallets/{id}/transactions`, `POST /wallets/{id}/transactions`
@@ -119,26 +106,33 @@ struct EncryptedKey {
 
 ## Decision: Coin Selection
 
-**Decision**: Implement largest-first and random-improve algorithms matching the Haskell reference.
+**Decision**: preserve reference selection, including the separately pinned seeded
+component and live wallet selection behavior. Eligibility, exact conservation,
+minimum ADA, native-asset change, collateral and failure precedence require
+independent assertions; naming a strategy does not establish compatibility.
 
-**Rationale**: Daedalus uses the random-improve strategy for normal payments. Largest-first is used as a fallback. Both are specified in the Haskell cardano-wallet codebase. We port the same algorithm to Rust to ensure identical fee calculations.
-
-**Fee calculation**: Linear fee model `a + b * tx_size_bytes` where a (intercept) and b (coefficient) come from protocol parameters fetched via LocalStateQuery.
+**Fee calculation**: use live protocol parameters and exact signed-size/ledger
+accounting. The linear byte fee is only one component; script execution prices,
+reference scripts, witnesses, certificates, withdrawals and deposits must be
+accounted for or explicitly rejected according to the pinned operation contract.
 
 ---
 
 ## Decision: Root Key V2 Encryption Scheme (from spec 003)
 
-**Decision**: Support only V2 (`argon2id-v2`) in new wallets; expose `encryption_method` field in wallet API responses.
+**Decision**: expose the actual persisted scheme through `encryption_method`, preserving family-aware current and legacy behavior and authenticated migration.
 
 **PassphraseScheme values** (matching cardano-wallet `ToText` instances):
-- `"scrypt"` — V1 legacy (cardano-wallet Haskell < 2026)
-- `"pbkdf2-hmac-sha512"` — V1 legacy variant
-- `"argon2id-v2"` — Current standard (our Rust impl always uses this)
+- `"scrypt"` — supported legacy credentials
+- `"pbkdf2-hmac-sha512"` — reference PBKDF2 credential preparation
+- `"argon2id-v2"` — authenticated V2 scheme when attached to that wallet
 
 **API field name**: `encryption_method` in `WalletResponse` (matches Haskell `ApiWallet.passphrase.encryption_method`).
 
-**Migration note**: Since this is a fresh Rust implementation, all wallets created here use `argon2id-v2`. If a user imports an existing wallet via mnemonic restoration, the key is re-encrypted with V2 on first creation.
+**Migration note**: do not assume all families use V2. Preserve reference creation,
+unlock and rotation transitions for Shelley/shared/Byron/Icarus, including callback
+and backend-failure behavior. Mnemonic restoration creates fresh Quetzal state;
+it is distinct from database import and supported legacy credential migration.
 
 ---
 

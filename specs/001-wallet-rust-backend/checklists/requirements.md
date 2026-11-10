@@ -1,34 +1,19 @@
-# Specification Quality Checklist: Quetzal Wallet Backend
+# Specification quality and acceptance status
 
-**Purpose**: Validate specification completeness and quality before proceeding to planning
-**Created**: 2026-08-22
-**Feature**: [spec.md](../spec.md)
+Reviewed 2026-11-09. Requirement quality is distinct from passing implementation
+tests. This supersedes the original seven-story/17-requirement checklist.
 
-## Content Quality
+- [x] All 78 paths / 96 operations and wallet families remain in scope.
+- [x] Duplicate creation, create-and-send and migration side effects match the reviewed API contract.
+- [x] Identity uses 20-byte reference digests and distinguishes families and public-key restoration.
+- [x] Storage encryption does not replace mnemonic/root derivation.
+- [x] Restoration requires historical funds; restart requires checkpoint reuse.
+- [x] Rollback restores spent inputs and preserves local pending/retry provenance; expiry is separate.
+- [x] Secure acceptance requires mutual TLS, positive/negative certificate controls, fail-closed startup and loopback default.
+- [x] Historical 643/37 receipts do not qualify the corrected 646/38 contract.
+- [x] Linux-only qualification, unsupported eras/scripts and database restoration boundaries are explicit.
+- [x] Fresh full 646-obligation/38-profile qualification: 3,808 checks, zero failures, unchanged identities and owned cleanup; evidence/20261109-mtls.
+- [ ] Actual pinned Daedalus launch, certificate provisioning and wallet workflow acceptance.
+- [ ] Defined and executed reproducible performance and memory benchmarks.
 
-- [X] No implementation details (languages, frameworks, APIs)
-- [X] Focused on user value and business needs
-- [X] Written for non-technical stakeholders
-- [X] All mandatory sections completed
-
-## Requirement Completeness
-
-- [X] No [NEEDS CLARIFICATION] markers remain
-- [X] Requirements are testable and unambiguous
-- [X] Success criteria are measurable
-- [X] Success criteria are technology-agnostic (no implementation details)
-- [X] All acceptance scenarios are defined
-- [X] Edge cases are identified
-- [X] Scope is clearly bounded
-- [X] Dependencies and assumptions identified
-
-## Feature Readiness
-
-- [X] All functional requirements have clear acceptance criteria
-- [X] User scenarios cover primary flows
-- [X] Feature meets measurable outcomes defined in Success Criteria
-- [X] No implementation details leak into specification
-
-## Notes
-
-All items pass. The spec covers 7 prioritised user stories (P1–P7), 17 functional requirements, 7 edge cases, and 8 measurable success criteria. Scope boundaries (no TLS, no multi-sig, no Plutus execution, no DRep governance, Linux x86_64 only) are documented in Assumptions. Ready to proceed to `/speckit.plan`.
+No all-green production or drop-in compatibility claim follows from this checklist.

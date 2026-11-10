@@ -16,28 +16,33 @@ node-to-client protocols.
 The sentinel is a robotic **Quetzalcoatlus**, the prehistoric pterosaur. Its armor
 and watchful posture represent local verification and resilient wallet state.
 
-## Verified status
+## Validation status
 
-The V58 implementation passes the complete supplied conformance suite:
+The mutual-TLS implementation passes the corrected independent contract:
 
 | Validation | Result |
 | --- | --- |
-| Required conformance obligations | **643 / 643** |
-| Executed checks | **3,807 passed, zero failures** |
-| Fresh execution profiles | **37 / 37** |
+| Required conformance obligations | **646 / 646** |
+| Executed checks | **3,808 passed, zero failures** |
+| Fresh execution profiles | **38 / 38** |
+| Mutual TLS, server authentication and plaintext rejection | **Pass** |
 | Native rollback and reapplication | **224 / 224 checks** |
-| Workspace tests, strict Clippy, formatting and release build | **Pass** |
+| Workspace tests, strict Clippy, formatting, release and Nix package build | **Pass** |
 
-This is one complete run against one frozen candidate and adapter, with unchanged
-binary identities throughout. The suite includes differential HTTP checks against
+These receipts describe one complete run against one frozen candidate and adapter,
+with unchanged binary identities throughout. The suite includes differential HTTP checks against
 the Haskell wallet, independent internal vectors, and real native-node controls.
 
-Start with the [validation report](evidence/20261109-v58-gate/VALIDATION.md),
-[machine-readable result](evidence/20261109-v58-gate/result.json), and
-[coverage gate](evidence/20261109-v58-gate/coverage.json). All
-[37 reports](evidence/20261109-v58-gate/reports/) and earlier failed attempts are
+Start with the [validation report](evidence/20261109-mtls/VALIDATION.md),
+[machine-readable result](evidence/20261109-mtls/result.json), and
+[coverage gate](evidence/20261109-mtls/coverage.json). All
+[38 reports](evidence/20261109-mtls/reports/) and earlier failed attempts are
 retained for review. The conformance suite is maintained separately; its assertions
 were not changed to make Quetzal pass.
+
+Actual Daedalus launch-and-use and performance acceptance remain separate and
+unqualified. The earlier [V58 receipts](evidence/20261109-v58-gate/VALIDATION.md)
+remain historical evidence for the old 643/37 contract without TLS.
 
 ## Wallet capabilities
 
@@ -57,7 +62,7 @@ were not changed to make Quetzal pass.
 The qualified native controls include Conway and a live Babbage-to-Conway
 transition. The recorded toolchain uses `cardano-node` 11.1.3 and `cardano-cli`
 11.2.3; exact independent tool identities are in the
-[run manifest](evidence/20261109-v58-gate/identities.json).
+[run manifest](evidence/20261109-mtls/identities.json).
 
 ## Build
 
@@ -111,8 +116,42 @@ curl --fail http://127.0.0.1:8090/v2/network/information
 curl --fail http://127.0.0.1:8090/v2/blocks/latest/header
 ```
 
-The default configuration uses mainnet, `/tmp/cardano-node.socket`, port `8090`,
-and `./quetzal.sled`. Pass explicit paths when operating more than one instance.
+The default configuration uses mainnet, `/tmp/cardano-node.socket`, loopback
+`127.0.0.1`, port `8090`, and `./quetzal.sled`. Pass explicit paths when operating
+more than one instance. Without TLS flags the loopback listener serves HTTP for
+local development and semantic fixtures; it does not satisfy transport conformance.
+
+## Mutual TLS
+
+Daedalus requires mutually authenticated TLS. Supply all three certificate paths:
+
+```sh
+./target/release/quetzal serve \
+  --database ./state/mainnet-wallet \
+  --node-socket /path/to/mainnet/node.socket \
+  --port 8090 \
+  --tls-ca-cert /private/tls/ca.crt \
+  --tls-sv-cert /private/tls/server.crt \
+  --tls-sv-key /private/tls/server.key
+
+curl --fail --cacert /private/tls/ca.crt \
+  --cert /private/tls/client.crt --key /private/tls/client.key \
+  https://127.0.0.1:8090/v2/network/information
+```
+
+The CA file trusts client certificates; each client needs a certificate signed by
+that CA with client-auth purpose. The PEM server certificate chain and matching
+private key identify the server. Its certificate needs server-auth purpose and
+a subject alternative name matching the host clients use. Clients must verify
+the server CA and hostname. Keep keys private and provision certificates through
+the owning application or deployment.
+
+Missing or malformed TLS files, mismatched certificate/key pairs and partial flag
+sets fail startup. TLS mode exposes
+one secure listener and rejects plaintext and unauthenticated TLS clients.
+`--host` accepts an explicit IP, including `::1`; non-loopback binds require TLS.
+These flags support the secure conformance launch. An actual pinned Daedalus
+launch-and-use run is still required before claiming drop-in application compatibility.
 
 ## Security model
 
@@ -128,10 +167,11 @@ transactions retain their provenance and signed bytes across restarts and retry.
 The latest-header endpoint reads one acquired native snapshot, keeping its slot,
 hash and block height consistent across a branch switch.
 
-**The API belongs on a trusted boundary.** The current server listens on
-`0.0.0.0` and does not provide API authentication or TLS. Restrict access with
-host/network controls; use an authenticated TLS proxy when remote access is needed.
-A spending passphrase protects key use, not access to every wallet API operation.
+**The API defaults to loopback.** Configure mutual TLS to authenticate API clients;
+non-loopback HTTP is rejected. A trusted client certificate grants access to the
+wallet API, not a separate per-wallet authorization policy. A spending passphrase
+protects key use and does not replace transport authentication. Restrict certificate
+and database access to the owning application or operator.
 
 The committed conformance receipts document tested behavior. They are separate
 from a security audit or a production deployment assessment.
@@ -157,10 +197,12 @@ wallet-conformance conform \
 ```
 
 The workspace must be new. The runner owns fresh fixtures and services, executes
-all 37 profiles and writes `result.json`, `coverage.json` and individual reports.
-The committed [V58 configuration](evidence/20261109-v58-gate/execution-config-v58.json)
-and [identity manifest](evidence/20261109-v58-gate/identities.json) record the exact
-qualified setup; their machine-specific paths must be provisioned for another host.
+all 38 profiles and writes `result.json`, `coverage.json` and individual reports.
+The committed [TLS configuration](evidence/20261109-mtls/execution-config.json)
+and [identity manifest](evidence/20261109-mtls/identities.json) record the qualified
+setup; their machine-specific paths must be provisioned for another host. The
+configuration points HTTPS at a distinct loopback port and passes the three TLS
+file placeholders to the same candidate executable as the HTTP fixture launch.
 Keep fixture keys and node/wallet databases private. Commit public receipts rather
 than complete runtime workspaces.
 

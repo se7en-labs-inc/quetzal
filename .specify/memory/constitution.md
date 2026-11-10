@@ -14,6 +14,11 @@ Handling cryptographic keys and financial transactions demands defense in depth 
 ### IV. REST API Contract
 The wallet exposes a REST API compatible with the existing cardano-wallet OpenAPI spec (`specifications/api/swagger.yaml` in the reference implementation). API surface parity with the Haskell backend is a hard requirement for Daedalus compatibility. Breaking changes require explicit versioning.
 
+Authenticated transport is part of this boundary: secure-mode launches require
+mutual TLS, fail-closed certificate configuration and rejection of plaintext API
+access. Default binding is loopback. API conformance alone does not establish
+actual Daedalus launch-and-use or platform/performance compatibility.
+
 ### V. Reproducible Builds
 Nix flakes (via `flake.nix`) are the single source of truth for the build environment. Crane builds the Rust workspace. Fenix provides the pinned Rust toolchain. All `nix` commands use the project flake. The devshell (`nix develop`) is the authoritative development environment.
 

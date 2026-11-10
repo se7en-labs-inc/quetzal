@@ -1,0 +1,9 @@
+error:
+       … while calling the 'getFlake' builtin
+         at «string»:1:225:
+            1| let source = builtins.path { path = /home/sam/work/se7en/quetzal/master; name = "quetzal-mtls-source"; filter = path: type: !(builtins.elem (builtins.baseNameOf path) [".git" "target" "evidence" ".direnv" "result"]); }; in (builtins.getFlake ("path:" + toString source)).packages.x86_64-linux.quetzal
+             |                                                                                                                                                                                                                                 ^
+
+       … while evaluating the argument passed to builtins.getFlake
+
+       error: the string 'path:/nix/store/0070nmsy1vpclgcvpfy4vqp32az7ny3m-quetzal-mtls-source' is not allowed to refer to a store path (such as '/nix/store/0070nmsy1vpclgcvpfy4vqp32az7ny3m-quetzal-mtls-source')

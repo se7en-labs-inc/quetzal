@@ -4,6 +4,7 @@ mod handlers;
 mod json;
 mod router;
 mod state;
+mod transport;
 mod workers;
 
 use std::sync::Arc;
@@ -24,6 +25,8 @@ async fn main() -> anyhow::Result<()> {
         .init();
 
     let config = Config::from_args(std::env::args().skip(1))?;
+    // Fail closed before opening wallet state or starting workers.
+    let tls = transport::load(&config)?;
     let wallet_service = WalletService::new(&config.db_path)?;
     let state = AppState::new(wallet_service, config.clone())?;
     for wallet in state.wallet_service.list_wallets().await? {
@@ -46,11 +49,11 @@ async fn main() -> anyhow::Result<()> {
 
     let router = router::build_router(state);
 
-    let addr = format!("0.0.0.0:{}", config.port);
-    tracing::info!(address = %addr, "Quetzal wallet backend starting");
+    let addr = std::net::SocketAddr::new(config.host, config.port);
+    tracing::info!(address = %addr, mutual_tls = tls.is_some(), "Quetzal wallet backend starting");
 
-    let listener = tokio::net::TcpListener::bind(&addr).await?;
-    axum::serve(listener, router).await?;
+    let listener = tokio::net::TcpListener::bind(addr).await?;
+    transport::serve(listener, router, tls).await?;
     Ok(())
 }
 
