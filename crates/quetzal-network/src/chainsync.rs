@@ -34,6 +34,15 @@ impl<'a> ChainSyncDriver<'a> {
     /// Pass the checkpoints you already know about; the node will pick the
     /// most recent common ancestor.  Use an empty slice to start from genesis.
     pub async fn find_intersect(&mut self, checkpoints: &[Checkpoint]) -> Result<(), NetworkError> {
+        self.intersection(checkpoints).await.map(|_| ())
+    }
+
+    /// Return the actual selected point so a restored wallet can undo stale state
+    /// before consuming blocks from an earlier intersection.
+    pub async fn intersection(
+        &mut self,
+        checkpoints: &[Checkpoint],
+    ) -> Result<Checkpoint, NetworkError> {
         let mut points: Vec<Point> = checkpoints
             .iter()
             .map(|c| Point::Specific(c.slot, c.block_hash.to_vec()))
@@ -42,12 +51,25 @@ impl<'a> ChainSyncDriver<'a> {
         // Origin is the fallback when every stored checkpoint was rolled back.
         points.push(Point::Origin);
 
-        self.client
+        let (selected, _) = self
+            .client
             .find_intersect(points)
             .await
             .map_err(|e: ClientError| NetworkError::ChainSync(e.to_string()))?;
 
-        Ok(())
+        match selected {
+            Some(Point::Origin) => Ok(Checkpoint::origin()),
+            Some(Point::Specific(slot, hash)) => checkpoints
+                .iter()
+                .find(|p| p.slot == slot && p.block_hash.as_slice() == hash.as_slice())
+                .cloned()
+                .ok_or_else(|| {
+                    NetworkError::ChainSync("node selected an unoffered intersection".into())
+                }),
+            None => Err(NetworkError::ChainSync(
+                "node rejected origin intersection".into(),
+            )),
+        }
     }
 
     /// Request the next block from the node and return the corresponding event.

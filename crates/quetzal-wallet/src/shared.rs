@@ -20,6 +20,43 @@ fn reject(code: &'static str, message: impl Into<String>) -> WalletError {
     }
 }
 
+/// Derive the complete address for one shared-wallet discovery path.
+pub fn address_for_path(
+    payment: &Value,
+    delegation: Option<&Value>,
+    role: AddressRole,
+    index: u32,
+    network: Network,
+) -> Result<Address, WalletError> {
+    let payment_keys = template_cosigners(payment)?;
+    let hash = native_script_hash(
+        &payment["template"],
+        &derive_cosigner_key_hashes(&payment_keys, role.index(), index)?,
+    )?;
+    let stake = delegation
+        .map(|template| {
+            let keys = template_cosigners(template)?;
+            native_script_hash(
+                &template["template"],
+                &derive_cosigner_key_hashes(&keys, 2, index)?,
+            )
+        })
+        .transpose()?;
+    if let Some(stake) = stake {
+        Ok(Address(
+            pallas_addresses::ShelleyAddress::new(
+                network,
+                pallas_addresses::ShelleyPaymentPart::script_hash(hash),
+                pallas_addresses::ShelleyDelegationPart::Script(stake),
+            )
+            .to_bech32()
+            .map_err(|e| WalletError::TxBuild(e.to_string()))?,
+        ))
+    } else {
+        quetzal_address::script_enterprise_address(hash, network).map_err(Into::into)
+    }
+}
+
 fn addresses(
     payment: &Value,
     delegation: Option<&Value>,
@@ -27,45 +64,15 @@ fn addresses(
     gap: u32,
     network: Network,
 ) -> Result<Vec<AddressEntry>, WalletError> {
-    let payment_keys = template_cosigners(payment)?;
     let mut entries = Vec::new();
     for index in 0..gap {
-        let stake = delegation
-            .map(|template| {
-                let keys = template_cosigners(template)?;
-                native_script_hash(
-                    &template["template"],
-                    &derive_cosigner_key_hashes(&keys, 2, index)?,
-                )
-            })
-            .transpose()?;
-        for role in [0, 1] {
-            let hash = native_script_hash(
-                &payment["template"],
-                &derive_cosigner_key_hashes(&payment_keys, role, index)?,
-            )?;
-            let address = if let Some(stake) = stake {
-                Address(
-                    pallas_addresses::ShelleyAddress::new(
-                        network,
-                        pallas_addresses::ShelleyPaymentPart::script_hash(hash),
-                        pallas_addresses::ShelleyDelegationPart::Script(stake),
-                    )
-                    .to_bech32()
-                    .map_err(|e| WalletError::TxBuild(e.to_string()))?,
-                )
-            } else {
-                quetzal_address::script_enterprise_address(hash, network)?
-            };
+        for role in [AddressRole::External, AddressRole::Internal] {
+            let address = address_for_path(payment, delegation, role, index, network)?;
             entries.push(AddressEntry {
                 address,
                 path: DerivationPath {
                     account_ix: account,
-                    role: if role == 0 {
-                        AddressRole::External
-                    } else {
-                        AddressRole::Internal
-                    },
+                    role,
                     address_ix: index,
                 },
                 state: AddressState::Unused,

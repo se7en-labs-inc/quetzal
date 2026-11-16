@@ -1068,7 +1068,7 @@ impl WalletService {
 
 // ── Native script helpers (CIP-1854 / shared wallet addresses) ───────────────
 
-fn script_template_text(node: &serde_json::Value) -> Result<String, WalletError> {
+pub fn script_template_text(node: &serde_json::Value) -> Result<String, WalletError> {
     if let Some(cosigner) = node.as_str() {
         let index = cosigner
             .strip_prefix("cosigner#")

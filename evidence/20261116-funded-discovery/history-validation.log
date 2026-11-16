@@ -1,0 +1,142 @@
+   Compiling quetzal-primitives v0.1.0 (/home/sam/work/se7en/quetzal/002-sqlite-state-migration/crates/quetzal-primitives)
+   Compiling quetzal-crypto v0.1.0 (/home/sam/work/se7en/quetzal/002-sqlite-state-migration/crates/quetzal-crypto)
+   Compiling quetzal-network v0.1.0 (/home/sam/work/se7en/quetzal/002-sqlite-state-migration/crates/quetzal-network)
+   Compiling quetzal-address v0.1.0 (/home/sam/work/se7en/quetzal/002-sqlite-state-migration/crates/quetzal-address)
+   Compiling quetzal-wallet v0.1.0 (/home/sam/work/se7en/quetzal/002-sqlite-state-migration/crates/quetzal-wallet)
+   Compiling quetzal-migrate v0.1.0 (/home/sam/work/se7en/quetzal/002-sqlite-state-migration/crates/quetzal-migrate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.25s
+     Running unittests src/main.rs (target/debug/deps/quetzal_migrate-59183d8f2c634160)
+
+running 9 tests
+test convert::native_source_tests::stopped_reference_files_convert_and_authenticate ... ignored, requires QUETZAL_OWNED_MIGRATION_FIXTURE with stopped native fixture
+test publish::tests::concurrent_destination_is_never_replaced ... ok
+test publish::tests::staging_is_published_once_and_source_overlap_rejected ... ok
+test convert::native_source_tests::history_retains_collateral_invalid_scripts_and_script_withdrawal_network ... ok
+test convert::native_source_tests::pool_fingerprints_lift_to_full_addresses_without_changing_payment_ownership ... ok
+test source::tests::source_identifiers_are_quoted_and_service_database_is_not_a_wallet ... ok
+test source::tests::future_schema_empty_directory_and_symlink_are_rejected ... ok
+test source::tests::committed_wal_and_binary_values_are_copied_without_mutating_source ... ok
+test convert::native_source_tests::persisted_legacy_and_prefixed_v2_credentials_authenticate_without_reencryption ... ok
+
+test result: ok. 8 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 14.95s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_primitives-4b414f317aa320cf)
+
+running 1 test
+test slotting::tests::utc_fractions_preserve_precision_and_remove_only_trailing_zeroes ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/roundtrip.rs (target/debug/deps/roundtrip-6c7b166d13d783dc)
+
+running 12 tests
+test coin_checked_add_overflow ... ok
+test coin_checked_sub_underflow ... ok
+test cbor_roundtrip_wallet_meta ... ok
+test tx_history_key_ordering ... ok
+test slot_key_ordering ... ok
+test utxo_key_different_outputs ... ok
+test checkpoint_default_is_origin ... ok
+test value_pure_ada ... ok
+test tx_hash_hex_roundtrip ... ok
+test coin_json_roundtrip ... ok
+test wallet_id_hex_roundtrip ... ok
+test prop::coin_add_sub_inverse ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/quetzal_wallet-10138046610fcf04)
+
+running 29 tests
+test balancing::tests::collateral_guards_precede_funding_and_follow_reference_order ... ok
+test metadatum::tests::metadata_reports_overflow_without_rounding_the_integer ... ok
+test metadatum::tests::metadata_retains_full_unsigned_and_negative_ledger_boundaries ... ok
+test seeded_selection::tests::splitmix_matches_upstream_published_examples ... ok
+test policy::tests::policy_rejects_missing_repeated_and_foreign_cosigners ... ok
+test pool_metrics::tests::rounds_percentage_ties_even_and_preserves_exact_saturation ... ok
+test policy::tests::policy_hash_resolves_the_template_and_includes_native_script_domain ... ok
+test staking::tests::withdrawal_benefit_uses_the_pinned_conservative_cost_boundary ... ok
+test stake::tests::groups_by_stake_credential_including_script_and_unassigned ... ok
+test db::pool_chain::tests::rolls_back_the_earlier_unreleased_production_only_record_format ... ok
+test db::chain::tests::aborted_block_leaves_no_utxo_checkpoint_or_journal ... ok
+test db::pool_chain::tests::counts_registrations_replay_same_slot_blocks_and_rollback_atomically ... ok
+test db::chain::tests::rollback_restores_stake_deposits_and_votes_without_reverting_credentials ... ok
+test db::pending_retry_tests::retry_slot_survives_reopen_and_never_recreates_a_forgotten_transaction ... ok
+test db::chain::tests::replay_and_rollback_restore_spent_inputs_addresses_and_checkpoints ... ok
+test shared::tests::shared_delegation_indices_match_pinned_reference_addresses ... ok
+test balancing::tests::input_boundaries_preserve_body_identity_and_exact_signed_size ... ok
+test payment::tests::payment_conserves_native_assets_and_authenticates_metadata ... ok
+test db::import::tests::malformed_snapshots_do_not_publish_wallet_and_post_import_undo_restores_baseline ... ok
+test balancing::tests::preselected_balance_conserves_assets_and_preserves_wallet_state ... ok
+test db::submissions::tests::confirmed_and_forgotten_rediscovered_submissions_retain_distinct_durable_status ... ok
+test byron_addresses::tests::random_address_creation_and_import_are_atomic_and_durable ... ok
+test db::change::tests::allocation_is_atomic_survives_forgetting_and_does_not_expose_the_unused_pool ... ok
+test policy::tests::policy_key_requires_authorization_and_is_persisted ... ok
+test bootstrap::tests::random_and_icarus_bootstrap_witnesses_authenticate_inputs_without_changing_the_body ... ok
+test shared::tests::peers_activate_atomically_and_sign_with_their_shared_account_keys ... ok
+test credentials::tests::mnemonic_recovery_authenticates_identity_and_persists_only_the_new_credentials ... ok
+test credentials::tests::migration_failure_is_durable_and_commit_preserves_a_concurrent_chain_tip ... ok
+test db::import::tests::import_reopens_with_keys_pending_and_identity_then_safely_resets_deep_rollback ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.14s
+
+     Running tests/namespaces.rs (target/debug/deps/namespaces-4370e7cee891eae2)
+
+running 1 test
+test identical_family_ids_have_independent_durable_credentials_and_lifecycle ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.30s
+
+     Running tests/wallet.rs (target/debug/deps/wallet-c751f8200068af73)
+
+running 15 tests
+test get_wallet_not_found ... ok
+test create_and_list_wallet ... ok
+test shared_wallet_deterministic_id ... ok
+test create_shared_wallet_single_cosigner_self ... ok
+test watch_wallet_reproduces_addresses_without_private_derivation ... ok
+test account_xpub_stored_at_creation ... ok
+test wallet_identity_matches_published_haskell_root_vector ... ok
+test get_addresses_returns_gap_limit_count ... ok
+test delete_shared_wallet ... ok
+test initial_balance_is_zero ... ok
+test delete_wallet ... ok
+test duplicate_wallet_rejected ... ok
+test update_passphrase_wrong_old ... ok
+test update_passphrase_success ... ok
+test derive_account_xpub_at_requires_correct_passphrase ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.72s
+
+   Doc-tests quetzal_primitives
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_wallet
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+     Running unittests src/main.rs (target/debug/deps/quetzal_migrate-59183d8f2c634160)
+
+running 1 test
+fixture Icarus: 41 discovery addresses, 2 UTxOs, 0 unowned, 0 duplicates
+fixture Byron: 1 discovery addresses, 1 UTxOs, 0 unowned, 0 duplicates
+fixture Shared: 41 discovery addresses, 1 UTxOs, 0 unowned, 0 duplicates
+fixture Shelley: 42 discovery addresses, 1 UTxOs, 0 unowned, 0 duplicates
+fixture Shelley: 42 discovery addresses, 1 UTxOs, 0 unowned, 0 duplicates
+Error: IO error: could not acquire lock on "/tmp/nix-shell.jCFWTR/.tmpMgj9tL/db": Os { code: 11, kind: WouldBlock, message: "Resource temporarily unavailable" }
+test convert::native_source_tests::stopped_reference_files_convert_and_authenticate ... FAILED
+
+failures:
+
+failures:
+    convert::native_source_tests::stopped_reference_files_convert_and_authenticate
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 13.80s
+
+error: test failed, to rerun pass `-p quetzal-migrate --bin quetzal-migrate`

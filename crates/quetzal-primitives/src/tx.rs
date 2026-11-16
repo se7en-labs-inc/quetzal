@@ -71,6 +71,25 @@ pub struct TxRecord {
     pub deposit_returned: Coin,
     #[serde(default)]
     pub stake_derivation_path: Option<crate::DerivationPath>,
+    #[serde(default)]
+    pub ledger_details: TxLedgerDetails,
+}
+
+/// Additional ledger fields retained by SQLite imports and newer records.
+/// Defaults keep existing sled records readable.
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct TxLedgerDetails {
+    #[serde(default)]
+    pub extra_signatures: Vec<String>,
+    /// Explicit ledger validity bounds; absent for Byron or unavailable CBOR.
+    #[serde(default)]
+    pub validity_interval: Option<(u64, u64)>,
+    pub collateral: Vec<TxInput>,
+    pub collateral_outputs: Vec<TxOutput>,
+    pub script_validity: Option<bool>,
+    /// Exact signed historical bytes when retained by the source wallet.
+    #[serde(default)]
+    pub raw_cbor: Option<Vec<u8>>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -113,6 +113,14 @@ pub(crate) fn record(
         .transpose()?
         .unwrap_or_default();
     Ok(TxRecord {
+        ledger_details: quetzal_primitives::tx::TxLedgerDetails {
+            extra_signatures: crate::ledger::extra_signatures(&multi),
+            validity_interval: Some((
+                multi.validity_start().unwrap_or(0),
+                multi.ttl().unwrap_or(u64::MAX),
+            )),
+            ..Default::default()
+        },
         id: pending.id.clone(),
         slot: pending.submitted_slot,
         block_hash: [0; 32],

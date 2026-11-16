@@ -192,6 +192,19 @@ impl WalletDb {
     }
 
     pub fn rollback_chain(&self, wid: &WalletId, to_slot: u64) -> Result<(), WalletError> {
+        let floor = self
+            .db
+            .open_tree(format!("migration:{wid}"))?
+            .get(b"floor")?
+            .map(|v| cbor_decode::<Checkpoint>(&v))
+            .transpose()?;
+        if floor.is_some_and(|p| to_slot < p.slot) {
+            self.reset_imported_chain(wid)?;
+            if to_slot != 0 {
+                return Err(WalletError::TxBuild("rollback crossed imported snapshot boundary; state reset to origin, reconnect to replay".into()));
+            }
+            return Ok(());
+        }
         let trees = self.chain_trees(wid)?;
         let mut journals = Vec::new();
         for entry in trees[6].iter().rev() {
@@ -309,6 +322,7 @@ mod tests {
         let (db, wid, _) = fixture();
         let credential = StakeCredential::AddrKeyhash([1; 28].into());
         let mut record = TxRecord {
+            ledger_details: Default::default(),
             id: TxHash([2; 32]),
             slot: 10,
             block_hash: [3; 32],

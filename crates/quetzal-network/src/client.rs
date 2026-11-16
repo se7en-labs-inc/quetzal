@@ -34,6 +34,31 @@ impl Drop for Connecting {
 }
 
 impl NodeClient {
+    /// Verify a persisted snapshot is actually on the connected node's chain.
+    pub async fn validate_checkpoint(
+        socket: &str,
+        magic: u64,
+        checkpoint: &quetzal_primitives::Checkpoint,
+    ) -> Result<bool, NetworkError> {
+        let connected = Self::connect(socket, magic).await?;
+        let mut owned = Connecting(Some(connected.inner));
+        let client = owned
+            .0
+            .as_mut()
+            .ok_or_else(|| NetworkError::Protocol("missing checkpoint connection".into()))?;
+        let result = crate::chainsync::ChainSyncDriver::new(client.chainsync())
+            .intersection(std::slice::from_ref(checkpoint))
+            .await
+            .map(|point| {
+                point == *checkpoint
+                    || checkpoint.block_height == 0
+                        && point == quetzal_primitives::Checkpoint::origin()
+            });
+        if let Some(client) = owned.0.take() {
+            client.abort().await;
+        }
+        result
+    }
     /// Live node header and native clock, independent of historical replay.
     pub async fn network_snapshot(
         socket: &str,

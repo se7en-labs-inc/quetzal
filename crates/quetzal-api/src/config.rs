@@ -336,7 +336,11 @@ impl Config {
             .and_then(chrono::DateTime::from_timestamp_millis)
             .map(|time| time.to_rfc3339_opts(chrono::SecondsFormat::AutoSi, true))
             .unwrap_or_default();
-        (epoch, local_slot, time)
+        (
+            epoch,
+            local_slot,
+            quetzal_primitives::slotting::compact_utc_fraction(time),
+        )
     }
 
     pub fn epoch_first_slot(&self, epoch: u64) -> Option<u64> {

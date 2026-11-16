@@ -35,6 +35,43 @@ pub enum LegacyScheme {
 }
 
 impl EncryptedKey {
+    /// Import an existing encrypted legacy root without decrypting or changing
+    /// its password. The original verifier remains mandatory on later unlock.
+    pub fn from_legacy_parts(
+        encrypted_root: Vec<u8>,
+        password_hash: Vec<u8>,
+        scheme: LegacyScheme,
+    ) -> Result<Self, CryptoError> {
+        if encrypted_root.len() != 128 {
+            return Err(CryptoError::InvalidKey);
+        }
+        crate::Bip32PublicKey::from_raw_bytes(&encrypted_root[64..])?;
+        let valid = match scheme {
+            LegacyScheme::Pbkdf2 => password_hash
+                .first()
+                .is_some_and(|n| password_hash.len() == usize::from(*n) + 65),
+            LegacyScheme::Scrypt => std::str::from_utf8(&password_hash).ok().is_some_and(|s| {
+                use base64::Engine;
+                let fields = s.split('|').collect::<Vec<_>>();
+                fields.len() == 5
+                    && fields[..3] == ["14", "8", "1"]
+                    && base64::engine::general_purpose::STANDARD
+                        .decode(fields[3])
+                        .is_ok()
+                    && base64::engine::general_purpose::STANDARD
+                        .decode(fields[4])
+                        .is_ok_and(|v| !v.is_empty() && v.len() <= 1024)
+            }),
+        };
+        if !valid {
+            return Err(CryptoError::InvalidKey);
+        }
+        Ok(Self::Byron(ByronEncryptedKey {
+            encrypted_root,
+            password_hash,
+            scheme,
+        }))
+    }
     pub fn encrypt_byron(key_bytes: &[u8], passphrase: &[u8]) -> Result<Self, CryptoError> {
         let key = crate::Bip32PrivateKey::from_raw_bytes(key_bytes)?;
         let mut salt = [0u8; 32];

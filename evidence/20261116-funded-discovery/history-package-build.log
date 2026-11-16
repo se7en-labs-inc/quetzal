@@ -1,0 +1,37 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/002-sqlite-state-migration' is dirty
+evaluation warning: crane requires at least nixpkgs-26.05, supplied nixpkgs-25.11
+this derivation will be built:
+  /nix/store/nmwaj9g800lawgjmr6b7kc7ch37x92b5-quetzal-0.1.0.drv
+building '/nix/store/nmwaj9g800lawgjmr6b7kc7ch37x92b5-quetzal-0.1.0.drv'...
+error: Cannot build '/nix/store/nmwaj9g800lawgjmr6b7kc7ch37x92b5-quetzal-0.1.0.drv'.
+       Reason: builder failed with exit code 101.
+       Output paths:
+         /nix/store/rhdkk68pn481knb6dsmfh0wv42y09407-quetzal-0.1.0
+       Last 25 log lines:
+       > test handlers::network::tests::disconnected_node_never_inherits_replay_ready_or_a_percentage ... ok
+       > test json::transaction::tests::history_keeps_validity_and_expiry_for_pending_and_confirmed_records ... FAILED
+       > test metadata::tests::required_and_optional_properties_follow_reference_validation ... ok
+       > test metadata::tests::real_registry_batches_subjects_preserves_policy_and_bounds_failures ... ok
+       > test handlers::transactions::transaction_tests::history_accepts_zero_limit_and_filters_individual_withdrawals ... ok
+       > test transport::tests::shutdown_drains_an_admitted_request_in_http_and_tls_modes ... ok
+       > test workers::tests::stopping_a_worker_during_handshake_releases_its_socket ... ok
+       > test handlers::transactions::transaction_tests::repeated_signing_preserves_other_witnesses_and_body ... ok
+       > test transport::tests::production_transport_requires_client_auth_and_rejects_plaintext ... ok
+       >
+       > failures:
+       >
+       > ---- json::transaction::tests::history_keeps_validity_and_expiry_for_pending_and_confirmed_records stdout ----
+       >
+       > thread 'json::transaction::tests::history_keeps_validity_and_expiry_for_pending_and_confirmed_records' (1252) panicked at crates/quetzal-api/src/json/transaction.rs:283:13:
+       > called `Result::unwrap()` on an `Err` value: Error("invalid type: number, expected a string", line: 0, column: 0)
+       > note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+       >
+       >
+       > failures:
+       >     json::transaction::tests::history_keeps_validity_and_expiry_for_pending_and_confirmed_records
+       >
+       > test result: FAILED. 27 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.99s
+       >
+       > error: test failed, to rerun pass `-p quetzal-api --bin quetzal`
+       For full logs, run:
+         nix log /nix/store/nmwaj9g800lawgjmr6b7kc7ch37x92b5-quetzal-0.1.0.drv

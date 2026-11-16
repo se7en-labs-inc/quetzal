@@ -1,6 +1,15 @@
 //! Era-directed decoding and ledger transaction identity.
 use pallas_traverse::{Era, MultiEraTx};
 
+pub fn extra_signatures(tx: &MultiEraTx<'_>) -> Vec<String> {
+    match tx.required_signers() {
+        pallas_traverse::MultiEraSigners::AlonzoCompatible(signers) => {
+            signers.iter().map(ToString::to_string).collect()
+        }
+        _ => vec![],
+    }
+}
+
 pub fn value(value: &pallas_traverse::MultiEraValue<'_>) -> quetzal_primitives::Value {
     let mut result = quetzal_primitives::Value::lovelace(quetzal_primitives::Coin(value.coin()));
     if let pallas_primitives::alonzo::Value::Multiasset(_, policies) = value.into_alonzo() {

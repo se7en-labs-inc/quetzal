@@ -68,6 +68,20 @@ impl ChainSyncWorker {
         Ok(())
     }
 
+    /// Reconcile the selected native point before replay, including origin
+    /// fallback when a migrated snapshot is no longer on the node's chain.
+    pub async fn process_intersection(&self, selected: &Checkpoint) -> Result<(), WalletError> {
+        for wallet in self.wallets()? {
+            if self.db.latest_checkpoint(&wallet.id)?.is_some_and(|p| {
+                p.slot > selected.slot
+                    || p.slot == selected.slot && p.block_hash != selected.block_hash
+            }) {
+                self.db.rollback_chain(&wallet.id, selected.slot)?;
+            }
+        }
+        Ok(())
+    }
+
     /// Process a roll-forward block event.
     ///
     /// Scans block outputs for addresses belonging to our wallets,
@@ -274,6 +288,17 @@ impl ChainSyncWorker {
                     .transpose()?
                     .unwrap_or_default();
                 let record = TxRecord {
+                    ledger_details: quetzal_primitives::tx::TxLedgerDetails {
+                        extra_signatures: crate::ledger::extra_signatures(&tx),
+                        validity_interval: (!matches!(tx, pallas_traverse::MultiEraTx::Byron(_)))
+                            .then(|| {
+                                (
+                                    tx.validity_start().unwrap_or(0),
+                                    tx.ttl().unwrap_or(u64::MAX),
+                                )
+                            }),
+                        ..Default::default()
+                    },
                     id: tx_hash.clone(),
                     slot,
                     block_hash: block_hash_bytes,

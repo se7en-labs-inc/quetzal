@@ -104,10 +104,11 @@ impl AppState {
                     result = async {
                     let mut driver = ChainSyncDriver::new(node.chainsync());
                     let checkpoints = worker.checkpoints()?;
-                    driver
-                        .find_intersect(&checkpoints)
+                    let selected = driver
+                        .intersection(&checkpoints)
                         .await
                         .map_err(|error| WalletError::TxBuild(error.to_string()))?;
+                    worker.process_intersection(&selected).await?;
                     loop {
                         match driver
                             .next()

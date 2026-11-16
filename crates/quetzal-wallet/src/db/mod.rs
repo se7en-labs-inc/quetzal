@@ -7,6 +7,7 @@ use quetzal_primitives::{
 use sled::{Db, Tree};
 mod chain;
 mod change;
+pub mod import;
 mod pool_chain;
 mod submissions;
 pub(crate) use chain::BlockChanges;

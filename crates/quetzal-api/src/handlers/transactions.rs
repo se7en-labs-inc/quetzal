@@ -358,7 +358,7 @@ pub async fn create_transaction(
                 .map_err(|_| ApiError::internal("Input index overflow"))?,
                 address: input["address"].as_str().map(str::to_owned),
                 amount: Some(AmountResponse::lovelace(Coin(amount(input)?))),
-                assets: input["assets"].as_array().cloned().unwrap_or_default(),
+                assets: Some(input["assets"].as_array().cloned().unwrap_or_default()),
             })
         })
         .collect::<Result<_, ApiError>>()?;
@@ -1787,6 +1787,7 @@ mod transaction_tests {
             db.insert_tx(
                 &wallet.id,
                 &TxRecord {
+                    ledger_details: Default::default(),
                     id: TxHash([index as u8; 32]),
                     slot: index as u64,
                     block_hash: [0; 32],

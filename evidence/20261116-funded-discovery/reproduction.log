@@ -1,0 +1,23 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/002-sqlite-state-migration' is dirty
+   Compiling quetzal-migrate v0.1.0 (/home/sam/work/se7en/quetzal/002-sqlite-state-migration/crates/quetzal-migrate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.75s
+     Running unittests src/main.rs (/home/sam/work/se7en/quetzal/master/target/debug/deps/quetzal_migrate-59183d8f2c634160)
+
+running 1 test
+fixture Icarus: 41 discovery addresses, 2 UTxOs, 0 unowned, 0 duplicates
+fixture Byron: 1 discovery addresses, 1 UTxOs, 0 unowned, 0 duplicates
+fixture Shared: 41 discovery addresses, 1 UTxOs, 1 unowned, 0 duplicates
+Error: importing fixture /tmp/qz-sqlite-migration-20261116-6/reference/database/sha.53acdd7db1116293e6343dd9e0ddc01901ff8ed3.sqlite (Shared)
+
+Caused by:
+    transaction build error: invalid imported wallet: unowned or duplicate UTxO
+test convert::native_source_tests::stopped_reference_files_convert_and_authenticate ... FAILED
+
+failures:
+
+failures:
+    convert::native_source_tests::stopped_reference_files_convert_and_authenticate
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 7 filtered out; finished in 10.07s
+
+error: test failed, to rerun pass `-p quetzal-migrate --bin quetzal-migrate`

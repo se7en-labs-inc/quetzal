@@ -22,6 +22,7 @@
           pkg-config
           openssl
           zlib
+          sqlite
           config.treefmt.build.wrapper
         ];
       };

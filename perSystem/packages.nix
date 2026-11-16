@@ -31,6 +31,7 @@
       pname = "quetzal";
       version = "0.1.0";
       strictDeps = true;
+      QUETZAL_SQLITE3 = "${pkgs.sqlite}/bin/sqlite3";
 
       nativeBuildInputs = with pkgs; [
         pkg-config

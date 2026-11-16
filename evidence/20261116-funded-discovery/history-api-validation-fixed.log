@@ -1,0 +1,22 @@
+   Compiling quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/002-sqlite-state-migration/crates/quetzal-api)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.03s
+     Running unittests src/main.rs (target/debug/deps/quetzal-10aadafab15e005e)
+
+running 1 test
+test json::transaction::tests::history_keeps_validity_and_expiry_for_pending_and_confirmed_records ... FAILED
+
+failures:
+
+---- json::transaction::tests::history_keeps_validity_and_expiry_for_pending_and_confirmed_records stdout ----
+
+thread 'json::transaction::tests::history_keeps_validity_and_expiry_for_pending_and_confirmed_records' (32871) panicked at crates/quetzal-api/src/json/transaction.rs:283:13:
+called `Result::unwrap()` on an `Err` value: Error("invalid type: number, expected a string", line: 0, column: 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    json::transaction::tests::history_keeps_validity_and_expiry_for_pending_and_confirmed_records
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 27 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p quetzal-api --bin quetzal`

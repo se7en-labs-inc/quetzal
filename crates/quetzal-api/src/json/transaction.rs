@@ -54,8 +54,12 @@ pub struct TransactionResponse {
     pub mint: MintBurnResponse,
     pub burn: MintBurnResponse,
     pub status: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<serde_json::Value>,
+    pub extra_signatures: Vec<String>,
     pub script_validity: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub validity_interval: Option<serde_json::Value>,
 }
 
 #[derive(Debug, Serialize)]
@@ -103,7 +107,8 @@ pub struct InputResponse {
     pub address: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub amount: Option<AmountResponse>,
-    pub assets: Vec<serde_json::Value>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub assets: Option<Vec<serde_json::Value>>,
 }
 
 #[derive(Debug, Serialize)]
@@ -199,7 +204,7 @@ impl TransactionResponse {
                         .amount
                         .as_ref()
                         .map(|b| AmountResponse::lovelace(b.quantity)),
-                    assets:i.assets.iter().map(|asset|serde_json::json!({"policy_id":asset.policy_id,"asset_name":asset.asset_name,"quantity":asset.quantity})).collect(),
+                    assets: i.address.as_ref().zip(i.amount.as_ref()).map(|_| i.assets.iter().map(|asset|serde_json::json!({"policy_id":asset.policy_id,"asset_name":asset.asset_name,"quantity":asset.quantity})).collect()),
                 })
                 .collect(),
             outputs: tx
@@ -212,14 +217,24 @@ impl TransactionResponse {
                     derivation_path: None,
                 })
                 .collect(),
-            collateral: vec![],
-            collateral_outputs: vec![],
+            collateral: tx.ledger_details.collateral.iter().map(|input| {
+                let mut value = serde_json::json!({"id":input.id.to_hex(),"index":input.index,"assets":input.assets});
+                if let Some(address) = &input.address { value["address"] = serde_json::json!(address.0); }
+                if let Some(amount) = &input.amount { value["amount"] = serde_json::json!({"quantity":amount.quantity.0,"unit":"lovelace"}); }
+                value
+            }).collect(),
+            collateral_outputs: tx.ledger_details.collateral_outputs.iter().map(|output|serde_json::json!({"address":output.address.0,"amount":{"quantity":output.amount.quantity.0,"unit":"lovelace"},"assets":output.assets})).collect(),
             withdrawals: withdrawal_responses(&tx.withdrawals),
             mint: MintBurnResponse { tokens: vec![] },
             burn: MintBurnResponse { tokens: vec![] },
             status: status.to_string(),
             metadata: tx.metadata.clone(),
-            script_validity: "valid".to_string(),
+            extra_signatures: tx.ledger_details.extra_signatures.clone(),
+            validity_interval: tx.ledger_details.validity_interval.map(|(start, end)| serde_json::json!({
+                "invalid_before": {"quantity": start, "unit": "slot"},
+                "invalid_hereafter": {"quantity": end, "unit": "slot"},
+            })),
+            script_validity: if tx.ledger_details.script_validity == Some(false) { "invalid" } else { "valid" }.to_string(),
         })
     }
 }
@@ -246,4 +261,63 @@ pub(crate) fn derivation_path(
         path.role.index().to_string(),
         path.address_ix.to_string()
     ])
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn history_keeps_validity_and_expiry_for_pending_and_confirmed_records() {
+        let config = crate::config::Config {
+            network: crate::config::Network::Testnet,
+            genesis_start: 1000,
+            slot_millis: 200,
+            epoch_length: 120,
+            ..Default::default()
+        };
+        let mut tx: TxRecord = serde_json::from_value(serde_json::json!({
+            "id": ([0; 32]), "slot": 4, "block_hash": ([0; 32]), "block_height": 1,
+            "direction": "outgoing", "amount": "100", "fee": "2",
+            "inputs": [{"id":([1;32]),"index":0,"address":null,"amount":null},
+                {"id":([2;32]),"index":1,"address":"addr_test","amount":{"quantity":"20","unit":"lovelace"}}],
+            "outputs": [], "status": "pending",
+            "inserted_at": {"time":"", "block":{"slot_no":4,"epoch_no":0,"height":{"quantity":1,"unit":"block"}}},
+            "metadata": null, "withdrawals": [], "expires_at_slot": 6,
+            "ledger_details": {"collateral":[],"collateral_outputs":[],"script_validity":true,
+                "validity_interval":[0,6]}
+        })).unwrap();
+        for status in [TxStatus::Pending, TxStatus::InLedger] {
+            tx.status = status;
+            let value =
+                serde_json::to_value(TransactionResponse::from_record(&tx, &config, 3).unwrap())
+                    .unwrap();
+            assert_eq!(
+                value["validity_interval"],
+                serde_json::json!({
+                    "invalid_before":{"quantity":0,"unit":"slot"},
+                    "invalid_hereafter":{"quantity":6,"unit":"slot"}
+                })
+            );
+            assert_eq!(value["expires_at"]["time"], "1970-01-01T00:16:41.2Z");
+            assert_eq!(value["extra_signatures"], serde_json::json!([]));
+            assert!(value.get("metadata").is_none());
+            assert_eq!(
+                value["inputs"][0],
+                serde_json::json!({"id":hex::encode([1;32]),"index":0})
+            );
+            assert_eq!(value["inputs"][1]["assets"], serde_json::json!([]));
+            let reference = if tx.status == TxStatus::Pending {
+                "pending_since"
+            } else {
+                "inserted_at"
+            };
+            assert_eq!(value[reference]["time"], "1970-01-01T00:16:40.8Z");
+        }
+        tx.ledger_details.validity_interval = None;
+        let value =
+            serde_json::to_value(TransactionResponse::from_record(&tx, &config, 3).unwrap())
+                .unwrap();
+        assert!(value.get("validity_interval").is_none());
+    }
 }
