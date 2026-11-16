@@ -1,0 +1,49 @@
+warning: Git tree '/home/sam/work/se7en/quetzal/003-development-faucet' is dirty
+   Compiling quetzal-faucet v0.1.0 (/home/sam/work/se7en/quetzal/003-development-faucet/crates/quetzal-faucet)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.96s
+     Running unittests src/lib.rs (/home/sam/work/se7en/quetzal/master/target/debug/deps/quetzal_faucet-99e4ccfe1dd1f38d)
+
+running 6 tests
+test tests::byron_encodings_preserve_bytes_and_reject_wrong_network ... ok
+test tests::config_rejects_mainnet_exposure_and_mismatched_key ... ok
+test tests::signed_payment_conserves_coin_pays_fee_and_has_valid_signature ... ok
+test tests::concurrent_reservations_have_only_one_winner ... ok
+test tests::reservations_survive_restart_and_cannot_be_overwritten ... ok
+test tests::http_validates_before_connecting_and_never_claims_acceptance_offline ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running unittests src/main.rs (/home/sam/work/se7en/quetzal/master/target/debug/deps/quetzal_faucet-5ae4e102d8e38c9d)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests quetzal_faucet
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Compiling quetzal-api v0.1.0 (/home/sam/work/se7en/quetzal/003-development-faucet/crates/quetzal-api)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.22s
+     Running tests/shutdown.rs (/home/sam/work/se7en/quetzal/master/target/debug/deps/shutdown-5352581ad5ea06c9)
+
+running 1 test
+test real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families ... FAILED
+
+failures:
+
+---- real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families stdout ----
+
+thread 'real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families' (8872) panicked at crates/quetzal-api/tests/shutdown.rs:307:41:
+called `Result::unwrap()` on an `Err` value: reqwest::Error { kind: Request, url: "https://127.0.0.1:46873/v2/wallets", source: TimedOut }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    real_http_and_tls_processes_obey_stdin_eof_and_reopen_both_families
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 8.36s
+
+error: test failed, to rerun pass `-p quetzal-api --test shutdown`

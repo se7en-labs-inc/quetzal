@@ -300,3 +300,9 @@ for this version.
 The code is licensed under [Apache-2.0](LICENSE), as declared in the workspace
 manifests. The sentinel asset and its generation prompt are documented in
 [branding](docs/branding/README.md).
+
+## Development faucet
+
+The standalone `quetzal-faucet` HTTP service funds Conway testnet wallets through
+Pallas, with no external wallet or CLI dependency. See
+[development-faucet.md](docs/development-faucet.md) for configuration and requests.

@@ -1,0 +1,30 @@
+[package]
+name = "quetzal-faucet"
+description = "Pallas-native development testnet faucet"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+axum.workspace = true
+hex.workspace = true
+pallas-addresses.workspace = true
+pallas-codec.workspace = true
+pallas-crypto.workspace = true
+pallas-network.workspace = true
+pallas-primitives.workspace = true
+pallas-txbuilder.workspace = true
+quetzal-address = { path = "../quetzal-address" }
+quetzal-network = { path = "../quetzal-network" }
+serde.workspace = true
+serde_json.workspace = true
+sled.workspace = true
+tokio.workspace = true
+zeroize.workspace = true
+
+[dev-dependencies]
+quetzal-crypto = { path = "../quetzal-crypto" }
+tempfile.workspace = true
+tower = { workspace = true, features = ["util"] }
