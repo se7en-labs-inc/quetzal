@@ -16,6 +16,8 @@ pub struct AppState {
     pub config: Config,
     /// Live connection to cardano-node; `None` until the background task connects.
     pub node_client: Arc<RwLock<Option<NodeClient>>>,
+    /// Last node query, independent of historical replay and retained on disconnect.
+    pub(crate) network_snapshot: Arc<RwLock<Option<quetzal_network::client::NetworkSnapshot>>>,
     /// Latest observed chain tip: `(slot, block_height)`.
     /// Written by the chain-sync background task; read by network handlers.
     pub chain_tip: Arc<RwLock<(u64, u64)>>,
@@ -43,6 +45,7 @@ impl AppState {
             byron_workers: Arc::new(tokio::sync::Mutex::new(std::collections::HashMap::new())),
             config,
             node_client: Arc::new(RwLock::new(None)),
+            network_snapshot: Arc::new(RwLock::new(None)),
             chain_tip: Arc::new(RwLock::new((0, 0))),
             chain_hash: Arc::new(RwLock::new([0; 32])),
             chain_ready: Arc::new(std::sync::atomic::AtomicBool::new(false)),
@@ -57,5 +60,11 @@ impl AppState {
         state.wallet_service = self.byron_service.clone();
         state.wallet_workers = self.byron_workers.clone();
         state
+    }
+
+    pub(crate) async fn observe_network(&self, snapshot: quetzal_network::client::NetworkSnapshot) {
+        self.config.set_native_eras(snapshot.timings.clone());
+        self.config.set_native_genesis(snapshot.genesis);
+        *self.network_snapshot.write().await = Some(snapshot);
     }
 }

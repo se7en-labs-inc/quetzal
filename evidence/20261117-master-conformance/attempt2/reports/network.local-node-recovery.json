@@ -1,0 +1,25 @@
+{
+  "contract_reference_revision": "2fc5c383c94bb907deaa0cd27b1b407f86224b6c",
+  "environment": "quetzal-master-719daea-network-fix-20261117",
+  "evidence": [
+    {
+      "case": "sync:disconnect-observations",
+      "detail": "{\"candidate_fault\":{\"active_connections\":0,\"admitted_connections\":6,\"completed_downstream_bytes\":54726,\"completed_upstream_bytes\":1606,\"enabled\":false,\"rejected_connections\":0,\"upstream_failures\":0,\"worker_panics\":0},\"candidate_reconnected\":{\"active_connections\":5,\"admitted_connections\":15,\"completed_downstream_bytes\":55792,\"completed_upstream_bytes\":2194,\"enabled\":true,\"rejected_connections\":13,\"upstream_failures\":0,\"worker_panics\":0},\"native_before\":{\"hash\":\"6f52a21b0177734dd21b9de6557b9608532e8a3d1c0e25b0b491bd54a4bb8134\",\"height\":57,\"slot\":243},\"native_during_fault\":{\"hash\":\"3e674b08a8845b134ca9b5d1ee1d19745be1fdec98066eb31f272346a19fe62f\",\"height\":59,\"slot\":270},\"native_recovered\":{\"hash\":\"de8e049c01e927511da7c73e18cad4f93877452cce2f4237525e26ac18015975\",\"height\":60,\"slot\":273},\"observed_statuses\":[\"ready\"],\"reference_fault\":{\"active_connections\":0,\"admitted_connections\":3,\"completed_downstream_bytes\":59540,\"completed_upstream_bytes\":1128,\"enabled\":false,\"rejected_connections\":0,\"upstream_failures\":0,\"worker_panics\":0},\"reference_reconnected\":{\"active_connections\":3,\"admitted_connections\":6,\"completed_downstream_bytes\":59540,\"completed_upstream_bytes\":1128,\"enabled\":true,\"rejected_connections\":15,\"upstream_failures\":0,\"worker_panics\":0},\"successful_fault_comparisons\":13}",
+      "passed": true,
+      "requirements": []
+    },
+    {
+      "case": "sync:disconnect",
+      "detail": "passed",
+      "passed": true,
+      "requirements": [
+        "network.local-node-recovery"
+      ]
+    }
+  ],
+  "format_version": 1,
+  "harness_self_test": false,
+  "suite_sha256": "30a6aadbf988727b7acf8347e66c72cbbe2da1ef5035f7cefb93f4f0f4554df8",
+  "target": "http://127.0.0.1:20319/v2/",
+  "unregistered_inputs": []
+}

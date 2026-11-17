@@ -84,6 +84,7 @@ async fn main() -> anyhow::Result<()> {
         None
     };
     // Query the node's own clock, with no neighboring genesis filename required.
+    let mut startup_snapshot = None;
     if std::path::Path::new(&config.socket_path).exists() {
         if let Ok(Ok(snapshot)) = tokio::time::timeout(
             Duration::from_secs(3),
@@ -91,8 +92,9 @@ async fn main() -> anyhow::Result<()> {
         )
         .await
         {
-            config.set_native_eras(snapshot.timings);
+            config.set_native_eras(snapshot.timings.clone());
             config.set_native_genesis(snapshot.genesis);
+            startup_snapshot = Some(snapshot);
         }
     }
     let wallet_service = WalletService::new(&config.db_path)?;
@@ -100,6 +102,9 @@ async fn main() -> anyhow::Result<()> {
         wallet_service.set_pool_metadata_source(source)?;
     }
     let state = AppState::new(wallet_service, config.clone())?;
+    if let Some(snapshot) = startup_snapshot {
+        state.observe_network(snapshot).await;
+    }
     for wallet in state.wallet_service.list_wallets().await? {
         state.start_wallet_worker(wallet.id).await;
     }

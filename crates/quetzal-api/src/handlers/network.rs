@@ -19,13 +19,12 @@ pub async fn get_network_info(
         ),
     )
     .await;
-    let (tip_slot, tip_height, connected, era) = match observed {
-        Ok(Ok(snapshot)) => {
-            state.config.set_native_eras(snapshot.timings);
-            state.config.set_native_genesis(snapshot.genesis);
-            (snapshot.slot, snapshot.height, true, snapshot.era)
-        }
-        _ => {
+    if let Ok(Ok(snapshot)) = observed {
+        state.observe_network(snapshot).await;
+    }
+    let (tip_slot, tip_height, observed, era) = match state.network_snapshot.read().await.as_ref() {
+        Some(snapshot) => (snapshot.slot, snapshot.height, true, snapshot.era),
+        None => {
             let (slot, height) = *state.chain_tip.read().await;
             (slot, height, false, 6)
         }
@@ -69,7 +68,7 @@ pub async fn get_network_info(
         .unwrap_or(&"conway")
         .to_string(),
         sync_progress: SyncProgress {
-            status: if !connected {
+            status: if !observed {
                 "not_responding"
             } else if progress.is_some() {
                 "syncing"
@@ -77,7 +76,7 @@ pub async fn get_network_info(
                 "ready"
             }
             .into(),
-            progress: if connected {
+            progress: if observed {
                 progress.map(|quantity| crate::json::network::ProgressValue {
                     quantity,
                     unit: "percent".into(),
@@ -215,6 +214,73 @@ pub async fn get_blocks_latest_header(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[tokio::test]
+    async fn disconnected_network_keeps_native_observation_across_namespaces_and_replaces_it() {
+        let directory = tempfile::tempdir().unwrap();
+        let now = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_secs();
+        let config = crate::config::Config {
+            socket_path: directory
+                .path()
+                .join("absent.socket")
+                .to_string_lossy()
+                .into_owned(),
+            network: crate::config::Network::Testnet,
+            genesis_start: now - 100,
+            slot_millis: 1000,
+            epoch_length: 20,
+            ..Default::default()
+        };
+        let mut state = AppState::new(
+            quetzal_wallet::WalletService::new(directory.path().join("wallet").to_str().unwrap())
+                .unwrap(),
+            config,
+        )
+        .unwrap();
+        let byron = state.for_byron();
+        *state.chain_tip.write().await = (200_000_000, 1_000_000);
+        let snapshot = |slot, height, era| quetzal_network::client::NetworkSnapshot {
+            slot,
+            height,
+            era,
+            hash: vec![7; 32],
+            timings: vec![quetzal_network::statequery::EraTiming {
+                start_slot: 0,
+                start_epoch: 0,
+                relative_millis: 0,
+                slot_millis: 1000,
+                epoch_length: 20,
+            }],
+            genesis: None,
+        };
+        state.observe_network(snapshot(100, 20, 6)).await;
+        let Json(response) = get_network_info(State(byron.clone())).await.unwrap();
+        assert_eq!(response.node_tip.absolute_slot_number, Some(100));
+        assert_eq!(response.node_tip.height.unwrap().quantity, 20);
+        assert_eq!(response.node_era, "conway");
+        assert_eq!(response.sync_progress.status, "ready");
+        assert!(response.sync_progress.progress.is_none());
+
+        // A subsequent real observation may move backwards during rollback.
+        state.observe_network(snapshot(80, 15, 5)).await;
+        let Json(response) = get_network_info(State(byron)).await.unwrap();
+        assert_eq!(response.node_tip.absolute_slot_number, Some(80));
+        assert_eq!(response.node_tip.height.unwrap().quantity, 15);
+        assert_eq!(response.node_era, "babbage");
+
+        // Retaining a point does not retain a ready status past its tolerance.
+        state.config.sync_tolerance_seconds = 0;
+        let Json(response) = get_network_info(State(state)).await.unwrap();
+        assert_eq!(response.sync_progress.status, "syncing");
+        let progress = response.sync_progress.progress.unwrap();
+        assert!(progress.quantity > 0.0 && progress.quantity < 100.0);
+        assert_eq!(progress.unit, "percent");
+        assert_eq!(response.node_tip.absolute_slot_number, Some(80));
+    }
+
     #[tokio::test]
     async fn disconnected_node_never_inherits_replay_ready_or_a_percentage() {
         let directory = tempfile::tempdir().unwrap();

@@ -1,0 +1,25 @@
+{
+  "contract_reference_revision": "2fc5c383c94bb907deaa0cd27b1b407f86224b6c",
+  "environment": "quetzal-network-fix-focused-20261117",
+  "evidence": [
+    {
+      "case": "sync:disconnect-observations",
+      "detail": "{\"candidate_fault\":{\"active_connections\":0,\"admitted_connections\":6,\"completed_downstream_bytes\":46530,\"completed_upstream_bytes\":1516,\"enabled\":false,\"rejected_connections\":0,\"upstream_failures\":0,\"worker_panics\":0},\"candidate_reconnected\":{\"active_connections\":4,\"admitted_connections\":10,\"completed_downstream_bytes\":46530,\"completed_upstream_bytes\":1516,\"enabled\":true,\"rejected_connections\":5,\"upstream_failures\":0,\"worker_panics\":0},\"native_before\":{\"hash\":\"4c44dedcd2dec3735377e5f2c733953851ea4f05f321e901ff87f152896c29cc\",\"height\":48,\"slot\":234},\"native_during_fault\":{\"hash\":\"66429f30650806d1d48c40f8a8eea2d3a28c274e972e093ece0742e68e743d02\",\"height\":50,\"slot\":246},\"native_recovered\":{\"hash\":\"42a0738dd74c4e87aa6b3a6f2619991a91556d1a2b7296bc74a6a0c464e8a51b\",\"height\":51,\"slot\":248},\"observed_statuses\":[\"ready\"],\"reference_fault\":{\"active_connections\":0,\"admitted_connections\":3,\"completed_downstream_bytes\":55789,\"completed_upstream_bytes\":1384,\"enabled\":false,\"rejected_connections\":0,\"upstream_failures\":0,\"worker_panics\":0},\"reference_reconnected\":{\"active_connections\":3,\"admitted_connections\":6,\"completed_downstream_bytes\":55789,\"completed_upstream_bytes\":1384,\"enabled\":true,\"rejected_connections\":6,\"upstream_failures\":0,\"worker_panics\":0},\"successful_fault_comparisons\":5}",
+      "passed": true,
+      "requirements": []
+    },
+    {
+      "case": "sync:disconnect",
+      "detail": "passed",
+      "passed": true,
+      "requirements": [
+        "network.local-node-recovery"
+      ]
+    }
+  ],
+  "format_version": 1,
+  "harness_self_test": false,
+  "suite_sha256": "30a6aadbf988727b7acf8347e66c72cbbe2da1ef5035f7cefb93f4f0f4554df8",
+  "target": "http://127.0.0.1:20119/v2/",
+  "unregistered_inputs": []
+}

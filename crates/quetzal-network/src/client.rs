@@ -10,6 +10,7 @@ pub struct NodeClient {
     inner: PallasNodeClient,
 }
 
+#[derive(Clone)]
 pub struct NetworkSnapshot {
     pub slot: u64,
     pub hash: Vec<u8>,
