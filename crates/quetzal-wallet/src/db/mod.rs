@@ -11,9 +11,11 @@ pub mod import;
 mod pool_chain;
 mod submissions;
 pub(crate) use chain::BlockChanges;
+pub(crate) use pool_chain::ObservedPoolBlock;
 
 pub struct WalletDb {
     db: Db,
+    discovery_epoch: std::sync::atomic::AtomicU64,
 }
 
 impl WalletDb {
@@ -56,7 +58,20 @@ impl WalletDb {
     }
     pub fn open(path: &str) -> Result<Self, sled::Error> {
         let db = sled::open(path)?;
-        Ok(WalletDb { db })
+        Ok(WalletDb {
+            db,
+            discovery_epoch: std::sync::atomic::AtomicU64::new(0),
+        })
+    }
+
+    pub(crate) fn discovery_epoch(&self) -> u64 {
+        self.discovery_epoch
+            .load(std::sync::atomic::Ordering::Acquire)
+    }
+
+    fn invalidate_discovery(&self) {
+        self.discovery_epoch
+            .fetch_add(1, std::sync::atomic::Ordering::Release);
     }
 
     pub(crate) fn pool_metadata_source(&self) -> Result<String, WalletError> {
@@ -157,6 +172,7 @@ impl WalletDb {
         let tree = self.wallets_tree()?;
         let bytes = cbor_encode(meta)?;
         tree.insert(meta.id.0.as_ref(), bytes)?;
+        self.invalidate_discovery();
         Ok(())
     }
 
@@ -175,10 +191,12 @@ impl WalletDb {
         let tree = self.wallets_tree()?;
         let bytes = cbor_encode(meta)?;
         tree.insert(meta.id.0.as_ref(), bytes)?;
+        self.invalidate_discovery();
         Ok(())
     }
 
     pub fn delete_wallet(&self, id: &WalletId) -> Result<(), WalletError> {
+        self.invalidate_discovery();
         let tree = self.wallets_tree()?;
         tree.remove(id.0.as_ref())?;
 
@@ -286,6 +304,7 @@ impl WalletDb {
     pub fn store_account_xpub(&self, wid: &WalletId, xpub: &[u8; 64]) -> Result<(), WalletError> {
         let tree = self.keys_tree(wid)?;
         tree.insert(b"acct_xpub", xpub.as_ref())?;
+        self.invalidate_discovery();
         Ok(())
     }
 
@@ -387,6 +406,7 @@ impl WalletDb {
         let key = utxo_key(&utxo.id.tx_hash, utxo.id.output_index);
         let bytes = cbor_encode(utxo)?;
         tree.insert(key, bytes)?;
+        self.invalidate_discovery();
         Ok(())
     }
 
@@ -394,6 +414,7 @@ impl WalletDb {
         let tree = self.utxos_tree(wid)?;
         let key = utxo_key(&id.tx_hash, id.output_index);
         tree.remove(key)?;
+        self.invalidate_discovery();
         Ok(())
     }
 
@@ -513,6 +534,7 @@ impl WalletDb {
                 TransactionError::Abort(error) => error,
                 TransactionError::Storage(error) => WalletError::Db(error),
             })?;
+        self.invalidate_discovery();
         self.flush()
     }
 
@@ -525,7 +547,7 @@ impl WalletDb {
         // Update addr→wid index
         let idx_tree = self.addr_wid_index_tree()?;
         idx_tree.insert(entry.address.as_str().as_bytes(), wid.0.as_ref())?;
-
+        self.invalidate_discovery();
         Ok(())
     }
 
@@ -548,6 +570,7 @@ impl WalletDb {
             entry.state = AddressState::Used;
             let bytes = cbor_encode(&entry)?;
             tree.insert(key, bytes)?;
+            self.invalidate_discovery();
         }
         Ok(())
     }

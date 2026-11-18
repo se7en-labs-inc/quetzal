@@ -10,6 +10,13 @@ struct PoolBlock {
     registrations: Vec<[u8; 28]>,
 }
 
+pub(crate) struct ObservedPoolBlock {
+    pub slot: u64,
+    pub hash: [u8; 32],
+    pub issuer: Option<[u8; 28]>,
+    pub registrations: Vec<[u8; 28]>,
+}
+
 #[derive(serde::Deserialize)]
 #[serde(untagged)]
 enum StoredBlock {
@@ -49,6 +56,83 @@ fn adjust(tree: &TransactionalTree, pool: &[u8], add: bool) -> Result<(), Confli
 }
 
 impl WalletDb {
+    pub(crate) fn pool_blocks(&self, input: &[ObservedPoolBlock]) -> Result<(), WalletError> {
+        let blocks = self.db.open_tree("pool_chain")?;
+        let counts = self.db.open_tree("pool_block_counts")?;
+        let registered = self.db.open_tree("pool_registration_counts")?;
+        let encoded = input
+            .iter()
+            .map(|block| {
+                let mut key = slot_key(block.slot).to_vec();
+                key.extend(block.hash);
+                Ok((
+                    key,
+                    cbor_encode(&PoolBlock {
+                        pool: block.issuer,
+                        registrations: block.registrations.clone(),
+                    })?,
+                ))
+            })
+            .collect::<Result<Vec<_>, WalletError>>()?;
+        (&blocks, &counts, &registered)
+            .transaction(|(blocks, counts, registered)| {
+                let mut produced = std::collections::BTreeMap::<[u8; 28], u64>::new();
+                let mut registrations = std::collections::BTreeMap::<[u8; 28], u64>::new();
+                for (block, (key, bytes)) in input.iter().zip(&encoded) {
+                    if blocks.get(key.as_slice())?.is_some() {
+                        continue;
+                    }
+                    if let Some(pool) = block.issuer {
+                        *produced.entry(pool).or_default() += 1;
+                    }
+                    for pool in &block.registrations {
+                        *registrations.entry(*pool).or_default() += 1;
+                    }
+                    blocks.insert(key.as_slice(), bytes.as_slice())?;
+                }
+                for (tree, changes) in [(counts, produced), (registered, registrations)] {
+                    for (pool, added) in changes {
+                        let count: u64 = tree
+                            .get(pool.as_slice())?
+                            .map(|bytes| cbor_decode(&bytes))
+                            .transpose()
+                            .map_err(|error| Conflict::Abort(WalletError::from(error)))?
+                            .unwrap_or(0);
+                        let total = count.checked_add(added).ok_or_else(|| {
+                            Conflict::Abort(WalletError::TxBuild("pool counter overflow".into()))
+                        })?;
+                        tree.insert(
+                            pool.as_slice(),
+                            cbor_encode(&total)
+                                .map_err(|error| Conflict::Abort(WalletError::from(error)))?,
+                        )?;
+                    }
+                }
+                Ok(())
+            })
+            .map_err(transaction_error)
+    }
+
+    pub(crate) fn pool_checkpoints(&self) -> Result<Vec<Checkpoint>, WalletError> {
+        let mut points = Vec::new();
+        for row in self.db.open_tree("pool_chain")?.iter().rev().take(100) {
+            let (key, _) = row?;
+            if key.len() != 40 {
+                return Err(WalletError::Cbor("invalid pool chain point".into()));
+            }
+            let mut slot = [0; 8];
+            slot.copy_from_slice(&key[..8]);
+            let mut hash = [0; 32];
+            hash.copy_from_slice(&key[8..]);
+            points.push(Checkpoint {
+                slot: u64::from_be_bytes(slot),
+                block_hash: hash,
+                block_height: 0,
+            });
+        }
+        Ok(points)
+    }
+
     pub(crate) fn pool_block(
         &self,
         slot: u64,
@@ -151,9 +235,38 @@ impl WalletDb {
 mod tests {
     use super::*;
     #[test]
+    fn batched_pool_replay_is_idempotent_and_resumes_after_rollback() {
+        let db = WalletDb {
+            db: sled::Config::new().temporary(true).open().unwrap(),
+            discovery_epoch: std::sync::atomic::AtomicU64::new(0),
+        };
+        let blocks: Vec<_> = (1..=300)
+            .map(|slot| ObservedPoolBlock {
+                slot,
+                hash: [slot as u8; 32],
+                issuer: Some([2; 28]),
+                registrations: if slot == 150 { vec![[3; 28]] } else { vec![] },
+            })
+            .collect();
+        for chunk in blocks.chunks(256) {
+            db.pool_blocks(chunk).unwrap();
+        }
+        db.pool_blocks(&blocks[..100]).unwrap();
+        assert_eq!(db.pool_block_counts().unwrap()[[2; 28].as_slice()], 300);
+        assert_eq!(db.pool_checkpoints().unwrap()[0].slot, 300);
+        assert!(db.registered_pools().unwrap().contains([3; 28].as_slice()));
+        db.rollback_pool_blocks(128).unwrap();
+        assert_eq!(db.pool_block_counts().unwrap()[[2; 28].as_slice()], 128);
+        assert_eq!(db.pool_checkpoints().unwrap()[0].slot, 128);
+        assert!(!db.registered_pools().unwrap().contains([3; 28].as_slice()));
+        db.pool_blocks(&blocks[128..]).unwrap();
+        assert_eq!(db.pool_block_counts().unwrap()[[2; 28].as_slice()], 300);
+    }
+    #[test]
     fn counts_registrations_replay_same_slot_blocks_and_rollback_atomically() {
         let db = WalletDb {
             db: sled::Config::new().temporary(true).open().unwrap(),
+            discovery_epoch: std::sync::atomic::AtomicU64::new(0),
         };
         db.pool_block(10, [1; 32], Some([1; 28]), &[[1; 28]])
             .unwrap();
@@ -191,6 +304,7 @@ mod tests {
     fn rolls_back_the_earlier_unreleased_production_only_record_format() {
         let db = WalletDb {
             db: sled::Config::new().temporary(true).open().unwrap(),
+            discovery_epoch: std::sync::atomic::AtomicU64::new(0),
         };
         let pool = [1; 28];
         let mut key = slot_key(10).to_vec();

@@ -75,6 +75,25 @@ impl IntoResponse for ApiError {
     }
 }
 
+impl From<quetzal_wallet::compute::ComputeError> for ApiError {
+    fn from(error: quetzal_wallet::compute::ComputeError) -> Self {
+        use quetzal_wallet::compute::ComputeError;
+        match error {
+            ComputeError::Busy | ComputeError::RequiresStreaming => ApiError::new(
+                StatusCode::SERVICE_UNAVAILABLE,
+                "service_unavailable",
+                "Wallet computation capacity is exhausted. Please retry later.",
+            ),
+            ComputeError::Unavailable => ApiError::new(
+                StatusCode::SERVICE_UNAVAILABLE,
+                "service_unavailable",
+                "Wallet computation service is unavailable. Please retry later.",
+            ),
+            other => ApiError::internal(other.to_string()),
+        }
+    }
+}
+
 impl From<WalletError> for ApiError {
     fn from(e: WalletError) -> Self {
         match e {
@@ -352,4 +371,25 @@ fn valid_drep(value: &str) -> bool {
             && (quetzal_address::codec::governance_decode(value, false).is_ok()
                 || quetzal_address::codec::governance_decode(value, true).is_ok())
     })
+}
+
+#[cfg(test)]
+mod overload_tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn approved_overload_response_uses_existing_json_envelope() {
+        let response = ApiError::from(quetzal_wallet::compute::ComputeError::Busy).into_response();
+        assert_eq!(response.status(), StatusCode::SERVICE_UNAVAILABLE);
+        assert_eq!(response.headers()["content-type"], "application/json");
+        let body = axum::body::to_bytes(response.into_body(), 4096)
+            .await
+            .unwrap();
+        let body: serde_json::Value = serde_json::from_slice(&body).unwrap();
+        assert_eq!(body["code"], "service_unavailable");
+        assert!(body["message"]
+            .as_str()
+            .is_some_and(|message| !message.is_empty()));
+        assert_eq!(body.as_object().unwrap().len(), 2);
+    }
 }

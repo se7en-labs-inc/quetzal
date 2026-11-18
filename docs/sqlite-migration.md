@@ -1,15 +1,52 @@
 # Migrating cardano-wallet SQLite state
 
-`quetzal-migrate` is a separate Rust executable, built with the wallet. Migration
+Quetzal automatically migrates wallet SQLite state during persistent startup.
+Migration
 transfers encrypted credentials, wallet metadata, address discovery and change
 allocations, balances and native assets, transaction history, local signed
 submissions, staking state and the latest sync checkpoint. No recovery phrase or
 spending password is needed. Existing passwords remain valid. Watch-only wallets
 remain watch-only.
 
-Qualification is in progress on feature branch `002-sqlite-state-migration`.
-Do not treat passing source-format tests as completed native qualification; the
-feature's evidence directory records the actual verification outcomes.
+## Normal startup
+
+Stop the source wallet backend and retain a backup of its database directory,
+including any `-wal` and `-shm` files. Start Quetzal with the **same database
+directory**, node socket and network arguments used by the launcher:
+
+```sh
+quetzal serve --database /data/wallets \
+  --node-socket /run/cardano-node/node.socket \
+  --testnet /path/to/preview/byron-genesis.json
+```
+
+If `/data/wallets` contains wallet `.sqlite` files, startup imports and verifies
+them before opening API listeners or starting wallet workers. The matching node
+must be running. A completed sled store is published at
+`/data/wallets/quetzal.sled`; the original SQLite files remain unchanged. Later
+starts with the same `--database /data/wallets` reuse the published store and
+preserve subsequent Quetzal changes, even if the old SQLite files are archived.
+No separate import command or spending password is required.
+
+Migration errors stop startup with an error rather than serving an empty wallet
+list. Interrupted unpublished stages do not count as a completed migration.
+Existing incomplete `quetzal.sled` destinations and conflicting direct/managed
+sled layouts are rejected; retain backups and resolve the authoritative store
+before retrying. Do not delete a completed store to fix a startup error: it may
+contain changes absent from the original SQLite source.
+
+Fresh databases and existing sled stores directly at `--database DIR` continue
+to work. Direct sled mixed with SQLite is rejected as ambiguous. A directory
+containing only `stake-pools.sqlite` does not trigger a wallet migration. Symlinked
+database layouts are rejected. Without `--database`, startup uses temporary empty
+storage, as before.
+
+## Explicit migration tools
+
+`quetzal-migrate` remains available for inspection, a conversion dry-run or an
+explicit import into a separate destination. It uses the same migration engine
+as automatic startup. The qualification evidence directories record the actual
+verification scope.
 
 ## Prepare
 

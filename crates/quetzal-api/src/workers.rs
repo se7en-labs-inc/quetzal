@@ -1,7 +1,7 @@
 //! Each wallet owns its restoration cursor. A new/restored wallet must scan
 //! from its own checkpoint rather than inherit the service's network tip.
 use crate::state::AppState;
-use quetzal_network::{chainsync::ChainSyncDriver, ChainSyncEvent, NodeClient};
+use quetzal_network::NodeClient;
 use quetzal_primitives::WalletId;
 use quetzal_wallet::WalletError;
 use std::time::Duration;
@@ -72,72 +72,22 @@ impl AppState {
                 }
             }
         });
-        let (stop, mut cancelled) = tokio::sync::oneshot::channel();
+        let (stop, cancelled) = tokio::sync::oneshot::channel();
         let task = tokio::spawn(async move {
             let clock_config = state.config.clone();
             let worker = state
                 .wallet_service
                 .wallet_sync_worker(id.clone())
                 .with_slot_reference(move |slot| clock_config.slot_reference(slot));
-            loop {
-                if state.wallet_service.get_wallet(&id).await.is_err() {
-                    break;
+            // Resolve registration even if cancellation arrived: dropping the
+            // acknowledgment could otherwise leave an unowned registered wallet.
+            let registration = state.shared_sync.register(worker).await;
+            match registration {
+                Ok(registration) => {
+                    let _ = cancelled.await;
+                    state.shared_sync.remove(registration).await;
                 }
-                let connection = tokio::select! {
-                    biased;
-                    _ = &mut cancelled => break,
-                    result = NodeClient::connect(&state.config.socket_path, state.config.network_magic) => result,
-                };
-                let mut node = match connection {
-                    Ok(node) => node,
-                    Err(error) => {
-                        tracing::warn!(wallet=%id,%error,"Wallet sync connection failed");
-                        tokio::select! {
-                            _ = &mut cancelled => break,
-                            _ = tokio::time::sleep(Duration::from_secs(2)) => continue,
-                        }
-                    }
-                };
-                let result: Result<(), WalletError> = tokio::select! {
-                    biased;
-                    _ = &mut cancelled => Ok(()),
-                    result = async {
-                    let mut driver = ChainSyncDriver::new(node.chainsync());
-                    let checkpoints = worker.checkpoints()?;
-                    let selected = driver
-                        .intersection(&checkpoints)
-                        .await
-                        .map_err(|error| WalletError::TxBuild(error.to_string()))?;
-                    worker.process_intersection(&selected).await?;
-                    loop {
-                        match driver
-                            .next()
-                            .await
-                            .map_err(|error| WalletError::TxBuild(error.to_string()))?
-                        {
-                            ChainSyncEvent::Await => worker.process_await()?,
-                            ChainSyncEvent::RollForward {
-                                block_cbor,
-                                tip_slot,
-                            } => worker.process_roll_forward(&block_cbor, tip_slot).await?,
-                            ChainSyncEvent::RollBackward { to_slot, to_hash } => {
-                                worker.process_roll_backward(to_slot, to_hash).await?
-                            }
-                        }
-                    }
-                    } => result,
-                };
-                node.abort().await;
-                if result.is_ok() {
-                    break;
-                }
-                if let Err(error) = result {
-                    tracing::warn!(wallet=%id,%error,"Wallet sync restarting");
-                }
-                tokio::select! {
-                    _ = &mut cancelled => break,
-                    _ = tokio::time::sleep(Duration::from_secs(2)) => {},
-                }
+                Err(error) => tracing::error!(%error, "Wallet sync registration failed"),
             }
         });
         workers.insert(
@@ -295,5 +245,61 @@ mod tests {
         drop(listener);
         drop(state);
         std::fs::remove_dir_all(directory).unwrap();
+    }
+}
+
+#[cfg(all(test, unix))]
+mod shared_shutdown_tests {
+    use super::*;
+    #[tokio::test]
+    async fn several_wallets_cancel_stalled_shared_handshake_and_join() {
+        let directory = tempfile::tempdir().unwrap();
+        let socket = directory.path().join("node.socket");
+        let listener = tokio::net::UnixListener::bind(&socket).unwrap();
+        let service =
+            quetzal_wallet::WalletService::new(directory.path().join("db").to_str().unwrap())
+                .unwrap();
+        let mut ids = Vec::new();
+        for entropy in [51, 52, 53] {
+            ids.push(
+                service
+                    .create_wallet(
+                        "shutdown".into(),
+                        &[entropy; 20],
+                        b"public-test-password",
+                        2,
+                        pallas_addresses::Network::Testnet,
+                    )
+                    .await
+                    .unwrap()
+                    .id,
+            );
+        }
+        let config = crate::config::Config {
+            socket_path: socket.to_str().unwrap().into(),
+            network_magic: 2,
+            ..Default::default()
+        };
+        let state = AppState::new(service, config).unwrap();
+        for id in ids {
+            state.start_wallet_worker(id).await;
+        }
+        let (mut connection, _) = tokio::time::timeout(Duration::from_secs(2), listener.accept())
+            .await
+            .unwrap()
+            .unwrap();
+        tokio::time::timeout(Duration::from_secs(2), async {
+            state.stop_all_wallet_workers().await.unwrap();
+            state.shared_sync.shutdown().await.unwrap();
+        })
+        .await
+        .unwrap();
+        use tokio::io::AsyncReadExt;
+        let mut data = Vec::new();
+        tokio::time::timeout(Duration::from_secs(2), connection.read_to_end(&mut data))
+            .await
+            .unwrap()
+            .unwrap();
+        assert!(!state.shared_sync.failed.is_cancelled());
     }
 }

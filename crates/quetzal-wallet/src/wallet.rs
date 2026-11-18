@@ -777,6 +777,10 @@ impl WalletService {
         crate::sync::ChainSyncWorker::for_wallet(Arc::clone(&self.db), wallet)
     }
 
+    pub fn pool_sync_worker(&self) -> crate::sync::ChainSyncWorker {
+        crate::sync::ChainSyncWorker::for_pools(Arc::clone(&self.db))
+    }
+
     // ── Pool cache ────────────────────────────────────────────────────────────
 
     pub fn observe_pool_block(

@@ -1,11 +1,11 @@
 use crate::config::Config;
-use quetzal_network::NodeClient;
 use quetzal_wallet::{DRepLayer, WalletService};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 
 #[derive(Clone)]
 pub struct AppState {
+    pub(crate) shared_sync: Arc<crate::shared_sync::SharedSync>,
     pub wallet_service: Arc<WalletService>,
     byron_service: Arc<WalletService>,
     byron_workers: Arc<
@@ -14,8 +14,6 @@ pub struct AppState {
         >,
     >,
     pub config: Config,
-    /// Live connection to cardano-node; `None` until the background task connects.
-    pub node_client: Arc<RwLock<Option<NodeClient>>>,
     /// Last node query, independent of historical replay and retained on disconnect.
     pub(crate) network_snapshot: Arc<RwLock<Option<quetzal_network::client::NetworkSnapshot>>>,
     /// Latest observed chain tip: `(slot, block_height)`.
@@ -40,11 +38,11 @@ impl AppState {
     ) -> Result<Self, quetzal_wallet::WalletError> {
         let byron_service = Arc::new(wallet_service.byron_service()?);
         Ok(AppState {
+            shared_sync: Arc::new(crate::shared_sync::SharedSync::new(config.clone())?),
             wallet_service: Arc::new(wallet_service),
             byron_service,
             byron_workers: Arc::new(tokio::sync::Mutex::new(std::collections::HashMap::new())),
             config,
-            node_client: Arc::new(RwLock::new(None)),
             network_snapshot: Arc::new(RwLock::new(None)),
             chain_tip: Arc::new(RwLock::new((0, 0))),
             chain_hash: Arc::new(RwLock::new([0; 32])),

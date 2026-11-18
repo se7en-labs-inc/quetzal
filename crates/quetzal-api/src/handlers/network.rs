@@ -11,17 +11,6 @@ use axum::{extract::State, Json};
 pub async fn get_network_info(
     State(state): State<AppState>,
 ) -> Result<Json<NetworkInfoResponse>, ApiError> {
-    let observed = tokio::time::timeout(
-        std::time::Duration::from_secs(3),
-        quetzal_network::NodeClient::network_snapshot(
-            &state.config.socket_path,
-            state.config.network_magic,
-        ),
-    )
-    .await;
-    if let Ok(Ok(snapshot)) = observed {
-        state.observe_network(snapshot).await;
-    }
     let (tip_slot, tip_height, observed, era) = match state.network_snapshot.read().await.as_ref() {
         Some(snapshot) => (snapshot.slot, snapshot.height, true, snapshot.era),
         None => {

@@ -5,6 +5,7 @@ mod handlers;
 mod json;
 mod metadata;
 mod router;
+mod shared_sync;
 mod shutdown;
 mod state;
 #[cfg(test)]
@@ -13,12 +14,10 @@ mod transport;
 mod ui;
 mod workers;
 
-use std::sync::Arc;
 use std::time::Duration;
 
 use config::Config;
-use quetzal_network::chainsync::ChainSyncDriver;
-use quetzal_network::{ChainSyncEvent, NodeClient};
+use quetzal_network::NodeClient;
 use quetzal_wallet::WalletService;
 use state::AppState;
 use tokio::task::JoinHandle;
@@ -75,6 +74,29 @@ async fn main() -> anyhow::Result<()> {
     }
     // Fail closed before opening wallet state or starting workers.
     let tls = transport::load(&config)?;
+    if !config.temporary_database {
+        let directory = std::path::PathBuf::from(&config.db_path);
+        let socket = config.socket_path.clone();
+        let network = quetzal_migrate::MigrationNetwork {
+            magic: config.network_magic,
+            genesis_start: config.genesis_start,
+            genesis_hash: config.genesis_hash.clone(),
+            mainnet: config.network == config::Network::Mainnet,
+        };
+        tracing::info!(database=%directory.display(), "Checking persistent wallet database for startup migration");
+        let prepared = tokio::task::spawn_blocking(move || {
+            quetzal_migrate::prepare_database(&directory, &socket, network)
+        })
+        .await??;
+        config.db_path = prepared
+            .path
+            .to_str()
+            .ok_or_else(|| anyhow::anyhow!("wallet database path is not UTF-8"))?
+            .into();
+        if let Some(wallets) = prepared.imported_wallets {
+            tracing::info!(wallets, database=%prepared.path.display(), "Automatic SQLite wallet migration completed");
+        }
+    }
     let addr = std::net::SocketAddr::new(config.host, config.port);
     let listener = tokio::net::TcpListener::bind(addr).await?;
     let addr = listener.local_addr()?;
@@ -142,6 +164,9 @@ async fn main() -> anyhow::Result<()> {
     tokio::pin!(serving);
     let result = tokio::select! {
         result = &mut serving => result,
+        _ = state.shared_sync.failed.cancelled() => {
+            Err(anyhow::anyhow!("shared wallet sync failed"))
+        },
         reason = shutdown::wait(config.shutdown_handler) => {
             tracing::info!(reason = ?reason, "Quetzal shutdown requested");
             stop.cancel();
@@ -165,7 +190,8 @@ async fn main() -> anyhow::Result<()> {
         if let Some(error) = failure {
             return Err(error);
         }
-        shelley.and(byron)
+        let shared = state.shared_sync.shutdown().await;
+        shelley.and(byron).and(shared)
     })
     .await
     .map_err(|_| anyhow::anyhow!("wallet shutdown exceeded its grace period"))?;
@@ -219,205 +245,49 @@ fn spawn_pool_gc(state: AppState, stop: CancellationToken) -> JoinHandle<()> {
     })
 }
 
-/// Spawn a background task that connects to cardano-node and drives chain-sync.
-///
-/// On any error the task logs a warning and retries after 5 seconds, so the
-/// HTTP server continues to operate even when the node is temporarily down.
+/// Native observation is independent of historical replay. Pool history is a
+/// participant in the shared follower and resumes from its recoverable point.
 fn spawn_chain_sync(state: AppState, stop: CancellationToken) -> JoinHandle<()> {
-    let chain_tip = Arc::clone(&state.chain_tip);
-    let chain_hash = Arc::clone(&state.chain_hash);
-    let chain_ready = Arc::clone(&state.chain_ready);
-    let node_client_slot = Arc::clone(&state.node_client);
-    let socket_path = state.config.socket_path.clone();
-    let network_magic = state.config.network_magic;
-
     tokio::spawn(async move {
+        let registration = state
+            .shared_sync
+            .register(state.wallet_service.pool_sync_worker())
+            .await;
+        let registration = match registration {
+            Ok(id) => id,
+            Err(error) => {
+                tracing::error!(%error,"Pool sync registration failed");
+                return;
+            }
+        };
         loop {
-            tracing::info!(socket = %socket_path, "Connecting to cardano-node");
-
-            // ── Connect ──────────────────────────────────────────────────────
-            let connection = tokio::select! {
+            let observed = tokio::select! {
                 biased;
                 _ = stop.cancelled() => break,
-                result = NodeClient::connect(&socket_path, network_magic) => result,
+                result = tokio::time::timeout(Duration::from_secs(3), NodeClient::network_snapshot(&state.config.socket_path,state.config.network_magic)) => result,
             };
-            let mut client = match connection {
-                Ok(c) => {
-                    tracing::info!("Connected to cardano-node");
-                    c
-                }
-                Err(e) => {
-                    tracing::warn!(error = %e, "Failed to connect to cardano-node; retrying in 5s");
-                    tokio::select! {
-                        _ = stop.cancelled() => break,
-                        _ = tokio::time::sleep(Duration::from_secs(5)) => {},
+            match observed {
+                Ok(Ok(snapshot)) => {
+                    *state.chain_tip.write().await = (snapshot.slot, snapshot.height);
+                    let mut hash = [0; 32];
+                    if snapshot.hash.len() == 32 {
+                        hash.copy_from_slice(&snapshot.hash);
                     }
-                    continue;
+                    *state.chain_hash.write().await = hash;
+                    state
+                        .chain_ready
+                        .store(true, std::sync::atomic::Ordering::Release);
+                    state.observe_network(snapshot).await;
                 }
-            };
-
-            let clock = tokio::select! {
-                _ = stop.cancelled() => None,
-                result = async {
-                    let mut query = quetzal_network::StateQuerier::new(client.statequery());
-                    let eras = query.era_timings().await?;
-                    let genesis = query.genesis_config().await?;
-                    Ok::<_,quetzal_network::NetworkError>((eras,genesis))
-                } => Some(result),
-            };
-            match clock {
-                Some(Ok((eras, genesis))) => {
-                    state.config.set_native_eras(eras);
-                    state.config.set_native_genesis(genesis);
-                }
-                Some(Err(error)) => tracing::warn!(%error,"Cannot read native era clock"),
-                None => {
-                    client.abort().await;
-                    break;
+                result => {
+                    state
+                        .chain_ready
+                        .store(false, std::sync::atomic::Ordering::Release);
+                    tracing::warn!(error=?result.err(),"Native observation unavailable");
                 }
             }
-
-            // ── Find intersect ───────────────────────────────────────────────
-            {
-                let mut driver = ChainSyncDriver::new(client.chainsync());
-                // Start from genesis (empty checkpoints).
-                let intersection = tokio::select! {
-                    _ = stop.cancelled() => None,
-                    result = driver.find_intersect(&[]) => Some(result),
-                };
-                let Some(intersection) = intersection else {
-                    client.abort().await;
-                    break;
-                };
-                if let Err(e) = intersection {
-                    tracing::warn!(error = %e, "find_intersect failed; retrying in 5s");
-                    client.abort().await;
-                    tokio::select! {
-                        _ = stop.cancelled() => break,
-                        _ = tokio::time::sleep(Duration::from_secs(5)) => {},
-                    }
-                    continue;
-                }
-
-                // ── Publish the live client into shared state ─────────────────
-                // We do this after a successful intersect so handlers know the
-                // connection is ready.  Note: the client is consumed by the sync
-                // loop below, so we only store a sentinel `None` here.  Handlers
-                // that need a direct query handle should use a separate connection.
-                // For now the `node_client` slot holds `None` while syncing is
-                // in progress; a future PR will expose a dedicated query client.
-                {
-                    let guard = node_client_slot.write().await;
-                    // We cannot store `client` here while `driver` holds a
-                    // mutable borrow of it, so we leave it `None` for now.
-                    let _ = guard; // silence unused warning
-                }
-
-                // ── Event loop ────────────────────────────────────────────────
-                loop {
-                    let event = tokio::select! {
-                        biased;
-                        _ = stop.cancelled() => break,
-                        result = driver.next() => result,
-                    };
-                    match event {
-                        Ok(ChainSyncEvent::Await) => {
-                            chain_ready.store(true, std::sync::atomic::Ordering::Release);
-                        }
-                        Ok(ChainSyncEvent::RollForward {
-                            block_cbor,
-                            tip_slot,
-                        }) => {
-                            let block = match pallas_traverse::MultiEraBlock::decode(&block_cbor) {
-                                Ok(block) => block,
-                                Err(error) => {
-                                    tracing::warn!(%error, "Cannot decode chain-sync block");
-                                    break;
-                                }
-                            };
-                            let issuer = block
-                                .header()
-                                .issuer_vkey()
-                                .map(|key| *pallas_crypto::hash::Hasher::<224>::hash(key));
-                            let mut registrations = Vec::new();
-                            for tx in block.txs() {
-                                if !tx.is_valid() {
-                                    continue;
-                                }
-                                for certificate in tx.certs() {
-                                    if let Some(
-                                        pallas_primitives::conway::Certificate::PoolRegistration {
-                                            operator,
-                                            ..
-                                        },
-                                    ) = certificate.as_conway()
-                                    {
-                                        registrations.push(**operator);
-                                    } else if let Some(
-                                        pallas_primitives::alonzo::Certificate::PoolRegistration {
-                                            operator,
-                                            ..
-                                        },
-                                    ) = certificate.as_alonzo()
-                                    {
-                                        registrations.push(**operator);
-                                    }
-                                }
-                            }
-                            if let Err(error) = state.wallet_service.observe_pool_block(
-                                block.slot(),
-                                *block.hash(),
-                                issuer,
-                                &registrations,
-                            ) {
-                                tracing::warn!(%error, "Cannot persist pool block production");
-                                break;
-                            }
-                            {
-                                let mut tip = chain_tip.write().await;
-                                tip.0 = block.slot();
-                                tip.1 = block.number();
-                                *chain_hash.write().await = *block.hash();
-                            }
-
-                            chain_ready.store(
-                                block.slot() >= tip_slot,
-                                std::sync::atomic::Ordering::Release,
-                            );
-                        }
-                        Ok(ChainSyncEvent::RollBackward { to_slot, to_hash }) => {
-                            if let Err(error) = state.wallet_service.rollback_pool_blocks(to_slot) {
-                                tracing::warn!(%error, "Cannot roll back pool block production");
-                                break;
-                            }
-                            *chain_hash.write().await = to_hash;
-                            chain_ready.store(false, std::sync::atomic::Ordering::Release);
-                            {
-                                let mut tip = chain_tip.write().await;
-                                tip.0 = to_slot;
-                            }
-                        }
-                        Err(e) => {
-                            chain_ready.store(false, std::sync::atomic::Ordering::Release);
-                            tracing::warn!(error = %e, "ChainSync error; reconnecting in 5s");
-                            break;
-                        }
-                    }
-                }
-            } // driver dropped here, releasing the borrow on `client`
-
-            client.abort().await;
-
-            // Clear the stored client so handlers know the connection is down.
-            {
-                let mut guard = node_client_slot.write().await;
-                *guard = None;
-            }
-
-            tokio::select! {
-                _ = stop.cancelled() => break,
-                _ = tokio::time::sleep(Duration::from_secs(5)) => {},
-            }
+            tokio::select! { _=stop.cancelled()=>break, _=tokio::time::sleep(Duration::from_secs(2))=>{} }
         }
+        state.shared_sync.remove(registration).await;
     })
 }

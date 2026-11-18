@@ -14,6 +14,14 @@ path = "src/main.rs"
 name = "quetzal-conformance-adapter"
 path = "src/bin/conformance.rs"
 
+[[bin]]
+name = "quetzal-runtime-bench"
+path = "src/bin/runtime-bench.rs"
+required-features = ["runtime-bench"]
+
+[features]
+runtime-bench = []
+
 [dependencies]
 base64 = { workspace = true }
 quetzal-wallet = { path = "../quetzal-wallet" }
@@ -21,6 +29,7 @@ quetzal-primitives = { path = "../quetzal-primitives" }
 quetzal-network = { path = "../quetzal-network" }
 quetzal-address = { path = "../quetzal-address" }
 quetzal-crypto = { path = "../quetzal-crypto" }
+quetzal-migrate = { path = "../quetzal-migrate" }
 pallas-crypto = { workspace = true }
 pallas-addresses = { workspace = true }
 pallas-txbuilder = { workspace = true }
@@ -52,5 +61,6 @@ bech32 = { workspace = true }
 chrono = { workspace = true }
 
 [dev-dependencies]
+pallas-network = { workspace = true }
 libc = { workspace = true }
 tokio = { workspace = true, features = ["rt", "rt-multi-thread", "macros"] }

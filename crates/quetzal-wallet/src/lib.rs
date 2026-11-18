@@ -1,4 +1,5 @@
 pub mod coinselect;
+pub mod compute;
 pub mod db;
 mod discovery;
 pub mod drep;

@@ -52,7 +52,7 @@ impl NodeClient {
             .await
             .map(|point| {
                 point == *checkpoint
-                    || checkpoint.block_height == 0
+                    || checkpoint == &quetzal_primitives::Checkpoint::origin()
                         && point == quetzal_primitives::Checkpoint::origin()
             });
         if let Some(client) = owned.0.take() {

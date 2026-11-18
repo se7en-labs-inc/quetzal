@@ -148,7 +148,7 @@ impl DiscoveryPool {
         }
         Ok(added)
     }
-    pub fn changes(&self) -> Vec<AddressEntry> {
-        self.changed.values().cloned().collect()
+    pub fn take_changes(&mut self) -> Vec<AddressEntry> {
+        self.changed.drain().map(|(_, entry)| entry).collect()
     }
 }

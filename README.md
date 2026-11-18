@@ -291,8 +291,10 @@ The [specification](specs/001-wallet-rust-backend/spec.md),
 ## Database compatibility
 
 Current wallet identifiers use the reference's 20-byte identity format.
-The standalone `quetzal-migrate` command imports stopped cardano-wallet SQLite
-wallets into a fresh Quetzal sled directory. See the
+Starting with `--database DIR` automatically imports stopped cardano-wallet SQLite
+wallets in that directory into `DIR/quetzal.sled` before serving the API. Later
+starts reuse the imported store. The standalone `quetzal-migrate` command also
+supports inspection, conversion checks and explicit imports. See the
 [migration instructions](docs/sqlite-migration.md) for inspection, full dry-run,
 network checks, supported source formats and rollback recovery.
 

@@ -20,7 +20,7 @@ Usage: quetzal serve --node-socket FILE (--mainnet | --testnet FILE) [OPTIONS]
   --tls-sv-key FILE              Server private key
   --mainnet                      Select mainnet
   --testnet FILE                 Byron genesis JSON; no sibling file required
-  --database DIR                 Persistent wallet directory; otherwise temporary
+  --database DIR                 Persistent wallet directory; auto-import SQLite; otherwise temporary
   --shutdown-handler             Clean shutdown on stdin EOF
   --pool-metadata-fetching SOURCE none, direct, or SMASH URL; persists across restart
   --token-metadata-server URL     Token registry; otherwise disabled

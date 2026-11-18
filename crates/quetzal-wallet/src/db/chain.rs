@@ -270,6 +270,7 @@ mod tests {
     fn fixture() -> (WalletDb, WalletId, UtxoEntry) {
         let db = WalletDb {
             db: sled::Config::new().temporary(true).open().unwrap(),
+            discovery_epoch: std::sync::atomic::AtomicU64::new(0),
         };
         let wid = WalletId([7; 20]);
         let meta = WalletMeta {
